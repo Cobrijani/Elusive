@@ -28,6 +28,10 @@ In this chapter each part of system will be presented along with solution from t
 ### Data security
 - Communication between parts of the system will be secured with most secured encryption algorithm that this system supports
 - __Xpack__ plugin will be used for rule-based reasoning of data as well as authentication for __Kibana__.
+- Alarms that will be triggered on certain events will be also configured with __Xpack__
+
+<img src="https://www.elastic.co/assets/blta828e1358964dc3e/cyber-webinar-thumbnail.jpeg"/>
+<p style="text-align: center;">	<i>Img.1</i> How data flows in ELK stack . </p>
 
 ## Conclusion
 
