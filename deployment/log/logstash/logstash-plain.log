@@ -1,0 +1,22 @@
+[2017-05-19T17:34:07,892][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.queue", :path=>"/opt/logstash/data/queue"}
+[2017-05-19T17:34:07,912][INFO ][logstash.agent           ] No persistent UUID file found. Generating new UUID {:uuid=>"d6b02978-75c0-454b-8144-e49c011111e5", :path=>"/opt/logstash/data/uuid"}
+[2017-05-19T17:34:08,627][INFO ][logstash.outputs.elasticsearch] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[http://localhost:9200/]}}
+[2017-05-19T17:34:08,632][INFO ][logstash.outputs.elasticsearch] Running health check to see if an Elasticsearch connection is working {:healthcheck_url=>http://localhost:9200/, :path=>"/"}
+[2017-05-19T17:34:08,720][WARN ][logstash.outputs.elasticsearch] Restored connection to ES instance {:url=>#<URI::HTTP:0x3e9f1f99 URL:http://localhost:9200/>}
+[2017-05-19T17:34:08,726][INFO ][logstash.outputs.elasticsearch] New Elasticsearch output {:class=>"LogStash::Outputs::ElasticSearch", :hosts=>[#<URI::Generic:0x16d99d5e URL://localhost>]}
+[2017-05-19T17:34:08,790][INFO ][logstash.pipeline        ] Starting pipeline {"id"=>"main", "pipeline.workers"=>2, "pipeline.batch.size"=>125, "pipeline.batch.delay"=>5, "pipeline.max_inflight"=>250}
+[2017-05-19T17:34:09,218][INFO ][logstash.inputs.beats    ] Beats inputs: Starting input listener {:address=>"0.0.0.0:5044"}
+[2017-05-19T17:34:09,249][INFO ][logstash.pipeline        ] Pipeline main started
+[2017-05-19T17:34:09,354][INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
+[2017-05-19T17:43:52,181][WARN ][logstash.runner          ] SIGTERM received. Shutting down the agent.
+[2017-05-19T17:43:52,186][WARN ][logstash.agent           ] stopping pipeline {:id=>"main"}
+[2017-05-19T17:48:07,660][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.queue", :path=>"/opt/logstash/data/queue"}
+[2017-05-19T17:48:07,677][INFO ][logstash.agent           ] No persistent UUID file found. Generating new UUID {:uuid=>"4524dc30-278f-4726-aca8-a749302527d5", :path=>"/opt/logstash/data/uuid"}
+[2017-05-19T17:48:08,319][INFO ][logstash.outputs.elasticsearch] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[http://localhost:9200/]}}
+[2017-05-19T17:48:08,321][INFO ][logstash.outputs.elasticsearch] Running health check to see if an Elasticsearch connection is working {:healthcheck_url=>http://localhost:9200/, :path=>"/"}
+[2017-05-19T17:48:08,414][WARN ][logstash.outputs.elasticsearch] Restored connection to ES instance {:url=>#<URI::HTTP:0x751a191a URL:http://localhost:9200/>}
+[2017-05-19T17:48:08,417][INFO ][logstash.outputs.elasticsearch] New Elasticsearch output {:class=>"LogStash::Outputs::ElasticSearch", :hosts=>[#<URI::Generic:0x5f9770d URL://localhost>]}
+[2017-05-19T17:48:08,502][INFO ][logstash.pipeline        ] Starting pipeline {"id"=>"main", "pipeline.workers"=>2, "pipeline.batch.size"=>125, "pipeline.batch.delay"=>5, "pipeline.max_inflight"=>250}
+[2017-05-19T17:48:09,203][INFO ][logstash.inputs.beats    ] Beats inputs: Starting input listener {:address=>"0.0.0.0:5044"}
+[2017-05-19T17:48:09,236][INFO ][logstash.pipeline        ] Pipeline main started
+[2017-05-19T17:48:09,335][INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}

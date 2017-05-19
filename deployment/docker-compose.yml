@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+    elk:
+      image: "sebp/elk:latest"
+      ports:
+        -  "5601:5601"
+        -  "9200:9200" 
+        -  "5044:5044"
+      volumes:
+        - ./log:/var/log # map logs folder for docker folder  
+    redis:
+      image: "redis:alpine"
+      ports:
+            - "6379:6379"
