@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
     elk:
@@ -14,6 +14,12 @@ services:
       ports:
         - "6379:6379"
       networks: 
+        - elk
+    filebeat:
+      build: "filebeat"
+      networks: 
+        - elk
+      depends_on: 
         - elk
 
 networks: 

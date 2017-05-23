@@ -61,7 +61,7 @@ node.name: logstash-indexer
 #
 # Where to fetch the pipeline configuration for the main pipeline
 #
-path.config: "/etc/logstash/pipeline"
+#path.config: "/etc/logstash/pipeline"
 #
 # Pipeline configuration string for the main pipeline
 #
