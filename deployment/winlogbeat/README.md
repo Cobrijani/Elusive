@@ -1,8 +1,8 @@
 # Winlogbeat scripts and configuration folder
 
-- "__configure.ps1__" is script that downloads latest winlogbeat and installs it on local windows machine with preffered install location from [winlogbeat reference documentation](https://www.elastic.co/guide/en/beats/winlogbeat/current/winlogbeat-installation.html)
+- "__install.ps1__" is script that downloads latest winlogbeat and installs it on local windows machine with preffered install location from [winlogbeat reference documentation](https://www.elastic.co/guide/en/beats/winlogbeat/current/winlogbeat-installation.html)
 
-- "__install.ps1__" is script that copies yml configuration and certificate into installation folder of winlogbeat. Also it loads index for winlogbeat into elasticsearch and imports dashboards for winlogbeat.
+- "__configure.ps1__" is script that copies yml configuration and certificate into installation folder of winlogbeat. Also it loads index for winlogbeat into elasticsearch and imports dashboards for winlogbeat.
 
 ### Get started
 
