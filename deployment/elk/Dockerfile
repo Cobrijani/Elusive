@@ -56,7 +56,7 @@ RUN mkdir ${ES_HOME} \
  && groupadd -r elasticsearch -g ${ES_GID} \
  && useradd -r -s /usr/sbin/nologin -M -c "Elasticsearch service user" -u ${ES_UID} -g elasticsearch elasticsearch \
  && mkdir -p /var/log/elasticsearch /etc/elasticsearch /etc/elasticsearch/scripts /var/lib/elasticsearch \
- && chown -R elasticsearch:elasticsearch ${ES_HOME} /var/log/elasticsearch /var/lib/elasticsearch
+ && chown -R elasticsearch:elasticsearch ${ES_HOME} /var/log/elasticsearch /var/lib/elasticsearch 
 
 ADD ./elasticsearch-init /etc/init.d/elasticsearch
 RUN sed -i -e 's#^ES_HOME=$#ES_HOME='$ES_HOME'#' /etc/init.d/elasticsearch \
@@ -78,15 +78,15 @@ RUN mkdir ${LOGSTASH_HOME} \
  && groupadd -r logstash -g ${LOGSTASH_GID} \
  && useradd -r -s /usr/sbin/nologin -d ${LOGSTASH_HOME} -c "Logstash service user" -u ${LOGSTASH_UID} -g logstash logstash \
  && mkdir -p /var/log/logstash /etc/logstash/conf.d \
- && chown -R logstash:logstash ${LOGSTASH_HOME} /var/log/logstash
+ && chown -R logstash:logstash ${LOGSTASH_HOME} /var/log/logstash 
 
 ADD ./logstash-init /etc/init.d/logstash
 RUN sed -i -e 's#^LS_HOME=$#LS_HOME='$LOGSTASH_HOME'#' /etc/init.d/logstash \
  && chmod +x /etc/init.d/logstash
 
 ### Install logstash plugins
-RUN .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-grok \
- && .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-date
+#RUN .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-grok \
+# && .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-date
 
 ### install Kibana
 
@@ -104,10 +104,16 @@ RUN mkdir ${KIBANA_HOME} \
  && useradd -r -s /usr/sbin/nologin -d ${KIBANA_HOME} -c "Kibana service user" -u ${KIBANA_UID} -g kibana kibana \
  && mkdir -p /var/log/kibana \
  && chown -R kibana:kibana ${KIBANA_HOME} /var/log/kibana
-
 ADD ./kibana-init /etc/init.d/kibana
 RUN sed -i -e 's#^KIBANA_HOME=$#KIBANA_HOME='$KIBANA_HOME'#' /etc/init.d/kibana \
  && chmod +x /etc/init.d/kibana
+
+
+### install x-pack
+
+RUN .${ES_HOME}/bin/elasticsearch-plugin install --batch x-pack \
+ && .${KIBANA_HOME}/bin/kibana-plugin install x-pack
+ #&& .${LOGSTASH_HOME}/bin/logstash-plugin install x-pack
 
 
 ###############################################################################
@@ -128,9 +134,19 @@ ADD ./config/logstash.yml ${LOGSTASH_HOME}/config/logstash.yml
 
 
 # certs/keys for Beats and Lumberjack input
-RUN mkdir -p /etc/pki/tls/certs && mkdir /etc/pki/tls/private
+RUN mkdir -p /etc/pki/tls/certs \
+    && mkdir /etc/pki/tls/private
 ADD ./logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 ADD ./logstash-beats.key /etc/pki/tls/private/logstash-beats.key
+ADD ./cryptography/certs/ca/ca.crt /etc/pki/tls/certs/ca.crt
+ADD ./cryptography/certs/ca/ca.crt ${ES_HOME}/config/x-pack/ca.crt
+ADD ./cryptography/certs/ca/ca.key ${ES_HOME/config/x-pack/ca.key
+ADD ./cryptography/certs/elusive-1/elusive-1.crt /etc/pki/tls/certs/elusive-1.crt
+ADD ./cryptography/certs/elusive-1/elusive-1.crt ${ES_HOME}/config/x-pack/elusive-1.crt
+ADD ./cryptography/certs/elusive-1/elusive-1.key ${ES_HOME}/config/x-pack/elusive-1.key
+
+
+
 
 # filters
 ADD ./pipeline /etc/logstash/conf.d/

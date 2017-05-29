@@ -1,7 +1,8 @@
 #!/bin/sh
 
-./wait.sh elk:9200
-curl -XPUT 'http://elk:9200/_template/filebeat?pretty' -d@/etc/filebeat/filebeat.template.json
+./wait.sh elk:9200 #wait for elasticsearch
+./wait.sh elk:5044 # wait for logstash
+curl --user elastic:changeme -XPUT 'http://elk:9200/_template/filebeat?pretty' -d@/etc/filebeat/filebeat.template.json
 #/etc/init.d/filebeat start
 service filebeat start
 mkdir /var/log/filebeat

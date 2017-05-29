@@ -1,0 +1,4 @@
+instances:
+  - name: "elusive-1"
+    dns:
+      - "localhost"
