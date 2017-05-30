@@ -136,7 +136,6 @@ ADD ./logstash-beats.key /etc/pki/tls/private/logstash-beats.key
 ADD ./pipeline /etc/logstash/conf.d/
 
 # patterns
-ADD ./nginx.pattern ${LOGSTASH_HOME}/patterns/nginx
 ADD ./patterns ${LOGSTASH_HOME}/patterns/
 RUN chown -R logstash:logstash ${LOGSTASH_HOME}/patterns
 
