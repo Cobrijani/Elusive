@@ -20,15 +20,16 @@
 6. Click on Logging Customize
 7. Set name to: %systemroot%\system32\LogFiles\Firewall\pfirewall.log
 8. Log dropped packets and Log successfull connections set to Yes
-9. Repeat 1. and 2.
-10. Go to Outbound Rules
-11. Click on New Rule in Actions arena
-12. Click on Port and Next
-13. Click on TCP, Specific remote ports
-14. Set Specific remote ports to: 5678-5680
-15. Click on Block this connections
-16. Mark Domain, Public and Private
-17. Set name and click Finish
-18. After this Kibana will show all successfull and unsuccessfull firewall logs
-19. We specify rule to block outbound on ports 5678-5680
-20. If you want to fire this event go to: https://www.google.rs:5678/ 
+9. Repeat 6-8 for Public and Private Profile tab
+10. Repeat 1. and 2.
+11. Go to Outbound Rules
+12. Click on New Rule in Actions arena
+13. Click on Port and Next
+14. Click on TCP, Specific remote ports
+15. Set Specific remote ports to: 5678-5680
+16. Click on Block this connections
+17. Mark Domain, Public and Private
+18. Set name and click Finish
+19. After this Kibana will show all successfull and unsuccessfull firewall logs
+20. We specify rule to block outbound on ports 5678-5680
+21. If you want to fire this event go to: https://www.google.rs:5678/ 
