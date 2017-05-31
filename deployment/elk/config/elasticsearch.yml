@@ -103,8 +103,8 @@ action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.wa
 # xpack.monitoring.elasticsearch.username: logstash_system
 # xpack.monitoring.elasticsearch.password: changeme
 
-xpack.ssl.key: /opt/elasticsearch/config/x-pack/elusive-1.key
-xpack.ssl.certificate: /opt/elasticsearch/config/x-pack/elusive-1.crt
-xpack.ssl.certificate_authorities: ["/opt/elasticsearch/config/x-pack/ca.crt"]
+xpack.ssl.key: ./x-pack/elusive-1.key
+xpack.ssl.certificate: ./x-pack/elusive-1.crt
+xpack.ssl.certificate_authorities: ["./x-pack/ca.crt"]
 xpack.security.transport.ssl.enabled: true
 xpack.security.http.ssl.enabled: true

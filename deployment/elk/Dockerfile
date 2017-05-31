@@ -45,6 +45,7 @@ ENV ELK_VERSION 5.4.0
 
 ENV ES_VERSION ${ELK_VERSION}
 ENV ES_HOME /opt/elasticsearch
+ENV ES_CONFIG /etc/elasticsearch
 ENV ES_PACKAGE elasticsearch-${ES_VERSION}.tar.gz
 ENV ES_GID 991
 ENV ES_UID 991
@@ -110,9 +111,11 @@ RUN sed -i -e 's#^KIBANA_HOME=$#KIBANA_HOME='$KIBANA_HOME'#' /etc/init.d/kibana 
 
 
 ### install x-pack
+ENV X_PACK_ES ${ES_CONFIG}/x-pack
 
 RUN .${ES_HOME}/bin/elasticsearch-plugin install --batch x-pack \
- && .${KIBANA_HOME}/bin/kibana-plugin install x-pack
+ && .${KIBANA_HOME}/bin/kibana-plugin install x-pack \
+ && mkdir ${X_PACK_ES}
  #&& .${LOGSTASH_HOME}/bin/logstash-plugin install x-pack
 
 
@@ -122,10 +125,10 @@ RUN .${ES_HOME}/bin/elasticsearch-plugin install --batch x-pack \
 
 ### configure Elasticsearch
 
-ADD ./config/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
-ADD ./elasticsearch-log4j2.properties /etc/elasticsearch/log4j2.properties
-ADD ./elasticsearch-jvm.options /etc/elasticsearch/jvm.options
-ADD ./elasticsearch-default /etc/default/elasticsearch
+ADD ./config/elasticsearch.yml ${ES_CONFIG}/elasticsearch.yml
+ADD ./elasticsearch-log4j2.properties ${ES_CONFIG}/log4j2.properties
+ADD ./elasticsearch-jvm.options ${ES_CONFIG}/jvm.options
+ADD ./elasticsearch-default ${ES_CONFIG}/elasticsearch
 RUN chmod -R +r /etc/elasticsearch
 
 
@@ -136,14 +139,18 @@ ADD ./config/logstash.yml ${LOGSTASH_HOME}/config/logstash.yml
 # certs/keys for Beats and Lumberjack input
 RUN mkdir -p /etc/pki/tls/certs \
     && mkdir /etc/pki/tls/private
+   # && mkdir ${ES_CONFIG}/x-pack
 ADD ./logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 ADD ./logstash-beats.key /etc/pki/tls/private/logstash-beats.key
 ADD ./cryptography/certs/ca/ca.crt /etc/pki/tls/certs/ca.crt
-ADD ./cryptography/certs/ca/ca.crt ${ES_HOME}/config/x-pack/ca.crt
-ADD ./cryptography/certs/ca/ca.key ${ES_HOME/config/x-pack/ca.key
+ADD ./cryptography/certs/ca/ca.crt ${X_PACK_ES}/ca.crt
+ADD ./cryptography/certs/ca/ca.key ${X_PACK_ES}/ca.key
 ADD ./cryptography/certs/elusive-1/elusive-1.crt /etc/pki/tls/certs/elusive-1.crt
-ADD ./cryptography/certs/elusive-1/elusive-1.crt ${ES_HOME}/config/x-pack/elusive-1.crt
-ADD ./cryptography/certs/elusive-1/elusive-1.key ${ES_HOME}/config/x-pack/elusive-1.key
+ADD ./cryptography/certs/elusive-1/elusive-1.crt ${X_PACK_ES}/elusive-1.crt
+ADD ./cryptography/certs/elusive-1/elusive-1.key ${X_PACK_ES}/elusive-1.key
+
+RUN chown -R elasticsearch:elasticsearch ${ES_CONFIG}
+# after adding xpack certificates and keys we need to change user from root to elasticsearch
 
 
 
@@ -154,7 +161,7 @@ ADD ./pipeline /etc/logstash/conf.d/
 # patterns
 ADD ./nginx.pattern ${LOGSTASH_HOME}/patterns/nginx
 ADD ./patterns ${LOGSTASH_HOME}/patterns/
-RUN chown -R logstash:logstash ${LOGSTASH_HOME}/patterns
+RUN chown -R logstash:logstash ${LOGSTASH_HOME}
 
 # Fix permissions
 RUN chmod -R +r /etc/logstash
