@@ -9,7 +9,7 @@
 
 FROM phusion/baseimage
 MAINTAINER Stefan Bratic
-ENV REFRESHED_AT 2017-05-21
+ENV REFRESHED_AT 2017-06-01
 
 
 ###############################################################################
@@ -159,7 +159,6 @@ RUN chown -R elasticsearch:elasticsearch ${ES_CONFIG}
 ADD ./pipeline /etc/logstash/conf.d/
 
 # patterns
-ADD ./nginx.pattern ${LOGSTASH_HOME}/patterns/nginx
 ADD ./patterns ${LOGSTASH_HOME}/patterns/
 RUN chown -R logstash:logstash ${LOGSTASH_HOME}
 

@@ -92,7 +92,7 @@ network.host: 0.0.0.0
 #action.destructive_requires_name: true
 
 # ---------------------------------- X-pack -----------------------------------
-action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*
+#action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*
 # xpack.security.authc.realms.pki1:
 #                   type: pki
 #                   truststore:
@@ -106,5 +106,6 @@ action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.wa
 xpack.ssl.key: ./x-pack/elusive-1.key
 xpack.ssl.certificate: ./x-pack/elusive-1.crt
 xpack.ssl.certificate_authorities: ["./x-pack/ca.crt"]
+xpack.security.audit.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.http.ssl.enabled: true
