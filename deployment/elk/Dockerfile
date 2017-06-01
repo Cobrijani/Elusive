@@ -177,6 +177,8 @@ RUN chmod 644 /etc/logrotate.d/elasticsearch \
 
 ### configure Kibana
 
+ADD ./cryptography/certs/kibana/k-key.pem /etc/pki/tls/private/kibana.key
+ADD ./cryptography/certs/kibana/k-cert.pem /etc/pki/tls/cert/kibana.crt
 ADD ./config/kibana.yml ${KIBANA_HOME}/config/kibana.yml
 
 

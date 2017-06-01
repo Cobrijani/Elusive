@@ -106,6 +106,6 @@ network.host: 0.0.0.0
 xpack.ssl.key: ./x-pack/elusive-1.key
 xpack.ssl.certificate: ./x-pack/elusive-1.crt
 xpack.ssl.certificate_authorities: ["./x-pack/ca.crt"]
-xpack.security.audit.enabled: true
+#xpack.security.audit.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.http.ssl.enabled: true
