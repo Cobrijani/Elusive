@@ -20,7 +20,8 @@ filebeat.prospectors:
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
     #- /var/log/*.log
-    - c:\WINDOWS\System32\LogFiles\Firewall\pfirewall.log
+    - c:\WINDOWS\System32\LogFiles\Firewall\pfirewall.log\
+    # - /var/log/firewall/*.log
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
   # matching any regular expression from the list.
@@ -61,11 +62,11 @@ filebeat.prospectors:
 
 # The name of the shipper that publishes the network data. It can be used to group
 # all the transactions sent by a single shipper in the web interface.
-#name:
+name: firewall-logs-agent
 
 # The tags of the shipper are included in their own field with each
 # transaction published.
-#tags: ["service-X", "web-tier"]
+tags: ["firewall-logs-agent"]
 
 # Optional fields that you can specify to add additional information to the
 # output.
@@ -95,7 +96,7 @@ output.logstash:
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
   ssl.certificate_authorities: ["C:\\Program Files\\Filebeat\\logstash-beats.crt"]
-
+  #ssl.certificate_authorities: ["/etc/pki/tls/certs/logstash-beats.crt"]
   # Certificate for SSL client authentication
   #ssl.certificate: "/etc/pki/client/cert.pem"
 

@@ -15,12 +15,12 @@ services:
     #     - "6379:6379"
     #   networks: 
     #     - elk
-    filebeat:
-      build: "filebeat"
-      networks: 
-        - elk
-      depends_on: 
-        - elk
+    # filebeat:
+    #   build: "filebeat"
+    #   networks: 
+    #     - elk
+    #   depends_on: 
+    #     - elk
 
 networks: 
   elk:
