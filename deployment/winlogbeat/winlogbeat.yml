@@ -21,7 +21,11 @@ winlogbeat.event_logs:
   - name: Application
     ignore_older: 72h
   - name: Security
+    ignore_older: 72h
   - name: System
+    ignore_older: 72h
+  - name: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
+    ignore_older: 72h
 
 #================================ General =====================================
 
