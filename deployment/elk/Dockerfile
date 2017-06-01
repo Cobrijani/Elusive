@@ -9,7 +9,7 @@
 
 FROM phusion/baseimage
 MAINTAINER Stefan Bratic
-ENV REFRESHED_AT 2017-05-21
+ENV REFRESHED_AT 2017-06-01
 
 
 ###############################################################################
@@ -45,6 +45,7 @@ ENV ELK_VERSION 5.4.0
 
 ENV ES_VERSION ${ELK_VERSION}
 ENV ES_HOME /opt/elasticsearch
+ENV ES_CONFIG /etc/elasticsearch
 ENV ES_PACKAGE elasticsearch-${ES_VERSION}.tar.gz
 ENV ES_GID 991
 ENV ES_UID 991
@@ -56,7 +57,7 @@ RUN mkdir ${ES_HOME} \
  && groupadd -r elasticsearch -g ${ES_GID} \
  && useradd -r -s /usr/sbin/nologin -M -c "Elasticsearch service user" -u ${ES_UID} -g elasticsearch elasticsearch \
  && mkdir -p /var/log/elasticsearch /etc/elasticsearch /etc/elasticsearch/scripts /var/lib/elasticsearch \
- && chown -R elasticsearch:elasticsearch ${ES_HOME} /var/log/elasticsearch /var/lib/elasticsearch
+ && chown -R elasticsearch:elasticsearch ${ES_HOME} /var/log/elasticsearch /var/lib/elasticsearch 
 
 ADD ./elasticsearch-init /etc/init.d/elasticsearch
 RUN sed -i -e 's#^ES_HOME=$#ES_HOME='$ES_HOME'#' /etc/init.d/elasticsearch \
@@ -78,15 +79,15 @@ RUN mkdir ${LOGSTASH_HOME} \
  && groupadd -r logstash -g ${LOGSTASH_GID} \
  && useradd -r -s /usr/sbin/nologin -d ${LOGSTASH_HOME} -c "Logstash service user" -u ${LOGSTASH_UID} -g logstash logstash \
  && mkdir -p /var/log/logstash /etc/logstash/conf.d \
- && chown -R logstash:logstash ${LOGSTASH_HOME} /var/log/logstash
+ && chown -R logstash:logstash ${LOGSTASH_HOME} /var/log/logstash 
 
 ADD ./logstash-init /etc/init.d/logstash
 RUN sed -i -e 's#^LS_HOME=$#LS_HOME='$LOGSTASH_HOME'#' /etc/init.d/logstash \
  && chmod +x /etc/init.d/logstash
 
 ### Install logstash plugins
-RUN .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-grok \
- && .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-date
+#RUN .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-grok \
+# && .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-date
 
 ### install Kibana
 
@@ -104,10 +105,18 @@ RUN mkdir ${KIBANA_HOME} \
  && useradd -r -s /usr/sbin/nologin -d ${KIBANA_HOME} -c "Kibana service user" -u ${KIBANA_UID} -g kibana kibana \
  && mkdir -p /var/log/kibana \
  && chown -R kibana:kibana ${KIBANA_HOME} /var/log/kibana
-
 ADD ./kibana-init /etc/init.d/kibana
 RUN sed -i -e 's#^KIBANA_HOME=$#KIBANA_HOME='$KIBANA_HOME'#' /etc/init.d/kibana \
  && chmod +x /etc/init.d/kibana
+
+
+### install x-pack
+ENV X_PACK_ES ${ES_CONFIG}/x-pack
+
+RUN .${ES_HOME}/bin/elasticsearch-plugin install --batch x-pack \
+ && .${KIBANA_HOME}/bin/kibana-plugin install x-pack \
+ && mkdir ${X_PACK_ES}
+ #&& .${LOGSTASH_HOME}/bin/logstash-plugin install x-pack
 
 
 ###############################################################################
@@ -116,10 +125,10 @@ RUN sed -i -e 's#^KIBANA_HOME=$#KIBANA_HOME='$KIBANA_HOME'#' /etc/init.d/kibana 
 
 ### configure Elasticsearch
 
-ADD ./config/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
-ADD ./elasticsearch-log4j2.properties /etc/elasticsearch/log4j2.properties
-ADD ./elasticsearch-jvm.options /etc/elasticsearch/jvm.options
-ADD ./elasticsearch-default /etc/default/elasticsearch
+ADD ./config/elasticsearch.yml ${ES_CONFIG}/elasticsearch.yml
+ADD ./elasticsearch-log4j2.properties ${ES_CONFIG}/log4j2.properties
+ADD ./elasticsearch-jvm.options ${ES_CONFIG}/jvm.options
+ADD ./elasticsearch-default ${ES_CONFIG}/elasticsearch
 RUN chmod -R +r /etc/elasticsearch
 
 
@@ -128,16 +137,30 @@ ADD ./config/logstash.yml ${LOGSTASH_HOME}/config/logstash.yml
 
 
 # certs/keys for Beats and Lumberjack input
-RUN mkdir -p /etc/pki/tls/certs && mkdir /etc/pki/tls/private
+RUN mkdir -p /etc/pki/tls/certs \
+    && mkdir /etc/pki/tls/private
+   # && mkdir ${ES_CONFIG}/x-pack
 ADD ./logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 ADD ./logstash-beats.key /etc/pki/tls/private/logstash-beats.key
+ADD ./cryptography/certs/ca/ca.crt /etc/pki/tls/certs/ca.crt
+ADD ./cryptography/certs/ca/ca.crt ${X_PACK_ES}/ca.crt
+ADD ./cryptography/certs/ca/ca.key ${X_PACK_ES}/ca.key
+ADD ./cryptography/certs/elusive-1/elusive-1.crt /etc/pki/tls/certs/elusive-1.crt
+ADD ./cryptography/certs/elusive-1/elusive-1.crt ${X_PACK_ES}/elusive-1.crt
+ADD ./cryptography/certs/elusive-1/elusive-1.key ${X_PACK_ES}/elusive-1.key
+
+RUN chown -R elasticsearch:elasticsearch ${ES_CONFIG}
+# after adding xpack certificates and keys we need to change user from root to elasticsearch
+
+
+
 
 # filters
 ADD ./pipeline /etc/logstash/conf.d/
 
 # patterns
 ADD ./patterns ${LOGSTASH_HOME}/patterns/
-RUN chown -R logstash:logstash ${LOGSTASH_HOME}/patterns
+RUN chown -R logstash:logstash ${LOGSTASH_HOME}
 
 # Fix permissions
 RUN chmod -R +r /etc/logstash
@@ -154,6 +177,8 @@ RUN chmod 644 /etc/logrotate.d/elasticsearch \
 
 ### configure Kibana
 
+ADD ./cryptography/certs/kibana/k-key.pem /etc/pki/tls/private/kibana.key
+ADD ./cryptography/certs/kibana/k-cert.pem /etc/pki/tls/cert/kibana.crt
 ADD ./config/kibana.yml ${KIBANA_HOME}/config/kibana.yml
 
 

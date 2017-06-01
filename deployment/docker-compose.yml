@@ -9,12 +9,12 @@ services:
         -  "5044:5044"
       networks: 
         - elk
-    redis:
-      image: "redis:alpine"
-      ports:
-        - "6379:6379"
-      networks: 
-        - elk
+    # redis:
+    #   image: "redis:alpine"
+    #   ports:
+    #     - "6379:6379"
+    #   networks: 
+    #     - elk
     filebeat:
       build: "filebeat"
       networks: 

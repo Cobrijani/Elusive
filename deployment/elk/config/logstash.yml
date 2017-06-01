@@ -74,11 +74,11 @@ node.name: logstash-indexer
 # Periodically check if the configuration has changed and reload the pipeline
 # This can also be triggered manually through the SIGHUP signal
 #
-config.reload.automatic: true
+config.reload.automatic: false
 #
 # How often to check if the pipeline configuration has changed (in seconds)
 #
-config.reload.interval: 10
+#config.reload.interval: 10
 #
 # Show fully compiled configuration as debug log message
 # NOTE: --log.level must be 'debug'
@@ -152,7 +152,7 @@ config.reload.interval: 10
 #   * debug
 #   * trace
 #
-log.level: info
+log.level: warn
 # path.logs:
 #
 # ------------ Other Settings --------------

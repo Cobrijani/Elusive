@@ -14,13 +14,13 @@
 #
 # Use a descriptive name for your cluster:
 #
-#cluster.name: my-application
+cluster.name: elusive-cluster
 #
 # ------------------------------------ Node ------------------------------------
 #
 # Use a descriptive name for the node:
 #
-#node.name: node-1
+node.name: elusive-1
 #
 # Add custom attributes to the node:
 #
@@ -40,6 +40,9 @@
 #
 # Lock the memory on startup:
 #
+#Another option is to use mlockall on Linux/Unix systems, or VirtualLock on Windows,
+# to try to lock the process address space into RAM, preventing any Elasticsearch memory from being swapped out.
+# This can be done, by adding this line to the config/elasticsearch.yml file:
 #bootstrap.memory_lock: true
 #
 # Make sure that the heap size is set to about half the memory available
@@ -82,8 +85,27 @@ network.host: 0.0.0.0
 #
 # For more information, consult the gateway module documentation.
 #
-# ---------------------------------- Various -----------------------------------
+# ---------------------------------- Various -----------------------------------  
 #
 # Require explicit names when deleting indices:
 #
 #action.destructive_requires_name: true
+
+# ---------------------------------- X-pack -----------------------------------
+#action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*
+# xpack.security.authc.realms.pki1:
+#                   type: pki
+#                   truststore:
+#                     path: /etc/pki/tls/jks/test.jks
+#                     password: test
+
+### Logstash monitoring
+# xpack.monitoring.elasticsearch.username: logstash_system
+# xpack.monitoring.elasticsearch.password: changeme
+
+xpack.ssl.key: ./x-pack/elusive-1.key
+xpack.ssl.certificate: ./x-pack/elusive-1.crt
+xpack.ssl.certificate_authorities: ["./x-pack/ca.crt"]
+#xpack.security.audit.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.http.ssl.enabled: true

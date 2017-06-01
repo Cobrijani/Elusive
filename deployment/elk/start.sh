@@ -98,14 +98,15 @@ else
   fi
 
   counter=0
-  while [ ! "$(curl localhost:9200 2> /dev/null)" -a $counter -lt $ES_CONNECT_RETRY  ]; do
+  while [ ! "$(curl -k https://localhost:9200 2> /dev/null)" -a $counter -lt $ES_CONNECT_RETRY  ]; do
     sleep 1
     ((counter++))
     echo "waiting for Elasticsearch to be up ($counter/$ES_CONNECT_RETRY)"
   done
-  if [ ! "$(curl localhost:9200 2> /dev/null)" ]; then
+  if [ ! "$(curl -k https://localhost:9200 2> /dev/null)" ]; then
     echo "Couln't start Elasticsearch. Exiting."
     echo "Elasticsearch log follows below."
+    cat /var/log/elasticsearch/elusive-cluster.log # cluster name 
     cat /var/log/elasticsearch/elasticsearch.log
     exit 1
   fi
@@ -115,7 +116,7 @@ else
   while [ -z "$CLUSTER_NAME" -a $counter -lt 30 ]; do
     sleep 1
     ((counter++))
-    CLUSTER_NAME=$(curl localhost:9200/_cat/health?h=cluster 2> /dev/null | tr -d '[:space:]')
+    CLUSTER_NAME=$(curl -k --user elastic:changeme https://localhost:9200/_cat/health?h=cluster 2> /dev/null | tr -d '[:space:]')
     echo "Waiting for Elasticsearch cluster to respond ($counter/30)"
   done
   if [ -z "$CLUSTER_NAME" ]; then
@@ -180,6 +181,21 @@ if [ "$ELASTICSEARCH_START" -ne "1" ] && [ "$LOGSTASH_START" -ne "1" ] \
   exit 1
 fi
 
+#Add role that is configured for logstash indexer named logstash_writer
+curl -k \
+   --user elastic:changeme \
+   -X POST \
+   -H "Content-Type: application/json"\
+   -d "{ \"cluster\": [\"manage_index_templates\", \"monitor\"], \"indices\": [{ \"names\": [\"logstash-*\", \"filebeat-*\", \"winlogbeat-*\"], \"privileges\": [\"write\", \"delete\", \"create_index\"]}]}" \
+   https://localhost:9200/_xpack/security/role/logstash_writer
+
+# Add user with role logstash writer
+curl -k \
+   --user elastic:changeme \
+   -X POST \
+   -H "Content-Type: application/json"\
+   -d "{ \"password\" : \"changeme\",\"roles\" : [ \"logstash_writer\"],\"full_name\" : \"Internal Logstash User\"}"\
+   https://localhost:9200/_xpack/security/user/logstash_internal
+
 touch $OUTPUT_LOGFILES
-tail -f $OUTPUT_LOGFILES &
-wait
+tail -f $OUTPUT_LOGFILES & wait
