@@ -20,7 +20,7 @@ filebeat.prospectors:
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
     #- /var/log/*.log
-    - c:\WINDOWS\System32\LogFiles\Firewall\pfirewall.log\
+    - c:\WINDOWS\System32\LogFiles\Firewall\pfirewall.log
     # - /var/log/firewall/*.log
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are

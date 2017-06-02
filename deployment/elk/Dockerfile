@@ -86,8 +86,8 @@ RUN sed -i -e 's#^LS_HOME=$#LS_HOME='$LOGSTASH_HOME'#' /etc/init.d/logstash \
  && chmod +x /etc/init.d/logstash
 
 ### Install logstash plugins
-#RUN .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-grok \
-# && .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-date
+RUN .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-grok \
+ && .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-date
 
 ### install Kibana
 
@@ -115,8 +115,8 @@ ENV X_PACK_ES ${ES_CONFIG}/x-pack
 
 RUN .${ES_HOME}/bin/elasticsearch-plugin install --batch x-pack \
  && .${KIBANA_HOME}/bin/kibana-plugin install x-pack \
- && mkdir ${X_PACK_ES}
- #&& .${LOGSTASH_HOME}/bin/logstash-plugin install x-pack
+ && mkdir ${X_PACK_ES} \
+ && .${LOGSTASH_HOME}/bin/logstash-plugin install x-pack
 
 
 ###############################################################################
