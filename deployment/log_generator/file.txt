@@ -1,0 +1,74 @@
+83.149.9.216 - - [03/Jun/2017:12:28:36 +0000] "GET /presentations/logstash-monitorama-2013/plugin/zoom-js/zoom.js HTTP/1.1" 200 7697 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+81.220.24.207 - - [03/Jun/2017:12:28:37 +0000] "GET /reset.css HTTP/1.1" 200 1015 "http://www.semicomplete.com/blog/geekery/ssl-latency.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11"
+83.149.9.216 - - [03/Jun/2017:12:28:37 +0000] "GET /presentations/logstash-monitorama-2013/images/redis.png HTTP/1.1" 200 25230 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+200.49.190.101 - - [03/Jun/2017:12:28:38 +0000] "GET /images/jordan-80.png HTTP/1.1" 200 6146 "-" "QS304 Profile/MIDP-2.0 Configuration/CLDC-1.1"
+209.85.238.199 - - [03/Jun/2017:12:28:38 +0000] "GET /test.xml HTTP/1.1" 200 1370 "-" "Feedfetcher-Google; (+http://www.google.com/feedfetcher.html; 1 subscribers; feed-id=11390274670024826467)"
+74.125.40.20 - - [03/Jun/2017:12:28:39 +0000] "GET /?flav=rss20 HTTP/1.1" 200 29941 "-" "FeedBurner/1.0 (http://www.FeedBurner.com)"
+200.49.190.101 - - [03/Jun/2017:12:28:39 +0000] "GET /style2.css HTTP/1.1" 200 4877 "-" "-"
+66.249.73.135 - - [03/Jun/2017:12:28:40 +0000] "GET /blog/tags/firefox?flav=rss20 HTTP/1.1" 200 16021 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+83.149.9.216 - - [03/Jun/2017:12:28:40 +0000] "GET /presentations/logstash-monitorama-2013/images/kibana-dashboard3.png HTTP/1.1" 200 171717 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+200.49.190.101 - - [03/Jun/2017:12:28:41 +0000] "GET /reset.css HTTP/1.1" 200 1015 "-" "-"
+110.136.166.128 - - [03/Jun/2017:12:28:41 +0000] "GET /favicon.ico HTTP/1.1" 200 3638 "-" "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+2017-06-03 12:36:42 ALLOW ICMP 127.168.2.65 127.168.0.64 7 17 - Rst - 16 - - - 11 SEND
+2017-06-03 12:36:42 ALLOW ICMPv6 128.168.3.65 127.169.2.65 13 1 - - - 14 - - 7 - RECEIVE
+2017-06-03 12:36:43 ALLOW UDP 128.169.2.64 128.169.0.64 1 13 - Ack 10 0 - - - 17 RECEIVE
+2017-06-03 12:36:43 DROP ICMPv6 128.169.3.64 128.168.0.65 8 13 11 Syn 18 6 - - - 4 SEND
+2017-06-03 12:36:44 DROP ICMPv6 127.168.0.64 128.169.2.65 17 19 11 Ack 15 - - 4 0 6 SEND
+2017-06-03 12:36:44 DROP ICMP 127.168.1.65 127.169.0.65 2 4 14 Syn - 5 - - - - RECEIVE
+2017-06-03 12:36:45 ALLOW ICMPv6 128.169.2.64 127.169.2.65 17 4 - Urg 10 9 5 8 - 7 RECEIVE
+2017-06-03 12:36:45 REJECT UDP 127.169.0.64 127.169.0.65 10 0 - Urg 4 - - 5 18 - RECEIVE
+2017-06-03 12:36:46 DROP TCP 128.168.3.64 127.169.1.64 8 9 - Ack 13 16 13 - 10 19 SEND
+83.149.9.216 - - [03/Jun/2017:12:37:01 +0000] "GET /presentations/logstash-monitorama-2013/plugin/zoom-js/zoom.js HTTP/1.1" 200 7697 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+81.220.24.207 - - [03/Jun/2017:12:37:01 +0000] "GET /reset.css HTTP/1.1" 200 1015 "http://www.semicomplete.com/blog/geekery/ssl-latency.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11"
+83.149.9.216 - - [03/Jun/2017:12:37:02 +0000] "GET /presentations/logstash-monitorama-2013/images/redis.png HTTP/1.1" 200 25230 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+200.49.190.101 - - [03/Jun/2017:12:37:02 +0000] "GET /images/jordan-80.png HTTP/1.1" 200 6146 "-" "QS304 Profile/MIDP-2.0 Configuration/CLDC-1.1"
+209.85.238.199 - - [03/Jun/2017:12:37:03 +0000] "GET /test.xml HTTP/1.1" 200 1370 "-" "Feedfetcher-Google; (+http://www.google.com/feedfetcher.html; 1 subscribers; feed-id=11390274670024826467)"
+74.125.40.20 - - [03/Jun/2017:12:37:03 +0000] "GET /?flav=rss20 HTTP/1.1" 200 29941 "-" "FeedBurner/1.0 (http://www.FeedBurner.com)"
+200.49.190.101 - - [03/Jun/2017:12:37:04 +0000] "GET /style2.css HTTP/1.1" 200 4877 "-" "-"
+66.249.73.135 - - [03/Jun/2017:12:37:04 +0000] "GET /blog/tags/firefox?flav=rss20 HTTP/1.1" 200 16021 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+83.149.9.216 - - [03/Jun/2017:12:37:05 +0000] "GET /presentations/logstash-monitorama-2013/images/kibana-dashboard3.png HTTP/1.1" 200 171717 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+200.49.190.101 - - [03/Jun/2017:12:37:05 +0000] "GET /reset.css HTTP/1.1" 200 1015 "-" "-"
+110.136.166.128 - - [03/Jun/2017:12:37:06 +0000] "GET /favicon.ico HTTP/1.1" 200 3638 "-" "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+218.30.103.62 - - [03/Jun/2017:12:37:06 +0000] "GET /projects/xdotool/xdotool.xhtml HTTP/1.1" 304 - "-" "Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)"
+2017-06-03 12:37:12 ALLOW ICMP 127.168.2.65 127.168.0.64 7 17 - Rst - 16 - - - 11 SEND
+83.149.9.216 - - [03/Jun/2017:12:37:12 +0000] "GET /presentations/logstash-monitorama-2013/css/fonts/Roboto-Bold.ttf HTTP/1.1" 200 38720 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+218.30.103.62 - - [03/Jun/2017:12:37:13 +0000] "GET /projects/fex/ HTTP/1.1" 200 14352 "-" "Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)"
+2017-06-03 12:37:13 REJECT ICMPv6 127.169.2.64 128.169.3.65 1 12 17 Rst 14 - - 7 - 11 SEND
+2017-06-03 12:37:13 REJECT ICMPv6 128.168.3.65 127.168.0.65 3 16 - Rst 0 - - - 17 14 RECEIVE
+81.220.24.207 - - [03/Jun/2017:12:37:13 +0000] "GET /images/jordan-80.png HTTP/1.1" 200 6146 "http://www.semicomplete.com/blog/geekery/ssl-latency.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11"
+2017-06-03 12:37:14 REJECT ICMPv6 127.169.0.64 128.168.2.65 5 11 18 Psh 3 - - 19 3 - SEND
+200.49.190.101 - - [03/Jun/2017:12:37:14 +0000] "GET /style2.css HTTP/1.1" 200 4877 "-" "-"
+2017-06-03 12:37:14 ALLOW TCP 128.169.2.65 128.169.2.64 2 15 3 Syn - 4 0 6 - 13 SEND
+93.114.45.13 - - [03/Jun/2017:12:37:14 +0000] "GET /style2.css HTTP/1.1" 200 4877 "http://www.semicomplete.com/articles/dynamic-dns-with-dhcp/" "Mozilla/5.0 (X11; Linux x86_64; rv:25.0) Gecko/20100101 Firefox/25.0"
+2017-06-03 12:37:15 REJECT UDP 128.168.2.64 127.169.1.65 5 13 5 Rst - - - - - - RECEIVE
+83.149.9.216 - - [03/Jun/2017:12:37:15 +0000] "GET /presentations/logstash-monitorama-2013/plugin/highlight/highlight.js HTTP/1.1" 200 26185 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+2017-06-03 12:37:15 ALLOW ICMPv6 128.169.3.64 128.169.2.65 5 9 9 Psh 8 - 7 - 8 15 SEND
+110.136.166.128 - - [03/Jun/2017:12:37:15 +0000] "GET /favicon.ico HTTP/1.1" 200 3638 "-" "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+2017-06-03 12:37:16 REJECT TCP 128.169.0.64 128.169.0.64 18 11 - Fin - 3 - 10 16 15 SEND
+81.220.24.207 - - [03/Jun/2017:12:37:16 +0000] "GET /reset.css HTTP/1.1" 200 1015 "http://www.semicomplete.com/blog/geekery/ssl-latency.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11"
+2017-06-03 12:37:16 DROP UDP 127.168.1.65 127.169.1.65 5 13 - Syn 10 19 1 - 16 12 RECEIVE
+50.150.204.184 - - [03/Jun/2017:12:37:16 +0000] "GET /images/googledotcom.png HTTP/1.1" 200 65748 "http://www.google.com/search?q=https//:google.com&source=lnms&tbm=isch&sa=X&ei=4-r8UvDrKZOgkQe7x4CICw&ved=0CAkQ_AUoAA&biw=320&bih=441" "Mozilla/5.0 (Linux; U; Android 4.0.4; en-us; LG-MS770 Build/IMM76I) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30"
+83.149.9.216 - - [03/Jun/2017:12:37:17 +0000] "GET /presentations/logstash-monitorama-2013/images/sad-medic.png HTTP/1.1" 200 430406 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+2017-06-03 12:37:17 DROP TCP 128.169.2.64 128.168.0.64 1 17 - Syn 4 - 12 15 - 13 RECEIVE
+83.149.9.216 - - [03/Jun/2017:12:37:17 +0000] "GET /presentations/logstash-monitorama-2013/images/simple-inputs-filters-outputs.jpg HTTP/1.1" 200 1168622 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+2017-06-03 12:37:17 DROP ICMPv6 127.168.3.64 127.169.3.64 8 9 - Fin - 10 15 6 1 10 SEND
+200.49.190.101 - - [03/Jun/2017:12:37:18 +0000] "GET /reset.css HTTP/1.1" 200 1015 "-" "-"
+2017-06-03 12:37:18 REJECT TCP 128.169.3.65 128.168.3.64 5 8 - Ack 12 8 18 7 - 6 SEND
+110.136.166.128 - - [03/Jun/2017:12:37:18 +0000] "GET /reset.css HTTP/1.1" 200 1015 "http://www.semicomplete.com/projects/xdotool/" "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+2017-06-03 12:37:18 REJECT TCP 127.168.2.64 127.168.3.65 8 8 - Urg - 2 - - - 9 RECEIVE
+74.125.40.20 - - [03/Jun/2017:12:37:19 +0000] "GET /?flav=rss20 HTTP/1.1" 200 29941 "-" "FeedBurner/1.0 (http://www.FeedBurner.com)"
+2017-06-03 12:37:19 DROP UDP 128.168.3.64 127.168.2.64 10 10 - Fin - - - 17 14 19 RECEIVE
+93.114.45.13 - - [03/Jun/2017:12:37:19 +0000] "GET /reset.css HTTP/1.1" 200 1015 "http://www.semicomplete.com/articles/dynamic-dns-with-dhcp/" "Mozilla/5.0 (X11; Linux x86_64; rv:25.0) Gecko/20100101 Firefox/25.0"
+2017-06-03 12:37:19 DROP TCP 128.168.0.64 128.168.0.64 10 13 - Psh 19 8 - - 3 5 SEND
+66.249.73.185 - - [03/Jun/2017:12:37:20 +0000] "GET /doc/index.html?org/elasticsearch/action/search/SearchResponse.html HTTP/1.1" 404 294 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+2017-06-03 12:37:20 DROP ICMP 128.169.3.65 128.168.3.65 0 16 - Psh - - - 10 - 7 RECEIVE
+50.16.19.13 - - [03/Jun/2017:12:37:20 +0000] "GET /blog/tags/puppet?flav=rss20 HTTP/1.1" 200 14872 "http://www.semicomplete.com/blog/tags/puppet?flav=rss20" "Tiny Tiny RSS/1.11 (http://tt-rss.org/)"
+2017-06-03 12:37:20 DROP TCP 127.168.1.64 127.168.3.64 0 11 - - 1 16 2 - 8 19 RECEIVE
+71.212.224.97 - - [03/Jun/2017:12:37:21 +0000] "GET /projects/xdotool/ HTTP/1.1" 200 12292 "http://suckless.org/rocks" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36"
+2017-06-03 12:37:21 DROP ICMPv6 127.169.2.65 128.169.3.64 7 18 8 Urg 7 11 - 0 5 - RECEIVE
+81.220.24.207 - - [03/Jun/2017:12:37:21 +0000] "GET /favicon.ico HTTP/1.1" 200 3638 "http://www.semicomplete.com/blog/geekery/ssl-latency.html" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11"
+2017-06-03 12:37:21 DROP TCP 127.169.0.64 127.168.1.64 3 10 - Urg - - 12 - - - RECEIVE
+110.136.166.128 - - [03/Jun/2017:12:37:22 +0000] "GET /style2.css HTTP/1.1" 200 4877 "http://www.semicomplete.com/projects/xdotool/" "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+2017-06-03 12:37:22 REJECT ICMPv6 127.168.3.65 127.168.2.64 8 12 - Syn 11 - - 7 - - RECEIVE
+83.149.9.216 - - [03/Jun/2017:12:37:22 +0000] "GET /presentations/logstash-monitorama-2013/images/kibana-dashboard.png HTTP/1.1" 200 321631 "http://semicomplete.com/presentations/logstash-monitorama-2013/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"
+2017-06-03 12:37:22 ALLOW UDP 127.168.3.64 128.168.2.64 0 1 - Syn - - 13 - 4 17 RECEIVE
