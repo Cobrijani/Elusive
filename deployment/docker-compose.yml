@@ -1,15 +1,42 @@
 version: '3'
 
 services:
-    elk:
-      build: "elk"
-      #image: 'cobrijani/elusive:latest_elk'
+    es:
+      build: "elasticsearch"
       ports:
-        -  "5601:5601"
-        -  "9200:9200" 
-        -  "5044:5044"
+        - "9200:9200"
+      networks:
+        - "elk"
+      volumes:
+        - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    kibana:
+      build: "kibana"
+      ports: 
+        - "5601:5601"
+      networks:
+        - "elk"
+      volumes:
+        - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    logstash:
+      build: "logstash"
+      ports:
+        - "5044:5044"
       networks: 
-        - elk
+        - "elk"
+      volumes:
+        - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+        - ./logstash/pipeline/:/usr/share/logstash/pipeline/
+        - ./logstash/patterns/:/usr/share/logstash/patterns/
+
+    # elk:
+    #   build: "elk"
+    #   #image: 'cobrijani/elusive:latest_elk'
+    #   ports:
+    #     -  "5601:5601"
+    #     -  "9200:9200" 
+    #     -  "5044:5044"
+    #   networks: 
+    #     - elk
     # redis:
     #   image: "redis:alpine"
     #   ports:

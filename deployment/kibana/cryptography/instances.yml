@@ -2,6 +2,5 @@ instances:
   - name: "elusive-1"
     dns:
       - "localhost"
-      - "es"
     ip:
       - "127.0.0.1"
