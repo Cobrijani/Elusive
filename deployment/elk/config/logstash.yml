@@ -159,3 +159,8 @@ log.level: warn
 #
 # Where to find custom plugins
 # path.plugins: []
+
+xpack.monitoring.elasticsearch.url: "https://localhost:9200"
+xpack.monitoring.elasticsearch.username: logstash_system
+xpack.monitoring.elasticsearch.password: changeme
+xpack.monitoring.elasticsearch.ssl.ca: /etc/pki/tls/certs/ca.crt  
