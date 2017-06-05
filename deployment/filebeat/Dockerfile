@@ -1,5 +1,6 @@
 FROM phusion/baseimage
-MAINTAINER Stefan Bratic
+LABEL maintainer "Stefan Bratic <cobrijani@gmail.com>"
+
 ENV REFRESHED_AT 2017-05-23
 
 
@@ -7,7 +8,9 @@ ENV REFRESHED_AT 2017-05-23
 #                                INSTALLATION
 ###############################################################################
 
-ENV FILEBEAT_VERSION 5.4.0
+ENV FILEBEAT_VERSION 5.4.1
+ENV BEAT_NAME GENERIC_BEAT
+
 
 RUN apt-get update -qq \
  && apt-get install -qqy curl \
@@ -16,7 +19,6 @@ RUN apt-get update -qq \
 RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT_VERSION}-amd64.deb \
  && dpkg -i filebeat-${FILEBEAT_VERSION}-amd64.deb \
  && rm filebeat-${FILEBEAT_VERSION}-amd64.deb
-
 
 ###############################################################################
 #                                CONFIGURATION
@@ -36,7 +38,6 @@ ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 
 ADD wait.sh /wait.sh
 RUN chmod +x /wait.sh
-
 ADD start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 CMD [ "/usr/local/bin/start.sh" ]

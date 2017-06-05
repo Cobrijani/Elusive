@@ -27,27 +27,29 @@ services:
         - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
         - ./logstash/pipeline/:/usr/share/logstash/pipeline/
         - ./logstash/patterns/:/usr/share/logstash/patterns/
+    apachebeat:
+      build: "filebeat"
+      networks:
+        - elk
+      volumes:
+        - ./../test_logs/apache/:/var/log/apache
+      environment:
+        - BEAT_NAME=apache-beat
+    firebeat:
+      build: "filebeat"
+      networks:
+       - elk
+      volumes:
+       - ./../test_logs/firewall/:/var/log/firewall
+      environment:
+       - BEAT_NAME=fire-beat
+    
 
-    # elk:
-    #   build: "elk"
-    #   #image: 'cobrijani/elusive:latest_elk'
-    #   ports:
-    #     -  "5601:5601"
-    #     -  "9200:9200" 
-    #     -  "5044:5044"
-    #   networks: 
-    #     - elk
     # redis:
     #   image: "redis:alpine"
     #   ports:
     #     - "6379:6379"
     #   networks: 
-    #     - elk
-    # filebeat:
-    #   build: "filebeat"
-    #   networks: 
-    #     - elk
-    #   depends_on: 
     #     - elk
 
 networks: 
