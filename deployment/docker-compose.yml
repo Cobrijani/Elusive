@@ -44,6 +44,14 @@ services:
        - ./../test_logs/firewall/:/var/log/firewall
       environment:
        - BEAT_NAME=fire-beat
+    appbeat:
+      build: "filebeat"
+      networks:
+       - elk
+      volumes:
+       - ./../test_logs/application/:/var/log/application
+      environment:
+       - BEAT_NAME=app-beat
     
 
     # redis:
