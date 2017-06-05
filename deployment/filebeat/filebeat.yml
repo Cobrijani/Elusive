@@ -112,7 +112,9 @@ filebeat.prospectors:
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - /var/log/*.log
+    - /var/log/firewall/*.log
+    - /var/log/apache/*.log
+
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
@@ -154,11 +156,11 @@ filebeat.prospectors:
 
 # The name of the shipper that publishes the network data. It can be used to group
 # all the transactions sent by a single shipper in the web interface.
-name: "linux-logs-agent"
+name: ${BEAT_NAME:test}
 
 # The tags of the shipper are included in their own field with each
 # transaction published.
-tags: ["linux-logs-agent"]
+#tags: []
 
 # Optional fields that you can specify to add additional information to the
 # output.
@@ -183,7 +185,7 @@ tags: ["linux-logs-agent"]
 #----------------------------- Logstash output --------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["elk:5044"]
+  hosts: ["logstash:5044"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications

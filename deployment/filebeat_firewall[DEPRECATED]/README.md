@@ -1,4 +1,6 @@
-# Firewall filebeat scripts and configuration folder
+# Firewall filebeat scripts and configuration folder [DEPRECATED]
+
+Folder filebeat contains configuration that is needed to process firewall logs
 
 - "__install.ps1__" is script that downloads latest filebeat and installs it on local windows machine with preffered install location from [filebeat reference documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html)
 
@@ -33,3 +35,4 @@
 19. After this Kibana will show all successfull and unsuccessfull firewall logs
 20. We specify rule to block outbound on ports 5678-5680
 21. If you want to fire this event go to: https://www.google.rs:5678/ 
+
