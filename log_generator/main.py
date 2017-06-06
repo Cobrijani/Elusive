@@ -16,6 +16,9 @@ if __name__ == '__main__':
         file_apache = sys.argv[2]
         file_app = sys.argv[3]
 
+    print("Generator started")
+    print("Output locations {}", [file_apache, file_app, file_firewall])
+
     lg = LogGenerator()
     lg.add_generator(FirewallGenerator(file_firewall, 0.5))
     lg.add_generator(ApacheGenerator(file_apache, 0.5))
