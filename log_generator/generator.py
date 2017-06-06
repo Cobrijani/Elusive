@@ -21,6 +21,7 @@ class Generator:
     def generate(self):
         with open(self.file_path, 'a') as f:
             log = self.generate_log_row()
+            print log
             f.write(log + '\n')
         print("Writing content to file: {}".format(self.file_path))
         threading.Timer(self.waiting, self.generate).start()
