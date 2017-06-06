@@ -1,6 +1,4 @@
-WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - 
-Failed to invoke @ExceptionHandler method: protected org.springframework.http.ResponseEntity<?>     com.sgb.AbstractBaseController.handle(com.sgb.panic.CustomSgbException,org.springframework.web.context.request.WebRequest)
-java.lang.NullPointerException: null
+WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Failed to invoke @ExceptionHandler method: protected org.springframework.http.ResponseEntity<?>     com.sgb.AbstractBaseController.handle(com.sgb.panic.CustomSgbException,org.springframework.web.context.request.WebRequest) java.lang.NullPointerException: null
     at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:156)
     at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:128)
     at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:97)
