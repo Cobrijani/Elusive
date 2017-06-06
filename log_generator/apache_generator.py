@@ -16,7 +16,7 @@ class ApacheGenerator(Generator):
 
     def generate_log_row(self):
         log = random.choice(self.logs)
-        log = log[:-1]
+        log = log.strip()
         new_log = ""
         new_log += log.split('[')[0]
         new_log += datetime.now().strftime('[%d/%b/%Y:%H:%M:%S +0000]')

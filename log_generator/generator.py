@@ -21,6 +21,7 @@ class Generator:
         threading.Timer(self.waiting, self.generate).start()
         with open(self.file_path, 'a') as f:
             log = self.generate_log_row()
+            print log
             f.write(log + '\n')
 
     def generate_log_row(self):
