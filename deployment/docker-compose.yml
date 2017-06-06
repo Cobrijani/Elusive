@@ -5,6 +5,7 @@ services:
       build: "elasticsearch"
       ports:
         - "9200:9200"
+        - "9300:9300"
       networks:
         - "elk"
       volumes:
@@ -43,6 +44,14 @@ services:
        - ./../test_logs/firewall/:/var/log/firewall
       environment:
        - BEAT_NAME=fire-beat
+    appbeat:
+      build: "filebeat"
+      networks:
+       - elk
+      volumes:
+       - ./../test_logs/application/:/var/log/application
+      environment:
+       - BEAT_NAME=app-beat
     
 
     # redis:
