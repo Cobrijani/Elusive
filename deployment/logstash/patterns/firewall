@@ -1,6 +1,6 @@
 ACTION [ALLOW|DROP|REJECT]+
 PROTOCOL [TCP|UDP|ICMP|ICMPv6]+
-FLAG [NUMBER|-]
 PATH [SEND|RECIEVE]+
 MY_TIMESTAMP %{YEAR:year}-%{MONTHNUM:month}-%{MONTHDAY:monthday}\s*%{TIME:time}
-TCP_FLAG [Ack|Fin|Psh|Rst|Syn|Urg|-]
+TCP_FLAG [Ack|Fin|Psh|Rst|Syn|Urg|-]+
+FLAG (:?(\b(?:[1-9][0-9]*)\b)|-)
