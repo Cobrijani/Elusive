@@ -4,11 +4,13 @@ from app_generator import AppGenerator
 from generator import LogGenerator
 import sys
 
+log_out = './../test_logs'
+
 if __name__ == '__main__':
     if len(sys.argv) == 1:
-        file_firewall = 'file_firewall.txt'
-        file_apache = 'file_apache.txt'
-        file_app = 'file_app.txt'
+        file_firewall = log_out + '/firewall/firewall.log'
+        file_apache = log_out + '/apache/apache.log'
+        file_app = log_out + '/application/app.log'
     else:
         file_firewall = sys.argv[1]
         file_apache = sys.argv[2]

@@ -47,3 +47,29 @@
 2017-06-05 23:39:44 INFO r.a.u.f.c.UserJWTController:70 - User bob succesfully logged in with authorities: [CUSTOMER].
 2017-06-05 23:39:45 INFO r.a.u.f.c.UserJWTController:70 - User marko succesfully logged in with authorities: [CUSTOMER].
 2017-06-05 23:39:45 INFO r.a.u.f.c.UserJWTController:72 - User pera failed to log in.
+2017-06-06 12:12:26 INFO r.a.u.f.c.UserJWTController:70 - User pera succesfully logged in with authorities: [ROLE_ADMIN].
+2017-06-06 12:12:26 INFO r.a.u.f.c.UserJWTController:70 - User admin succesfully logged in with authorities: [ROLE_ADMIN].
+2017-06-06 12:12:27 INFO r.a.u.f.c.UserJWTController:72 - User marko failed to log in.
+2017-06-06 12:12:27 INFO r.a.u.f.c.UserJWTController:72 - User pera failed to log in.
+2017-06-06 12:12:28 INFO r.a.u.f.c.UserJWTController:72 - User marko failed to log in.
+2017-06-06 12:12:28 INFO r.a.u.f.c.UserJWTController:72 - User marko failed to log in.
+2017-06-06 12:12:29 INFO r.a.u.f.c.UserJWTController:70 - User bob succesfully logged in with authorities: [COMPANY_ADVERTISER].
+2017-06-06 12:12:29 INFO r.a.u.f.c.UserJWTController:72 - User marko failed to log in.
+2017-06-06 12:12:30 INFO r.a.u.f.c.UserJWTController:72 - User pera failed to log in.
+2017-06-06 12:12:30 INFO r.a.u.f.c.UserJWTController:72 - User bob failed to log in.
+2017-06-06 12:12:31 INFO r.a.u.f.c.UserJWTController:72 - User bob failed to log in.
+2017-06-06 12:12:31 INFO r.a.u.f.c.UserJWTController:70 - User bob succesfully logged in with authorities: [VERIFIER].
+2017-06-06 12:12:32 INFO r.a.u.f.c.UserJWTController:70 - User admin succesfully logged in with authorities: [COMPANY_ADVERTISER].
+2017-06-06 12:12:32 INFO r.a.u.f.c.UserJWTController:70 - User pera succesfully logged in with authorities: [PRIVATE_ADVERTISER].
+2017-06-06 12:12:33 INFO r.a.u.f.c.UserJWTController:70 - User pera succesfully logged in with authorities: [PRIVATE_ADVERTISER].
+2017-06-06 12:12:33 INFO r.a.u.f.c.UserJWTController:70 - User marko succesfully logged in with authorities: [COMPANY_ADVERTISER].
+2017-06-06 12:12:34 INFO r.a.u.f.c.UserJWTController:70 - User admin succesfully logged in with authorities: [ROLE_ADMIN].
+2017-06-06 12:12:34 INFO r.a.u.f.c.UserJWTController:72 - User marko failed to log in.
+2017-06-06 12:12:35 INFO r.a.u.f.c.UserJWTController:70 - User bob succesfully logged in with authorities: [COMPANY_ADVERTISER].
+2017-06-06 12:12:35 INFO r.a.u.f.c.UserJWTController:70 - User admin succesfully logged in with authorities: [VERIFIER].
+2017-06-06 12:12:36 INFO r.a.u.f.c.UserJWTController:70 - User admin succesfully logged in with authorities: [COMPANY_ADVERTISER].
+2017-06-06 12:12:36 INFO r.a.u.f.c.UserJWTController:70 - User bob succesfully logged in with authorities: [COMPANY_ADVERTISER].
+2017-06-06 12:12:37 INFO r.a.u.f.c.UserJWTController:72 - User marko failed to log in.
+2017-06-06 12:12:37 INFO r.a.u.f.c.UserJWTController:72 - User marko failed to log in.
+2017-06-06 12:12:38 INFO r.a.u.f.c.UserJWTController:70 - User marko succesfully logged in with authorities: [COMPANY_ADVERTISER].
+2017-06-06 12:12:38 INFO r.a.u.f.c.UserJWTController:72 - User admin failed to log in.
