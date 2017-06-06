@@ -1,6 +1,5 @@
-# Created by https://www.gitignore.io/api/osx,linux,windows,visualstudiocode
 
-# Created by https://www.gitignore.io/api/python
+/test_logs/*/*.log
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
