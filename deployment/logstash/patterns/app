@@ -1,2 +1,2 @@
 MY_TIMESTAMP %{YEAR:year}-%{MONTHNUM:month}-%{MONTHDAY:monthday}\s*%{TIME:time}
-JAVA_CLASS (?:[a-zA-Z0-9-\[\]]+\.)+[A-Za-z0-9$]+
+JAVA_CLASS (?:[a-zA-Z0-9-\[\]\/]+\.)+[A-Za-z0-9$]+
