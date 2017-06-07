@@ -12,22 +12,23 @@ services:
         - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     kibana:
       build: "kibana"
-      ports: 
+      ports:
         - "5601:5601"
       networks:
         - "elk"
       volumes:
-        - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+        - ./kibana/kibana.yml:/opt/kibana/config/kibana.yml
     logstash:
       build: "logstash"
       ports:
         - "5044:5044"
-      networks: 
+        - "9600:9600"
+      networks:
         - "elk"
       volumes:
-        - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-        - ./logstash/pipeline/:/usr/share/logstash/pipeline/
-        - ./logstash/patterns/:/usr/share/logstash/patterns/
+        - ./logstash/logstash.yml:/opt/logstash/config/logstash.yml
+        - ./logstash/pipeline/:/etc/logstash/conf.d/
+        - ./logstash/patterns/:/opt/logstash/patterns/
     apachebeat:
       build: "filebeat"
       networks:
@@ -36,6 +37,7 @@ services:
         - ./../test_logs/apache/:/var/log/apache
       environment:
         - BEAT_NAME=apache-beat
+        - INDEX_NAME=apachebeat
     firebeat:
       build: "filebeat"
       networks:
@@ -44,6 +46,7 @@ services:
        - ./../test_logs/firewall/:/var/log/firewall
       environment:
        - BEAT_NAME=fire-beat
+       - INDEX_NAME=firebeat
     appbeat:
       build: "filebeat"
       networks:
@@ -52,17 +55,17 @@ services:
        - ./../test_logs/application/:/var/log/application
       environment:
        - BEAT_NAME=app-beat
-    
+       - INDEX_NAME=appbeat
+
 
     # redis:
     #   image: "redis:alpine"
     #   ports:
     #     - "6379:6379"
-    #   networks: 
+    #   networks:
     #     - elk
 
-networks: 
+networks:
   elk:
     driver: bridge
 
-  

@@ -134,7 +134,7 @@ config.reload.automatic: true
 #
 # Bind address for the metrics REST endpoint
 #
- 
+
 #http.host: "es"
 #
 # Bind port for the metrics REST endpoint, this option also accept a range
@@ -163,4 +163,4 @@ log.level: warn
 xpack.monitoring.elasticsearch.url: "https://es:9200"
 xpack.monitoring.elasticsearch.username: logstash_system
 xpack.monitoring.elasticsearch.password: changeme
-xpack.monitoring.elasticsearch.ssl.ca: /etc/pki/tls/certs/ca.crt  
+xpack.monitoring.elasticsearch.ssl.ca: /etc/pki/tls/certs/ca.crt

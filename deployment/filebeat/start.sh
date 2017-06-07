@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ./wait.sh -t 300 -h es -p 9200 #wait for elasticsearch
-
+./wait.sh -t 15 -h logstash -p 5044 # wait for logstash
 
 #Add role that is configured for logstash indexer named logstash_writer
 curl -k \
@@ -24,7 +24,7 @@ curl -k \
  -X PUT \
  'https://es:9200/_template/filebeat?pretty' \
  -d@/etc/filebeat/filebeat.template.json
-./wait.sh -t 15 -h logstash -p 5044 # wait for logstash
+
 /etc/init.d/filebeat start -e
 
 mkdir /var/log/filebeat
