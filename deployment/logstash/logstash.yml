@@ -152,7 +152,7 @@ config.reload.automatic: true
 #   * debug
 #   * trace
 #
-log.level: warn
+log.level: info
 #path.logs: /var/log/logstash
 #
 # ------------ Other Settings --------------

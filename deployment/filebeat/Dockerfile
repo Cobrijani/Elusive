@@ -32,6 +32,9 @@ RUN chmod 644 /etc/filebeat/filebeat.yml
 RUN mkdir -p /etc/pki/tls/certs
 ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 
+# ADD Template
+ADD filebeat.template.json /usr/share/filebeat/filebeat.template.json
+
 ###############################################################################
 #                                    START
 ###############################################################################

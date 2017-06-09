@@ -21,3 +21,13 @@ curl -k \
  -X PUT \
  'https://localhost:9200/_template/filebeat?pretty' \
  -d@/etc/filebeat/filebeat.template.json
+
+
+./../scripts/import_dashboards.exe \
+ -es https://localhost:9200 \
+ -cacert ./filebeat/cryptography/certs/ca/ca.crt \
+ -insecure \
+ -user elastic \
+ -pass changeme \
+ -file ./../resources/beats-dashboards-5.4.1.zip
+
