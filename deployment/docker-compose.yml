@@ -2,7 +2,8 @@ version: '3'
 
 services:
     es:
-      build: "elasticsearch"
+      image: "cobrijani/elusive:latest_es"
+      #build: "elasticsearch"
       ports:
         - "9200:9200"
         - "9300:9300"
@@ -11,7 +12,8 @@ services:
       volumes:
         - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     kibana:
-      build: "kibana"
+      image: "cobrijani/elusive:latest_kibana"
+      #build: "kibana"
       ports:
         - "5601:5601"
       networks:
@@ -19,10 +21,10 @@ services:
       volumes:
         - ./kibana/kibana.yml:/opt/kibana/config/kibana.yml
     logstash:
-      build: "logstash"
+      image: "cobrijani/elusive:latest_logstash"
+      #build: "logstash"
       ports:
         - "5044:5044"
-        - "9600:9600"
       networks:
         - "elk"
       volumes:
@@ -56,15 +58,6 @@ services:
       environment:
        - BEAT_NAME=app-beat
        - INDEX_NAME=appbeat
-
-
-    # redis:
-    #   image: "redis:alpine"
-    #   ports:
-    #     - "6379:6379"
-    #   networks:
-    #     - elk
-
 networks:
   elk:
     driver: bridge
