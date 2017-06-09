@@ -7,7 +7,7 @@ class AppGenerator(Generator):
         Generator.__init__(self, file_path, waiting)
         self.authorities_reg=["ROLE_ADMIN", "ROLE_COMPANY_ADVERTISER", "ROLE_PRIVATE_ADVERTISER", "ROLE_USER", "ROLE_VERIFIER"]
         self.authorities=["ROLE_ADMIN", "ROLE_COMPANY_ADVERTISER", "ROLE_PRIVATE_ADVERTISER", "ROLE_USER", "ROLE_VERIFIER", "ROLE_ANONYMOUS"]
-        self.usernames = ["pera", "marko", "bob", "admin"]
+        self.usernames = ['marko', 'pera', 'sima', 'admin', 'mika', 'zika', 'misa', 'joca', 'miki', 'ika']
         self.entities = ["Company", "PrivateAdvert", "CompanyAdvert"]
         self.adverts = ["PrivateAdvert", "CompanyAdvert"]
         with open('app_error_stacktrace.txt', 'r') as content_file:
