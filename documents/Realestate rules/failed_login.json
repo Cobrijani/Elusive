@@ -1,0 +1,65 @@
+{
+    "trigger": {
+        "schedule": {
+            "interval": "1m"
+        }
+    },
+    "input": {
+        "search": {
+            "request": {
+                "body": {
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "match_phrase": {
+                                        "action": "LOGGING"
+                                    }
+                                },
+                                {
+                                    "match_phrase": {
+                                        "logmessage": "failed to log in."
+                                    }
+                                }
+                            ],
+                            "filter": [{
+                                "range": {
+                                    "@timestamp": {
+                                        "gte": "now-30m"
+                                    }
+                                }
+                            }]
+                        }
+                    },
+                    "aggs": {
+                        "group_by_username": {
+                            "terms": {
+                                "field": "username",
+                                "size": 5
+                            }
+                        }
+                    }
+                },
+                "indices": [
+                    "appbeat-*"
+                ]
+            }
+        }
+    },
+    "condition": {
+        "array_compare": {
+            "ctx.payload.aggregations.group_by_username.buckets.doc_count": {
+                "gte": {
+                    "value": 5
+                }
+            }
+        }
+    },
+    "actions": {
+        "my-logging-action": {
+            "logging": {
+                "text": "User failed to log in {{ctx.payload.aggregations.group_by_username.buckets.doc_count}} times."
+            }
+        }
+    }
+}

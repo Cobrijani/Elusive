@@ -22,13 +22,15 @@ class AppGenerator(Generator):
         return random.choice(self.usernames)+str(random.randrange(1, 5))
 
     def create_logging_log(self):
+        username = self.get_username()
         if random.randrange(0, 2):
-            return "INFO r.a.u.f.c.UserJWTController:70 - User " + self.get_username() + " succesfully logged in with authorities: [" + random.choice(self.authorities_reg) + "]."
+            return "INFO r.a.u.f.c.UserJWTController:70 LOGGING "+username+" - User "+username+" succesfully logged in with authority " + random.choice(self.authorities_reg) + "."
         else:
-            return "WARN r.a.u.f.c.UserJWTController:72 - User " + self.get_username() + " failed to log in."
+            return "WARN r.a.u.f.c.UserJWTController:72 LOGGING "+username+" - User "+username+" failed to log in."
 
     def create_registration_log(self):
-        return "INFO r.a.u.f.c.UserController:97 - New user "+self.get_username()+" has been registered as "+ random.choice(self.authorities_reg) +"."
+        username = self.get_username()
+        return "INFO r.a.u.f.c.UserController:97 REGISTRATION "+username+" - New user "+username+" has been registered as "+ random.choice(self.authorities_reg) +"."
     
     def create_not_found_exception_log(self):
         entity = random.choice(self.entities)
@@ -39,13 +41,16 @@ class AppGenerator(Generator):
         return "ERROR r.a.u.f.c."+entity+"Controller:"+str(random.randrange(20, 2000))+" - "+random.choice(self.stack_traces)
     
     def get_create_advert_log(self):
-        return "INFO r.a.u.f.c."+random.choice(self.adverts)+"Controller:210 - User "+self.get_username()+" created an advert with id: "+self.generate_id()+" for realestate with id: "+self.generate_id()+"."
+        username = self.get_username()
+        return "INFO r.a.u.f.c."+random.choice(self.adverts)+"Controller:210 CREATING_ADVERT "+username+" - User "+username+" created an advert with id: "+self.generate_id()+" for realestate with id: "+self.generate_id()+"."
 
     def create_report_log(self):
-        return "INFO r.a.u.f.c.ReportController:610 - User " + self.get_username() + " created a report for an advert with id: "+self.generate_id()+"."
+        username = self.get_username()
+        return "INFO r.a.u.f.c.ReportController:610 CREATING_REPORT "+username+" - User " + username + " created a report for an advert with id: "+self.generate_id()+"."
     
     def create_edit_profile_log(self):
-        return "INFO r.a.u.f.c.UserController:200 - User "+self.get_username()+" has edited his profile."
+        username = self.get_username()
+        return "INFO r.a.u.f.c.UserController:200 EDITING_PROFILE "+username+" - User "+username+" has edited his profile."
 
     def generate_log_row(self):
         possible_logs = [self.create_logging_log, self.create_registration_log, self.create_not_found_exception_log, self.create_error_log, self.get_create_advert_log, self.create_report_log]
