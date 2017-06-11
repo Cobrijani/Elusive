@@ -115,6 +115,7 @@ filebeat.prospectors:
     - /var/log/firewall/*.log
     - /var/log/apache/*.log
     - /var/log/application/*.log
+    - /var/log/linux/*.log
 
     #- c:\programdata\elasticsearch\logs\*
 

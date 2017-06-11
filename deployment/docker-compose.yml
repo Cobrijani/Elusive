@@ -58,6 +58,15 @@ services:
       environment:
        - BEAT_NAME=app-beat
        - INDEX_NAME=appbeat
+    linuxbeat:
+      build: "filebeat"
+      networks:
+       - elk
+      volumes:
+       - ./../test_logs/linux/:/var/log/linux
+      environment:
+       - BEAT_NAME=linux-beat
+       - INDEX_NAME=linuxbeat
 networks:
   elk:
     driver: bridge
