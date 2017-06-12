@@ -19,6 +19,6 @@ class ApacheGenerator(Generator):
         log = log.strip()
         new_log = ""
         new_log += log.split('[')[0]
-        new_log += datetime.now().strftime('[%d/%b/%Y:%H:%M:%S +0000]')
+        new_log += datetime.now().strftime('[%d/%b/%Y:%H:%M:%S +0200]')
         new_log += log.split(']')[1]
         return new_log
