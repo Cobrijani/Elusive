@@ -8,7 +8,6 @@
     "search": {
       "request": {
         "body": {
-          "size": 0,
           "query": {
             "bool": {
               "must": [{

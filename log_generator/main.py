@@ -18,6 +18,7 @@ if __name__ == '__main__':
         file_firewall = sys.argv[1]
         file_apache = sys.argv[2]
         file_app = sys.argv[3]
+        file_linux = sys.argv[4]
 
     output_files = [file_apache, file_app, file_firewall, file_linux]
     print("Generator started")
@@ -28,6 +29,7 @@ if __name__ == '__main__':
     lg.add_generator(ApacheGenerator(file_apache))
     lg.add_generator(AppGenerator(file_app))
     lg.add_generator(LinuxGenerator(file_linux))
+
     try:
       lg.generate()
     except KeyboardInterrupt:

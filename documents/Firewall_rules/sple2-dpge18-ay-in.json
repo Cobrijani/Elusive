@@ -12,12 +12,26 @@
             "bool": {
               "must": [{
                   "match": {
-                    "action": "REJECT"
+                    "path": "RECEIVE"
                   }
                 },
                 {
                   "match": {
-                    "path": "RECEIVE"
+                    "tcpflags": "Ack"
+                  }
+                },
+                {
+                  "range": {
+                    "dst-port": {
+                      "gte": 18
+                    }
+                  }
+                },
+                {
+                  "range": {
+                    "src-port": {
+                      "lte": 2
+                    }
                   }
                 }
               ],
@@ -30,15 +44,7 @@
               }]
             }
           },
-          "aggs": {
-            "group_by_src_ip": {
-              "terms": {
-                "field": "src-ip.keyword",
-                "size": 100
-              }
-            }
-          },
-          "_source": ["src-ip", "src-ip.keyword"]
+          "_source": ["path", "tcpflags", "src-port", "dst-port"]
         },
         "indices": [
           "firebeat-*"
@@ -47,19 +53,16 @@
     }
   },
   "condition": {
-    "array_compare": {
-      "ctx.payload.aggregations.group_by_src_ip.buckets": {
-        "path": "doc_count",
-        "gte": {
-          "value": 100
-        }
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 1
       }
     }
   },
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "There are more than 100 (exactly: \n {{ctx.payload.aggregations.group_by_src_ip.buckets}} REJECTS FROM IP ADDRESSES \n {{ctx.payload.aggregations.group_by_src_ip.buckets}}"
+        "text": "[WARNING!] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port<=2|dst-port=>18|Ack|RECEIVE]"
       }
     }
   }
