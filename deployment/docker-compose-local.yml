@@ -18,16 +18,34 @@ services:
         - "elk"
       volumes:
         - ./kibana/kibana.yml:/opt/kibana/config/kibana.yml
-    logstash:
+    logstash_shipper:
       build: "logstash"
       ports:
         - "5044:5044"
       networks:
         - "elk"
       volumes:
-        - ./logstash/logstash.yml:/opt/logstash/config/logstash.yml
-        - ./logstash/pipeline/:/etc/logstash/conf.d/
+        - ./logstash/logstash-shipper.yml:/opt/logstash/config/logstash.yml
+        - ./logstash/pipeline-shipper/:/etc/logstash/conf.d/
         - ./logstash/patterns/:/opt/logstash/patterns/
+      environment:
+        - LOGSTASH_NAME=logstash-shipper
+    logstash_indexer:
+      build: "logstash"
+      networks:
+        - "elk"
+      volumes:
+        - ./logstash/pipeline-indexer/:/etc/logstash/conf.d/
+        - ./logstash/logstash-indexer.yml:/opt/logstash/config/logstash.yml
+        - ./logstash/patterns/:/opt/logstash/patterns/
+      environment:
+        - LOGSTASH_NAME=logstash-indexer
+    redisbroker:
+      image: redis
+      ports:
+        - "6379:6379"
+      networks:
+        - "elk"
     apachebeat:
       build: "filebeat"
       networks:

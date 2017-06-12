@@ -5,7 +5,7 @@ curl -k \
    --user elastic:changeme \
    -X POST \
    -H "Content-Type: application/json"\
-   -d "{ \"cluster\": [\"manage_index_templates\", \"monitor\"], \"indices\": [{ \"names\": [\"logstash-*\", \"linuxbeat-*\", \"firebeat-*\", \"appbeat-*\", \"apachebeat-*\",\"winlogbeat-*\",\"data/write/bulk\"], \"privileges\": [\"write\", \"delete\", \"create_index\"]}]}" \
+   -d "{ \"cluster\": [\"manage_index_templates\", \"monitor\"], \"indices\": [{ \"names\": [\"logstash-*\", \"linuxbeat-*\", \"firebeat-*\", \"appbeat-*\", \"apachebeat-*\",\"winlogbeat-*\",\"data/write/bulk\", \"*\"], \"privileges\": [\"write\", \"delete\", \"create_index\"]}]}" \
    https://localhost:9200/_xpack/security/role/logstash_writer
 
 # Add user with role logstash writer

@@ -27,7 +27,7 @@ fi
 
 
 ./usr/local/bin/wait.sh -t 300 -h es -p 9200 # wait for elasticsearch
-./usr/local/bin/wait.sh -t 300 -h logstash -p 5044 # wait for logstash
+./usr/local/bin/wait.sh -t 10 -h logstash -p 5044 # wait for logstash
 
 ## start services as needed
 
