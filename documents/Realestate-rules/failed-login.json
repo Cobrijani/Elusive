@@ -8,6 +8,7 @@
         "search": {
             "request": {
                 "body": {
+                    "size": 0,
                     "query": {
                         "bool": {
                             "must": [
@@ -34,7 +35,7 @@
                     "aggs": {
                         "group_by_username": {
                             "terms": {
-                                "field": "username",
+                                "field": "username.keyword",
                                 "size": 5
                             }
                         }
@@ -48,7 +49,8 @@
     },
     "condition": {
         "array_compare": {
-            "ctx.payload.aggregations.group_by_username.buckets.doc_count": {
+            "ctx.payload.aggregations.group_by_username.buckets": {
+                "path": "doc_count",
                 "gte": {
                     "value": 5
                 }

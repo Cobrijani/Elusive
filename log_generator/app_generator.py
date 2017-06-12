@@ -10,7 +10,7 @@ class AppGenerator(Generator):
         self.usernames = ['marko', 'pera', 'sima', 'admin', 'mika', 'zika', 'misa', 'joca', 'miki', 'ika']
         self.entities = ["Company", "PrivateAdvert", "CompanyAdvert"]
         self.adverts = ["PrivateAdvert", "CompanyAdvert"]
-        with open('app_error_stacktrace.txt', 'r') as content_file:
+        with open('samples/app_error_stacktrace.txt', 'r') as content_file:
             stacktrace = content_file.read()
         self.stack_traces = [stacktrace]
         random.seed(43)
