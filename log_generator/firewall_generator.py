@@ -3,8 +3,8 @@ import random
 from datetime import datetime
 
 class FirewallGenerator(Generator):
-    def __init__(self, file_path, waiting):
-        Generator.__init__(self, file_path, waiting)
+    def __init__(self, file_path):
+        Generator.__init__(self, file_path)
         self.actions = ["ALLOW", "DROP", "REJECT"]
         self.protocols = ["TCP", "UDP", "ICMP", "ICMPv6"]
         self.tcp_flags = ["Ack", "Fin", "Psh", "Rst", "Syn", "Urg", "-"]

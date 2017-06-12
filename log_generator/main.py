@@ -4,6 +4,7 @@ from app_generator import AppGenerator
 from linux_generator import LinuxGenerator
 from generator import LogGenerator
 import sys
+import os
 
 log_out = './../test_logs'
 
@@ -19,12 +20,20 @@ if __name__ == '__main__':
         file_app = sys.argv[3]
         file_linux = sys.argv[4]
 
+    output_files = [file_apache, file_app, file_firewall, file_linux]
     print("Generator started")
-    print("Output locations {}", [file_apache, file_app, file_firewall, file_linux])
+    print("Output locations {}", output_files)
 
-    lg = LogGenerator()
-    lg.add_generator(FirewallGenerator(file_firewall, 0.5))
-    lg.add_generator(ApacheGenerator(file_apache, 0.5))
-    lg.add_generator(AppGenerator(file_app, 0.5))
-    lg.add_generator(LinuxGenerator(file_linux, 0.5))
-    lg.generate()
+    lg = LogGenerator(sleep = 0.5)
+    lg.add_generator(FirewallGenerator(file_firewall))
+    lg.add_generator(ApacheGenerator(file_apache))
+    lg.add_generator(AppGenerator(file_app))
+    lg.add_generator(LinuxGenerator(file_linux))
+
+    try:
+      lg.generate()
+    except KeyboardInterrupt:
+      print("Program stop deleting log files")
+      for file in output_files:
+        if os.path.exists(file):
+          os.remove(file)
