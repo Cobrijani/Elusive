@@ -1,0 +1,62 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [{
+                  "match": {
+                    "httpversion": "1.1"
+                  }
+                },
+                {
+                  "match": {
+                    "referrer": "http://www.izdajemstan.com/"
+                  }
+                },
+                {
+                  "match": {
+                    "response": "401"
+                  }
+                }
+              ],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-30m"
+                  }
+                }
+              }]
+            }
+          },
+          "_source": ["response", "referrer", "httpversion"]
+
+        },
+        "indices": [
+          "apachebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 4000
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[WARNING!] There are more than 4000 requests coming from referrer 'http://www.izadajemstan.com/' with status code 401"
+      }
+    }
+  }
+}
