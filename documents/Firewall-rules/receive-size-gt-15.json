@@ -57,6 +57,14 @@
       "logging": {
         "text": "[WARNING!] There are {{ctx.payload.hits.total}} network requests with size greater than 15!"
       }
+    },
+    "send_email" : {
+      "email" : {
+        "to" : "milekuglas@gmail.com",
+        "subject" : "Proba",
+        "body" : "Too many error in the system, see attached data",
+        "priority" : "high"
+      }
     }
   }
 }

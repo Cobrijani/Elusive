@@ -106,19 +106,29 @@ network.host: 0.0.0.0
 xpack.ssl.key: ./x-pack/elusive-1.key
 xpack.ssl.certificate: ./x-pack/elusive-1.crt
 xpack.ssl.certificate_authorities: ["./x-pack/ca.crt"]
-#xpack.security.audit.enabled: true
+# xpack.security.audit.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.http.ssl.enabled: true
-xpack.notification.hipchat:
-  account:
-    notify-monitoring:
-      profile: integration
-      auth_token: 7419bi6W1pxxILLrw50yqUhwQv3gS9kPu3sLQgEU
-      room: elusive-notifications
-      message:
-        format: text
-        color: blue
-        notify: true
+xpack.notification.email.account:
+    gmail_account:
+        profile: gmail
+        smtp:
+            auth: false
+            starttls.enable: true
+            host: smtp.gmail.com
+            port: 587
+            user: elasticstackbezb
+            password: elasticstack
+# xpack.notification.hipchat:
+#   account:
+#     notify-monitoring:
+#       profile: integration
+#       auth_token: 7419bi6W1pxxILLrw50yqUhwQv3gS9kPu3sLQgEU
+#       room: elusive-notifications
+#       message:
+#         format: text
+#         color: blue
+#         notify: true
 # minimum_master_nodes need to be explicitly set when bound on a public IP
 # set to 1 to allow single node clusters
 # Details: https://github.com/elastic/elasticsearch/pull/17288
