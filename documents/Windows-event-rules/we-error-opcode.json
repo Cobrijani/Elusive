@@ -12,21 +12,10 @@
           "query": {
             "bool": {
               "must": [{
-                  "match": {
-                    "httpversion": "1.1"
-                  }
-                },
-                {
-                  "match": {
-                    "referrer": "http://www.izdajemstan.com/"
-                  }
-                },
-                {
-                  "match": {
-                    "response": "401"
-                  }
+                "match": {
+                  "level": "error"
                 }
-              ],
+              }],
               "filter": [{
                 "range": {
                   "@timestamp": {
@@ -35,12 +24,10 @@
                 }
               }]
             }
-          },
-          "_source": ["response", "referrer", "httpversion"]
-
+          }
         },
         "indices": [
-          "apachebeat-*"
+          "winlogbeat-*"
         ]
       }
     }
@@ -48,14 +35,14 @@
   "condition": {
     "compare": {
       "ctx.payload.hits.total": {
-        "gte": 4000
+        "gte": 1
       }
     }
   },
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[RULE TRIGGERED] There are more than 4000 requests coming from referrer 'http://www.izadajemstan.com/' with status code 401"
+        "text": "[RULE TRIGGERED] Windows event logs is reporting that an error occured"
       }
     }
   }

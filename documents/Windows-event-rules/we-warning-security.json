@@ -8,30 +8,17 @@
     "search": {
       "request": {
         "body": {
+          "size": 0,
           "query": {
             "bool": {
               "must": [{
                   "match": {
-                    "path": "RECEIVE"
+                    "level": "warning"
                   }
                 },
                 {
                   "match": {
-                    "tcpflags": "Ack"
-                  }
-                },
-                {
-                  "range": {
-                    "dst-port": {
-                      "gte": 18
-                    }
-                  }
-                },
-                {
-                  "range": {
-                    "src-port": {
-                      "lte": 2
-                    }
+                    "log_name": "security"
                   }
                 }
               ],
@@ -43,11 +30,10 @@
                 }
               }]
             }
-          },
-          "_source": ["path", "tcpflags", "src-port", "dst-port"]
+          }
         },
         "indices": [
-          "firebeat-*"
+          "winlogbeat-*"
         ]
       }
     }
@@ -62,7 +48,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port<=2|dst-port=>18|Ack|RECEIVE]"
+        "text": "[RULE TRIGGERED] Windows event logs is reporting that an warning occured in security log"
       }
     }
   }

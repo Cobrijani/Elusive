@@ -56,7 +56,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] Users listed below: \n {{ctx.payload.aggregations.group_by_auth.buckets}} have more then one ip address login in last 30 minutes"
+        "text": "[RULE TRIGGERED] Users listed below: \n {{ctx.payload.aggregations.group_by_auth.buckets}} have more then one ip address login in last 30 minutes"
       }
     }
   }

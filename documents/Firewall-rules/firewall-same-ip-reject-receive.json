@@ -59,7 +59,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "There are more than 100 (exactly: \n {{ctx.payload.aggregations.group_by_src_ip.buckets}} REJECTS FROM IP ADDRESSES \n {{ctx.payload.aggregations.group_by_src_ip.buckets}}"
+        "text": "[RULE TRIGGERED] There are more than 100 (exactly: \n {{ctx.payload.aggregations.group_by_src_ip.buckets}} REJECTS FROM IP ADDRESSES \n {{ctx.payload.aggregations.group_by_src_ip.buckets}}"
       }
     }
   }
