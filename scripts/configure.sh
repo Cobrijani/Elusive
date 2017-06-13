@@ -1,5 +1,12 @@
 #!/bin/bash
 
+###################################################################
+# Script for configuring elastic stack to be in proper working state
+# Author: Stefan Bratic <cobrijani@gmail.com>
+# Version: 1.0.0
+###################################################################
+
+
 #Add role that is configured for logstash indexer named logstash_writer
 curl -k \
    --user elastic:changeme \

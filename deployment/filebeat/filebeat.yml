@@ -191,13 +191,13 @@ output.logstash:
   index: "${INDEX_NAME:filebeat}"
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
-  ssl.certificate_authorities: ["/etc/pki/tls/certs/logstash-beats.crt"]
+  ssl.certificate_authorities: ["/etc/pki/tls/certs/ca.pem"]
 
   # Certificate for SSL client authentication
-  #ssl.certificate: "/etc/pki/client/cert.pem"
+  ssl.certificate: "/etc/pki/tls/certs/beats.pem"
 
   # Client Certificate Key
-  #ssl.key: "/etc/pki/client/cert.key"
+  ssl.key: "/etc/pki/tls/private/beats.key"
 
 #================================ Logging =====================================
 

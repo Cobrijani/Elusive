@@ -29,8 +29,12 @@ ADD filebeat.yml /etc/filebeat/filebeat.yml
 RUN chmod 644 /etc/filebeat/filebeat.yml
 
 # CA cert
-RUN mkdir -p /etc/pki/tls/certs
-ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
+RUN mkdir -p /etc/pki/tls/certs \
+ && mkdir -p /etc/pki/tls/private
+
+ADD ./cryptography/certs/ca/ca.pem /etc/pki/tls/certs/ca.pem
+ADD ./cryptography/certs/beats/beats.pem /etc/pki/tls/certs/beats.pem
+ADD ./cryptography/certs/beats/beats.key /etc/pki/tls/private/beats.key
 
 # ADD Template
 ADD filebeat.template.json /usr/share/filebeat/filebeat.template.json

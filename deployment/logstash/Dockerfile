@@ -58,10 +58,11 @@ RUN .${LOGSTASH_HOME}/bin/logstash-plugin install logstash-filter-grok \
 
 
 ### Add certificates and private keys
-ADD ./cryptography/certs/ca/ca.crt /etc/pki/tls/certs/ca.crt
-ADD ./cryptography/certs/elusive-1/elusive-1.crt /etc/pki/tls/certs/elusive-1.crt
-ADD ./cryptography/certs/logstash-beats/logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
-ADD ./cryptography/certs/logstash-beats/logstash-beats.key /etc/pki/tls/private/logstash-beats.key
+ADD ./cryptography/certs/ca/ca.pem /etc/pki/tls/certs/ca.pem
+ADD ./cryptography/certs/elusive-1/elusive-1.pem /etc/pki/tls/certs/elusive-1.pem
+ADD ./cryptography/certs/logstash/logstash.pem /etc/pki/tls/certs/logstash.pem
+ADD ./cryptography/certs/logstash/logstash.key /etc/pki/tls/private/logstash.key
+ADD ./cryptography/certs/logstash/logstash.pkcs8 /etc/pki/tls/private/logstash.pkcs8
 
 ADD ./logstash-logrotate /etc/logrotate.d/logstash
 RUN chmod 644 /etc/logrotate.d/logstash

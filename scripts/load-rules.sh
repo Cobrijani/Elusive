@@ -3,7 +3,6 @@
 # Script for automatically loading Elasticsearch with rules defined in 'documents' folder
 # Author: Stefan Bratic
 # Version: 1.0
-#
 ###############################################################################
 
 ES_USER=elastic

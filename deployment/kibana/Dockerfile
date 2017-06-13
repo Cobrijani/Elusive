@@ -55,10 +55,10 @@ RUN sed -i -e 's#^KIBANA_HOME=$#KIBANA_HOME='$KIBANA_HOME'#' /etc/init.d/kibana 
 #                               CONFIGURATION
 ###############################################################################
 
-ADD ./cryptography/certs/ca/ca.crt /etc/pki/tls/certs/ca.crt
-ADD ./cryptography/certs/elusive-1/elusive-1.crt /etc/pki/tls/certs/elusive-1.crt
-ADD ./cryptography/certs/kibana/k-key.pem /etc/pki/tls/private/kibana.key
-ADD ./cryptography/certs/kibana/k-cert.pem /etc/pki/tls/cert/kibana.crt
+ADD ./cryptography/certs/ca/ca.pem /etc/pki/tls/certs/ca.pem
+ADD ./cryptography/certs/elusive-1/elusive-1.pem /etc/pki/tls/certs/elusive-1.pem
+ADD ./cryptography/certs/kibana/kibana.key /etc/pki/tls/private/kibana.key
+ADD ./cryptography/certs/kibana/kibana.pem /etc/pki/tls/cert/kibana.pem
 
 ### configure logrotate
 ADD ./kibana-logrotate /etc/logrotate.d/kibana
