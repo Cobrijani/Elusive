@@ -11,43 +11,43 @@
           "size": 0,
           "query": {
             "bool": {
-              "must": [{
-                "match": {
-                  "response": "500"
-                }
-              }],
+              "must": [],
               "filter": [{
                 "range": {
                   "@timestamp": {
-                    "gte": "now-30m"
+                    "gte": "now-3h"
                   }
                 }
               }]
             }
           },
           "aggs": {
-            "group_by_requests": {
+            "group_by_computer_name": {
               "terms": {
-                "field": "request.keyword",
-                "min_doc_count": 3000
+                "field": "computer_name.keyword"
+              },
+              "aggs": {
+                "process_id": {
+                  "cardinality": {
+                    "field": "process_id"
+                  }
+                }
               }
             }
-          },
-          "_source": ["response", "request"]
-
+          }
         },
         "indices": [
-          "apachebeat-*"
+          "winlogbeat-*"
         ]
       }
     }
   },
   "condition": {
     "array_compare": {
-      "ctx.payload.aggregations.group_by_requests.buckets": {
-        "path": "doc_count",
+      "ctx.payload.aggregations.group_by_computer_name.buckets": {
+        "path": "process_id.value",
         "gte": {
-          "value": 3000
+          "value": 10
         }
       }
     }
@@ -55,7 +55,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[RULE TRIGGERED] Requests listed below: \n {{ctx.payload.aggregations.group_by_requests.buckets}} have more than 3000 request with status code 500"
+        "text": "[RULE TRIGGERED] Some of the computers that there are more than 10 active processes"
       }
     }
   }

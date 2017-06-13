@@ -55,7 +55,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] There are {{ctx.payload.hits.total}} network requests with size greater than 15!"
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} network requests with size greater than 15!"
       }
     }
   }

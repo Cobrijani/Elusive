@@ -62,7 +62,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port=>18|dst-port<=2|Ack|SEND]"
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port=>18|dst-port<=2|Ack|SEND]"
       }
     }
   }

@@ -8,44 +8,43 @@
     "search": {
       "request": {
         "body": {
+          "size": 0,
           "query": {
             "bool": {
               "must": [{
                 "match": {
-                  "action": "DROP"
+                  "log_name": "System"
                 }
               }],
               "filter": [{
                 "range": {
                   "@timestamp": {
-                    "gte": "now-30m"
+                    "gte": "now-3h"
                   }
                 }
               }]
             }
           },
           "aggs": {
-            "group_by_src_ip": {
+            "group_by_computer_name": {
               "terms": {
-                "field": "src-ip.keyword",
-                "size": 100
+                "field": "computer_name.keyword"
               }
             }
-          },
-          "_source": ["src-ip", "src-ip.keyword"]
+          }
         },
         "indices": [
-          "firebeat-*"
+          "winlogbeat-*"
         ]
       }
     }
   },
   "condition": {
     "array_compare": {
-      "ctx.payload.aggregations.group_by_src_ip.buckets": {
+      "ctx.payload.aggregations.group_by_computer_name.buckets": {
         "path": "doc_count",
         "gte": {
-          "value": 100
+          "value": 20
         }
       }
     }
@@ -53,7 +52,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[RULE TRIGGERED] There are more than 100 (exactly: \n {{ctx.payload.aggregations.group_by_src_ip.buckets}} DROPS FROM IP ADDRESSES: \n {{ctx.payload.aggregations.group_by_src_ip.buckets}}"
+        "text": "[RULE TRIGGERED] Some of the computers are reporting more than 20 System logs that occured in last 3 hours"
       }
     }
   }

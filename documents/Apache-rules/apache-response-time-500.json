@@ -55,7 +55,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] There are more than 1000 Requests with ended with 500 Response code in last 30 minutes on users: {{ctx.payload.aggregations.group_by_auth.buckets}}"
+        "text": "[RULE TRIGGERED] There are more than 1000 Requests with ended with 500 Response code in last 30 minutes on users: {{ctx.payload.aggregations.group_by_auth.buckets}}"
       }
     }
   }

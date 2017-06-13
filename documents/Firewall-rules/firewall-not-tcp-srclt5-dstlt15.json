@@ -58,7 +58,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] There are {{ctx.payload.hits.total}} forbidden network requests!! src=89.216.18.1|dst=89.216.18.19|!TCP|RECEIVE"
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} forbidden network requests!! src=89.216.18.1|dst=89.216.18.19|!TCP|RECEIVE"
       }
     }
   }
