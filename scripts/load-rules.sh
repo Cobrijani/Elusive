@@ -16,6 +16,7 @@ for filename in ./../documents/*/*.json; do
   [ -e "$filename" ] || continue
 
   base=${filename##*/}
+  echo
 
   curl -k \
   --user ${ES_USER}:${ES_PASS} \
@@ -24,5 +25,5 @@ for filename in ./../documents/*/*.json; do
   -d@${filename}
 
 done
-
+echo
 echo "Done."
