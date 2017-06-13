@@ -1,10 +1,64 @@
-Feb 21 21:54:44 localhost sshd[3402]: Accepted publickey for vagrant from 10.0.2.2 port 63673 ssh2: RSA 39:33:99:e9:a0:dc:f2:33:a3:e5:72:3b:7c:3a:56:84
-Feb 23 00:13:35 localhost sshd[7483]: Accepted password for vagrant from 192.168.33.1 port 58803 ssh2
-Feb 21 21:56:12 localhost sshd[3430]: Invalid user test from 10.0.2.2
-Feb 20 08:35:22 slave22 sshd[5774]: Failed password for root from 116.31.116.24 port 29160 ssh2
+Feb 21 21:54:44 localhost sshd[3402]: Accepted publickey for vagrant from 89.216.18.1 port 63673 ssh2: RSA 39:33:99:e9:a0:dc:f2:33:a3:e5:72:3b:7c:3a:56:84
+Feb 23 00:13:35 localhost sshd[7483]: Accepted password for vagrant from 89.216.18.2 port 58803 ssh2
+Feb 21 21:56:12 localhost sshd[3430]: Invalid user test from 89.216.18.3
+Feb 20 08:35:22 slave22 sshd[5774]: Failed password for root from 89.216.18.4 port 29160 ssh2
+Feb 19 15:30:04 slave22 sshd[18406]: Did not receive identification string from 89.216.18.5
 Feb 21 23:35:33 localhost sudo: vagrant : TTY=pts/0 ; PWD=/home/vagrant ; USER=root ; COMMAND=/bin/ls
-Feb 19 15:30:04 slave22 sshd[18406]: Did not receive identification string from 123.57.245.163
 Feb 23 00:08:48 localhost sudo: vagrant : TTY=pts/1 ; PWD=/home/vagrant ; USER=root ; COMMAND=/bin/cat /var/log/secure
 Feb 24 00:13:02 precise32 sudo:      tsg : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/vagrant ; USER=root ; COMMAND=/bin/ls
 Feb 22 11:47:05 localhost groupadd[6991]: new group: name=apache, GID=48
 Feb 22 11:47:05 localhost useradd[6995]: new user: name=apache, UID=48, GID=48, home=/usr/share/httpd, shell=/sbin/nologin
+Feb 21 21:54:44 precise32 sshd[3403]: Accepted publickey for vagrant from 89.216.18.6 port 63671 ssh2: RSA 39:33:99:e9:a0:dc:f2:33:a3:e5:72:3b:7c:3a:56:84
+Feb 23 00:13:35 precise32 sshd[7484]: Accepted password for vagrant from 89.216.18.7 port 58803 ssh2
+Feb 21 21:56:12 precise32 sshd[3431]: Invalid user admin from 89.216.18.8
+Feb 20 08:35:22 slave222 sshd[5775]: Failed password for admin from 89.216.18.9 port 2916 ssh2
+Feb 19 15:30:04 slave222 sshd[18407]: Did not receive identification string from 89.216.18.10
+Feb 21 23:35:33 precise32 sudo: vagrant : TTY=pts/0 ; PWD=/home/vagrant ; USER=test ; COMMAND=/bin/ls
+Feb 23 00:08:48 precise32 sudo: vagrant : TTY=pts/1 ; PWD=/home/vagrant ; USER=test ; COMMAND=/bin/cat /var/log/secure
+Feb 24 00:13:02 precise32 sudo:      tsg : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/vagrant ; USER=test ; COMMAND=/bin/ls
+Feb 22 11:47:05 precise32 groupadd[6991]: new group: name=testers, GID=49
+Feb 22 11:47:05 precise32 useradd[6995]: new user: name=precise32, UID=49, GID=49, home=/usr/share/httpd, shell=/sbin/nologin
+Feb 21 21:54:44 mica sshd[3404]: Accepted publickey for vagrant from 89.216.18.11 port 63671 ssh2: RSA 39:33:99:e9:a0:dc:f2:33:a3:e5:72:3b:7c:3a:56:84
+Feb 23 00:13:35 mica sshd[7485]: Accepted password for vagrant from 89.216.18.12 port 58803 ssh2
+Feb 21 21:56:12 mica sshd[3432]: Invalid user admin from 89.216.18.13
+Feb 20 08:35:22 mica sshd[5776]: Failed password for admin from 89.216.18.14 port 2916 ssh2
+Feb 19 15:30:04 sima sshd[18408]: Did not receive identification string from 89.216.18.15
+Feb 21 23:35:33 sima sudo: vagrant : TTY=pts/0 ; PWD=/home/vagrant ; USER=test ; COMMAND=/bin/ls
+Feb 23 00:08:48 sima sudo: vagrant : TTY=pts/1 ; PWD=/home/vagrant ; USER=test ; COMMAND=/bin/cat /var/log/secure
+Feb 24 00:13:02 sima sudo:      tsg : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/vagrant ; USER=test ; COMMAND=/bin/ls
+Feb 22 11:47:05 zika groupadd[6993]: new group: name=testers, GID=50
+Feb 22 11:47:05 zika useradd[6996]: new user: name=testers, UID=50, GID=50, home=/usr/share/httpd, shell=/sbin/nologin
+Feb 22 16:48:04 zika sshd[2805]: Accepted publickey for drewr from 89.216.18.16 port 34202 ssh2: RSA 01:67:32:d9:b3:20:5d:2d:5f:b4:35:c5:a5:8b:0a:5e
+Feb 22 17:03:22 zika sshd[3260]: Accepted publickey for tsg from 89.216.18.17 port 57936 ssh2: RSA 7c:28:53:4b:dd:5d:1e:07:77:0e:98:01:96:0d:c5:95
+Feb 21 21:54:44 ika sshd[3405]: Accepted publickey for drewr from 89.216.18.18 port 6367 ssh2: RSA 39:33:99:e9:a0:dc:f2:33:a3:e5:72:3b:7c:3a:56:84
+Feb 23 00:13:35 ika sshd[7485]: Accepted password for tsg from 89.216.18.19 port 58804 ssh2
+Feb 21 21:56:12 ika sshd[3435]: Invalid user ika from 89.216.18.20
+Feb 20 08:35:22 miki sshd[5776]: Failed password for root from 89.216.18.1 port 2916 ssh2
+Feb 19 15:30:04 miki sshd[1840]: Did not receive identification string from 89.216.18.2
+Feb 21 23:35:33 miki sudo: vagrant : TTY=pts/0 ; PWD=/home/vagrant ; USER=miki ; COMMAND=/bin/ls
+Feb 23 00:08:48 miki sudo: vagrant : TTY=pts/1 ; PWD=/home/vagrant ; USER=miki ; COMMAND=/bin/cat /var/log/secure
+Feb 24 00:13:02 miki sudo:      tsg : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/vagrant ; USER=miki ; COMMAND=/bin/ls
+Feb 22 11:47:05 miki groupadd[6992]: new group: name=developers, GID=55
+Feb 22 11:47:05 miki useradd[6999]: new user: name=miki, UID=55, GID=55, home=/usr/share/httpd, shell=/sbin/nologin
+Feb 21 21:54:44 misa sshd[3403]: Accepted publickey for vagrant from 89.216.18.3 port 3671 ssh2: RSA 39:33:99:e9:a0:dc:f2:33:a3:e5:72:3b:7c:3a:56:84
+Feb 23 00:13:35 misa sshd[7484]: Accepted password for vagrant from 89.216.18.4 port 8803 ssh2
+Feb 21 21:56:12 misa sshd[3431]: Invalid user misa from 89.216.18.5
+Feb 20 08:35:22 misa sshd[5775]: Failed password for misa from 89.216.18.6 port 29161 ssh2
+Feb 19 15:30:04 misa sshd[18407]: Did not receive identification string from 89.216.18.7
+Feb 21 23:35:33 misa sudo: vagrant : TTY=pts/0 ; PWD=/home/vagrant ; USER=misa ; COMMAND=/bin/ls
+Feb 23 00:08:48 misa sudo: vagrant : TTY=pts/1 ; PWD=/home/vagrant ; USER=misa ; COMMAND=/bin/cat /var/log/secure
+Feb 24 00:13:02 misa sudo:      tsg : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/vagrant ; USER=misa ; COMMAND=/bin/ls
+Feb 22 11:47:05 misa groupadd[6991]: new group: name=java, GID=100
+Feb 22 11:47:05 misa useradd[6995]: new user: name=misa, UID=100, GID=100, home=/usr/share/httpd, shell=/sbin/nologin
+Feb 21 21:54:44 pera sshd[3404]: Accepted publickey for vagrant from 89.216.18.8 port 63671 ssh2: RSA 39:33:99:e9:a0:dc:f2:33:a3:e5:72:3b:7c:3a:56:84
+Feb 23 00:13:35 pera sshd[7485]: Accepted password for vagrant from 89.216.18.9 port 58803 ssh2
+Feb 21 21:56:12 pera sshd[3432]: Invalid user admin from 89.216.18.10
+Feb 20 08:35:22 pera sshd[5776]: Failed password for admin from 89.216.18.11 port 2916 ssh2
+Feb 19 15:30:04 pera sshd[18408]: Did not receive identification string from 89.216.18.12
+Feb 21 23:35:33 pera sudo: vagrant : TTY=pts/0 ; PWD=/home/vagrant ; USER=pera ; COMMAND=/bin/ls
+Feb 23 00:08:48 pera sudo: vagrant : TTY=pts/1 ; PWD=/home/vagrant ; USER=pera ; COMMAND=/bin/cat /var/log/secure
+Feb 24 00:13:02 pera sudo:      tsg : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/vagrant ; USER=pera ; COMMAND=/bin/ls
+Feb 22 11:47:05 pera groupadd[6993]: new group: name=python, GID=150
+Feb 22 11:47:05 pera useradd[6996]: new user: name=pera, UID=150, GID=150, home=/usr/share/httpd, shell=/sbin/nologin
+Feb 22 16:48:04 pera sshd[2805]: Accepted publickey for drewr from 89.216.18.13 port 34202 ssh2: RSA 01:67:32:d9:b3:20:5d:2d:5f:b4:35:c5:a5:8b:0a:5e
+Feb 22 17:03:22 pera sshd[3260]: Accepted publickey for tsg from 89.216.18.14 port 57936 ssh2: RSA 7c:28:53:4b:dd:5d:1e:07:77:0e:98:01:96:0d:c5:95
