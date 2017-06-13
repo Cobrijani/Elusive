@@ -1,0 +1,62 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "response": "500"
+                }
+              }],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-30m"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "group_by_auth": {
+              "terms": {
+                "field": "auth.keyword",
+                "size": 100,
+                "min_doc_count": 1000
+              }
+            }
+          },
+          "_source": ["response", "auth"]
+        },
+        "indices": [
+          "apachebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_auth.buckets": {
+        "path": "doc_count",
+        "gte": {
+          "value": 1000
+        }
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] There are more than 1000 Requests with ended with 500 Response code in last 30 minutes on users: {{ctx.payload.aggregations.group_by_auth.buckets}}"
+      }
+    }
+  }
+}

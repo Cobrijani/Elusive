@@ -11,11 +11,12 @@ ES_PASS=changeme
 ES_URL=localhost
 ES_PORT=9200
 
+echo "Loading rules in elasticsearch..."
 for filename in ./../documents/*/*.json; do
   [ -e "$filename" ] || continue
 
   base=${filename##*/}
-  echo curl${base%.json}
+  echo
 
   curl -k \
   --user ${ES_USER}:${ES_PASS} \
@@ -24,3 +25,5 @@ for filename in ./../documents/*/*.json; do
   -d@${filename}
 
 done
+echo
+echo "Done."

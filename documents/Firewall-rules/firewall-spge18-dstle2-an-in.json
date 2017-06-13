@@ -1,0 +1,69 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "query": {
+            "bool": {
+              "must": [{
+                  "match": {
+                    "path": "RECEIVE"
+                  }
+                },
+                {
+                  "range": {
+                    "src-port": {
+                      "gte": 18
+                    }
+                  }
+                },
+                {
+                  "range": {
+                    "dst-port": {
+                      "lte": 2
+                    }
+                  }
+                }
+              ],
+              "must_not": [{
+                "match": {
+                  "tcpflags": "Ack"
+                }
+              }],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-30m"
+                  }
+                }
+              }]
+            }
+          },
+          "_source": ["path", "tcpflags", "src-port", "dst-port"]
+        },
+        "indices": [
+          "firebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 1
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port=>18|dst-port<=2|No Ack|RECEIVE]"
+      }
+    }
+  }
+}

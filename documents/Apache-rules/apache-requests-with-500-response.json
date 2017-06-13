@@ -1,0 +1,62 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "response": "500"
+                }
+              }],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-30m"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "group_by_requests": {
+              "terms": {
+                "field": "request.keyword",
+                "min_doc_count": 3000
+              }
+            }
+          },
+          "_source": ["response", "request"]
+
+        },
+        "indices": [
+          "apachebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_requests.buckets": {
+        "path": "doc_count",
+        "gte": {
+          "value": 3000
+        }
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] Requests listed below: \n {{ctx.payload.aggregations.group_by_requests.buckets}} have more than 3000 request with status code 500"
+      }
+    }
+  }
+}

@@ -12,35 +12,39 @@
             "bool": {
               "must": [{
                   "match": {
-                    "path": "RECEIVE"
+                    "path": "SEND"
                   }
                 },
                 {
                   "match": {
-                    "src-ip": "89.216.18.1"
+                    "tcpflags": "Ack"
                   }
                 },
                 {
-                  "match": {
-                    "dst-ip": "89.216.18.19"
+                  "range": {
+                    "src-port": {
+                      "gte": 18
+                    }
+                  }
+                },
+                {
+                  "range": {
+                    "dst-port": {
+                      "lte": 2
+                    }
                   }
                 }
               ],
-              "must_not": [{
-                "match": {
-                  "protocol": "TCP"
-                }
-              }],
               "filter": [{
                 "range": {
                   "@timestamp": {
-                    "gte": "now-3h"
+                    "gte": "now-30m"
                   }
                 }
               }]
             }
           },
-          "_source": ["path", "src-port", "dst-port", "protocol", "size", "src-ip", "dst-ip"]
+          "_source": ["path", "tcpflags", "src-port", "dst-port"]
         },
         "indices": [
           "firebeat-*"
@@ -58,7 +62,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] There are {{ctx.payload.hits.total}} forbidden network requests!! src=89.216.18.1|dst=89.216.18.19|!TCP|RECEIVE"
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port=>18|dst-port<=2|Ack|SEND]"
       }
     }
   }

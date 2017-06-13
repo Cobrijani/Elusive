@@ -1,0 +1,49 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "level": "error"
+                }
+              }],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-30m"
+                  }
+                }
+              }]
+            }
+          }
+        },
+        "indices": [
+          "winlogbeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 1
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] Windows event logs is reporting that an error occured"
+      }
+    }
+  }
+}

@@ -8,33 +8,25 @@
     "search": {
       "request": {
         "body": {
+          "size": 0,
           "query": {
             "bool": {
               "must": [{
                   "match": {
-                    "path": "RECEIVE"
+                    "httpversion": "1.1"
                   }
                 },
                 {
-                  "range": {
-                    "src-port": {
-                      "gte": 18
-                    }
+                  "match": {
+                    "referrer": "http://www.izdajemstan.com/"
                   }
                 },
                 {
-                  "range": {
-                    "dst-port": {
-                      "lte": 2
-                    }
+                  "match": {
+                    "response": "401"
                   }
                 }
               ],
-              "must_not": [{
-                "match": {
-                  "tcpflags": "Ack"
-                }
-              }],
               "filter": [{
                 "range": {
                   "@timestamp": {
@@ -44,10 +36,11 @@
               }]
             }
           },
-          "_source": ["path", "tcpflags", "src-port", "dst-port"]
+          "_source": ["response", "referrer", "httpversion"]
+
         },
         "indices": [
-          "firebeat-*"
+          "apachebeat-*"
         ]
       }
     }
@@ -55,14 +48,14 @@
   "condition": {
     "compare": {
       "ctx.payload.hits.total": {
-        "gte": 1
+        "gte": 4000
       }
     }
   },
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port=>18|dst-port<=2|No Ack|RECEIVE]"
+        "text": "[RULE TRIGGERED] There are more than 4000 requests coming from referrer 'http://www.izadajemstan.com/' with status code 401"
       }
     }
   }

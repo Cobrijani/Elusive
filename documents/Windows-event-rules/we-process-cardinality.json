@@ -1,0 +1,62 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-3h"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "group_by_computer_name": {
+              "terms": {
+                "field": "computer_name.keyword"
+              },
+              "aggs": {
+                "process_id": {
+                  "cardinality": {
+                    "field": "process_id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "indices": [
+          "winlogbeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_computer_name.buckets": {
+        "path": "process_id.value",
+        "gte": {
+          "value": 10
+        }
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] Some of the computers that there are more than 10 active processes"
+      }
+    }
+  }
+}

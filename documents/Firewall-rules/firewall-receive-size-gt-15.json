@@ -1,0 +1,70 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "query": {
+            "bool": {
+              "must": [{
+                  "range": {
+                    "size": {
+                      "gt": 15
+                    }
+                  }
+                },
+                {
+                  "match": {
+                    "path": "RECEIVE"
+                  }
+                }
+              ],
+              "must_not": [{
+                "match": {
+                  "protocol": "TCP"
+                }
+              }],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-3h"
+                  }
+                }
+              }]
+            }
+          },
+          "_source": ["path", "src-port", "dst-port", "protocol", "size"]
+        },
+        "indices": [
+          "firebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 1
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} network requests with size greater than 15!"
+      }
+    },
+    "send_email" : {
+      "email" : {
+        "to" : "milekuglas@gmail.com",
+        "subject" : "Proba",
+        "body" : "Too many error in the system, see attached data",
+        "priority" : "high"
+      }
+    }
+  }
+}

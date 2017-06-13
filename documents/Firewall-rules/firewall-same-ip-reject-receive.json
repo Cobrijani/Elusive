@@ -12,26 +12,12 @@
             "bool": {
               "must": [{
                   "match": {
-                    "path": "SEND"
+                    "action": "REJECT"
                   }
                 },
                 {
                   "match": {
-                    "tcpflags": "Ack"
-                  }
-                },
-                {
-                  "range": {
-                    "src-port": {
-                      "gte": 18
-                    }
-                  }
-                },
-                {
-                  "range": {
-                    "dst-port": {
-                      "lte": 2
-                    }
+                    "path": "RECEIVE"
                   }
                 }
               ],
@@ -44,7 +30,15 @@
               }]
             }
           },
-          "_source": ["path", "tcpflags", "src-port", "dst-port"]
+          "aggs": {
+            "group_by_src_ip": {
+              "terms": {
+                "field": "src-ip.keyword",
+                "size": 100
+              }
+            }
+          },
+          "_source": ["src-ip", "src-ip.keyword"]
         },
         "indices": [
           "firebeat-*"
@@ -53,16 +47,19 @@
     }
   },
   "condition": {
-    "compare": {
-      "ctx.payload.hits.total": {
-        "gte": 1
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_src_ip.buckets": {
+        "path": "doc_count",
+        "gte": {
+          "value": 100
+        }
       }
     }
   },
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port=>18|dst-port<=2|Ack|SEND]"
+        "text": "[RULE TRIGGERED] There are more than 100 (exactly: \n {{ctx.payload.aggregations.group_by_src_ip.buckets}} REJECTS FROM IP ADDRESSES \n {{ctx.payload.aggregations.group_by_src_ip.buckets}}"
       }
     }
   }

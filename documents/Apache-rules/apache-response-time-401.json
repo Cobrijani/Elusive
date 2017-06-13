@@ -8,19 +8,14 @@
     "search": {
       "request": {
         "body": {
+          "size": 0,
           "query": {
             "bool": {
               "must": [{
-                  "match": {
-                    "action": "REJECT"
-                  }
-                },
-                {
-                  "match": {
-                    "path": "RECEIVE"
-                  }
+                "match": {
+                  "response": "401"
                 }
-              ],
+              }],
               "filter": [{
                 "range": {
                   "@timestamp": {
@@ -31,27 +26,28 @@
             }
           },
           "aggs": {
-            "group_by_src_ip": {
+            "group_by_auth": {
               "terms": {
-                "field": "src-ip.keyword",
-                "size": 100
+                "field": "auth.keyword",
+                "size": 100,
+                "min_doc_count": 1000
               }
             }
           },
-          "_source": ["src-ip", "src-ip.keyword"]
+          "_source": ["response", "auth"]
         },
         "indices": [
-          "firebeat-*"
+          "apachebeat-*"
         ]
       }
     }
   },
   "condition": {
     "array_compare": {
-      "ctx.payload.aggregations.group_by_src_ip.buckets": {
+      "ctx.payload.aggregations.group_by_auth.buckets": {
         "path": "doc_count",
         "gte": {
-          "value": 100
+          "value": 1000
         }
       }
     }
@@ -59,7 +55,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "There are more than 100 (exactly: \n {{ctx.payload.aggregations.group_by_src_ip.buckets}} REJECTS FROM IP ADDRESSES \n {{ctx.payload.aggregations.group_by_src_ip.buckets}}"
+        "text": "[RULE TRIGGERED] There are more than 1000 Requests with ended with 401 Response code in last 30 minutes on users: {{ctx.payload.aggregations.group_by_auth.buckets}}"
       }
     }
   }

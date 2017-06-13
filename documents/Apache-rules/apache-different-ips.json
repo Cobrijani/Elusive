@@ -1,0 +1,63 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-30m"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "group_by_auth": {
+              "terms": {
+                "field": "auth.keyword"
+              },
+              "aggs": {
+                "group_ip": {
+                  "cardinality": {
+                    "field": "clientip.keyword"
+                  }
+                }
+              }
+            }
+          },
+          "_source": ["auth"]
+        },
+        "indices": [
+          "apachebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_auth.buckets": {
+        "path": "group_ip.value",
+        "gte": {
+          "value": 2
+        }
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] Users listed below: \n {{ctx.payload.aggregations.group_by_auth.buckets}} have more then one ip address login in last 30 minutes"
+      }
+    }
+  }
+}

@@ -11,33 +11,40 @@
           "query": {
             "bool": {
               "must": [{
+                  "match": {
+                    "path": "SEND"
+                  }
+                },
+                {
                   "range": {
-                    "size": {
-                      "gt": 15
+                    "dst-port": {
+                      "gte": 18
                     }
                   }
                 },
                 {
-                  "match": {
-                    "path": "RECEIVE"
+                  "range": {
+                    "src-port": {
+                      "lte": 2
+                    }
                   }
                 }
               ],
               "must_not": [{
                 "match": {
-                  "protocol": "TCP"
+                  "tcpflags": "Ack"
                 }
               }],
               "filter": [{
                 "range": {
                   "@timestamp": {
-                    "gte": "now-3h"
+                    "gte": "now-30m"
                   }
                 }
               }]
             }
           },
-          "_source": ["path", "src-port", "dst-port", "protocol", "size"]
+          "_source": ["path", "tcpflags", "src-port", "dst-port"]
         },
         "indices": [
           "firebeat-*"
@@ -55,15 +62,7 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[WARNING!] There are {{ctx.payload.hits.total}} network requests with size greater than 15!"
-      }
-    },
-    "send_email" : {
-      "email" : {
-        "to" : "milekuglas@gmail.com",
-        "subject" : "Proba",
-        "body" : "Too many error in the system, see attached data",
-        "priority" : "high"
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} forbidden network requests!! [src-port<=2|dst-port=>18|No Ack|SEND]"
       }
     }
   }
