@@ -11,8 +11,10 @@
           "query": {
             "bool": {
               "must": [{
-                  "match": {
-                    "action": "REJECT"
+                  "range": {
+                    "size": {
+                      "gt": 15
+                    }
                   }
                 },
                 {
@@ -21,24 +23,21 @@
                   }
                 }
               ],
+              "must_not": [{
+                "match": {
+                  "protocol": "TCP"
+                }
+              }],
               "filter": [{
                 "range": {
                   "@timestamp": {
-                    "gte": "now-30m"
+                    "gte": "now-3h"
                   }
                 }
               }]
             }
           },
-          "aggs": {
-            "group_by_src_ip": {
-              "terms": {
-                "field": "src-ip.keyword",
-                "size": 100
-              }
-            }
-          },
-          "_source": ["src-ip", "src-ip.keyword"]
+          "_source": ["path", "src-port", "dst-port", "protocol", "size"]
         },
         "indices": [
           "firebeat-*"
@@ -47,19 +46,16 @@
     }
   },
   "condition": {
-    "array_compare": {
-      "ctx.payload.aggregations.group_by_src_ip.buckets": {
-        "path": "doc_count",
-        "gte": {
-          "value": 100
-        }
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 1
       }
     }
   },
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "There are more than 100 (exactly: \n {{ctx.payload.aggregations.group_by_src_ip.buckets}} REJECTS FROM IP ADDRESSES \n {{ctx.payload.aggregations.group_by_src_ip.buckets}}"
+        "text": "[WARNING!] There are {{ctx.payload.hits.total}} network requests with size greater than 15!"
       }
     }
   }

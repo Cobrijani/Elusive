@@ -7,8 +7,6 @@ Academic Staff:
 - Sladic Goran (Professor)
 - Luburic Nikola (Teaching Assistant) 
 
-
-
 Students:
 - Bratic Stefan
 - Vojnovic Milorad

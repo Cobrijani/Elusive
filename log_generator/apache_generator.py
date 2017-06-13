@@ -3,14 +3,14 @@ import random
 from datetime import datetime
 
 class ApacheGenerator(Generator):
-    def __init__(self, file_path, waiting):
-        Generator.__init__(self, file_path, waiting)
+    def __init__(self, file_path):
+        Generator.__init__(self, file_path)
         self.logs = []
         random.seed(43)
         self.get_log_samples()
 
     def get_log_samples(self):
-        with open('apache_log_samples.txt', 'r') as f:
+        with open('samples/apache_log_samples.txt', 'r') as f:
             for row in f:
                 self.logs.append(row)
 
