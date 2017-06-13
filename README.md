@@ -16,6 +16,31 @@ Students:
 
 Student project that consists of creating SIEM center using ELK stack.
 
+### Requirements
+
+- Python 2.x.x or 3.x.x
+- Docker Machine
+- Docker Compose
+- Docker
+- Bash
+- Powershell v3 (if on Windows)
+
+### Instructions
+
+1. ```run docker-compose -f deployments/docker-compose.yml up -d``` to start elastic stack 
+
+2. ``` python log_generator/main.py ``` to start generation of logs
+
+3. After system is up, go to: https://localhost:5601 which represents kibana client for elastics stack
+
+4. Navigate to Management -> Index Patterns
+
+5. In the text field in the middle of the current screen write __firebeat-\*__, then click out of text field to refresh loading and lastly in options box below text field select '@timestamp' as time field and click 'Create'.
+
+6. Repeat 5. for __appbeat-\*__, __apachebeat-\*__, __linuxbeat-\*__, __winlogbeat-*__
+
+7. In _Discover_ menu you can watch in real time logs that are coming to elasticsearch from different sources separated by indexes you defined above.
+
 ### Useful resources
  
 - [Xpack (official site)](https://www.elastic.co/guide/en/x-pack/current/index.html)
