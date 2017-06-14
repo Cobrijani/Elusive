@@ -14,12 +14,12 @@
                             "must": [
                                 {
                                     "match_phrase": {
-                                        "action": "LOGGING"
+                                        "action": "CREATING_ADVERT"
                                     }
                                 },
                                 {
                                     "match_phrase": {
-                                        "logmessage": "failed to log in."
+                                        "logmessage": "created an advert"
                                     }
                                 }
                             ],
@@ -60,7 +60,7 @@
     "actions": {
         "my-logging-action": {
             "logging": {
-                "text": "[RULE TRIGGERED] User failed to log in {{ctx.payload.aggregations.group_by_username.buckets}} times in last half hour."
+                "text": "[RULE TRIGGERED] User created more than 5 adverts in last half hour. {{ctx.payload.aggregations.group_by_username.buckets}}"
             }
         }
     }

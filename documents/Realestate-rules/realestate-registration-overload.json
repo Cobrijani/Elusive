@@ -14,12 +14,12 @@
                             "must": [
                                 {
                                     "match_phrase": {
-                                        "action": "LOGGING"
+                                        "action": "REGISTRATION"
                                     }
                                 },
                                 {
                                     "match_phrase": {
-                                        "logmessage": "failed to log in."
+                                        "logmessage": "succesfully registered"
                                     }
                                 }
                             ],
@@ -31,14 +31,6 @@
                                 }
                             }]
                         }
-                    },
-                    "aggs": {
-                        "group_by_username": {
-                            "terms": {
-                                "field": "username.keyword",
-                                "size": 5
-                            }
-                        }
                     }
                 },
                 "indices": [
@@ -48,19 +40,16 @@
         }
     },
     "condition": {
-        "array_compare": {
-            "ctx.payload.aggregations.group_by_username.buckets": {
-                "path": "doc_count",
-                "gte": {
-                    "value": 5
-                }
+        "compare": {
+            "ctx.payload.hits.total": {
+                "gte": 100
             }
         }
     },
     "actions": {
         "my-logging-action": {
             "logging": {
-                "text": "[RULE TRIGGERED] User failed to log in {{ctx.payload.aggregations.group_by_username.buckets}} times in last half hour."
+                "text": "[RULE TRIGGERED] Too many registrations in last half hour. {{ctx.payload.hits.total}} users registered."
             }
         }
     }
