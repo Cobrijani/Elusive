@@ -60,7 +60,7 @@
     "actions": {
         "my-logging-action": {
             "logging": {
-                "text": "[RULE TRIGGERED] User failed to log in {{ctx.payload.aggregations.group_by_username.buckets}} times in last half hour."
+                "text": "[RULE TRIGGERED] User failed to log in more than 5 times in last half hour. {{ctx.payload.aggregations.group_by_username.buckets}}"
             }
         }
     }
