@@ -30,7 +30,7 @@ class AppGenerator(Generator):
 
     def create_registration_log(self):
         username = self.get_username()
-        return "INFO r.a.u.f.c.UserController:97 REGISTRATION "+username+" - New user "+username+" has been registered as "+ random.choice(self.authorities_reg) +"."
+        return "INFO r.a.u.f.c.UserController:97 REGISTRATION "+username+" - New user "+username+" has been succesfully registered as "+ random.choice(self.authorities_reg) +"."
 
     def create_not_found_exception_log(self):
         entity = random.choice(self.entities)
