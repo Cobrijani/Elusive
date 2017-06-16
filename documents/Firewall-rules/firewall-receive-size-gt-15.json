@@ -55,14 +55,27 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} network requests with size greater than 15!"
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} network requests with size greater than 15{{ctx}}!"
       }
     },
+     "index_payload" : { 
+       "transform": {
+            "script" : {
+              "lang" : "painless",
+              "inline" : "def alarms = []; for (int i = 0; i < ctx.payload.hits.hits.length; ++i){ def source = ctx.payload.hits.hits[i]._source; source.timestamp = ctx.execution_time; alarms.add(source); } return ['_doc' : alarms];" 
+            }
+        },
+       "index" : {
+        "index" : "<alarms-{now/d{YYYY.MM.dd|+01:00}}>", 
+        "doc_type" : "firewall",
+        "execution_time_field" : "timestamp"  
+      }
+    },  
     "send_email" : {
       "email" : {
-        "to" : "milekuglas@gmail.com",
-        "subject" : "Proba",
-        "body" : "Too many error in the system, see attached data",
+        "to" : "cobrijani@gmail.com",
+        "subject" : "Alarm for firewall!",
+        "body" : "There are {{ctx.payload.hits.total}} network requests with size greater than 15!",
         "priority" : "high"
       }
     }

@@ -62,6 +62,14 @@
             "logging": {
                 "text": "[RULE TRIGGERED] User failed to log in {{ctx.payload.aggregations.group_by_username.buckets.doc_count}} times."
             }
-        }
+        },
+    "send_email" : {
+      "email" : {
+        "to" : "cobrijani@gmail.com",
+        "subject" : "Alarm for Real Estate App!",
+        "body" : "User failed to log in {{ctx.payload.aggregations.group_by_username.buckets.doc_count}} times.",
+        "priority" : "high"
+      }
+    }
     }
 }
