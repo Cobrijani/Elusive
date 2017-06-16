@@ -9,7 +9,7 @@ services:
       networks:
         - "elk"
       volumes:
-        - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+        - ./elasticsearch/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml
     kibana:
       image: "cobrijani/elusive:latest_kibana"
       ports:

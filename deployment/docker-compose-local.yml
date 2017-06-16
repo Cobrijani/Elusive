@@ -9,8 +9,7 @@ services:
       networks:
         - "elk"
       volumes:
-        - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-        - ./../cryptography/certs/:/usr/share/certs
+        - ./elasticsearch/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml
       container_name: "elasticsearch"
     kibana:
       build: "kibana"

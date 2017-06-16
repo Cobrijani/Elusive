@@ -14,7 +14,6 @@
 #  - "cn=John Doe,cn=other users,dc=example,dc=com"
 
 logstash_writer:
-  - "cn=logstash"
-
-monitoring:
-  - "cn=logstash"
+  - "CN=logstash_internal"
+kibana_system:
+  - "cn=kibana"

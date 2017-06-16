@@ -93,22 +93,28 @@ network.host: 0.0.0.0
 
 # ---------------------------------- X-pack -----------------------------------
 #action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*
-# xpack.security.authc.realms.pki1:
-#                   type: pki
-#                   truststore:
-#                     path: /etc/pki/tls/jks/test.jks
-#                     password: test
+xpack.security.authc:
+    realms:
+        pki:
+          type: pki
+          order: 0
+          truststore.path: /etc/elasticsearch/x-pack/elasticsearch-truststore.jks
+          truststore.password: changeit
+          files.role_mapping: /etc/elasticsearch/x-pack/role_mapping.yml
+        # native:
+        #   type: native
+        #   order: 1
 
-### Logstash monitoring
-# xpack.monitoring.elasticsearch.username: logstash_system
-# xpack.monitoring.elasticsearch.password: changeme
 
-xpack.ssl.key: ./x-pack/elusive-1.key
-xpack.ssl.certificate: ./x-pack/elusive-1.pem
-xpack.ssl.certificate_authorities: ["./x-pack/ca.pem"]
-# xpack.security.audit.enabled: true
+xpack.ssl.keystore.path: /etc/elasticsearch/x-pack/elasticsearch-keystore.jks
+xpack.ssl.keystore.password: changeit
+xpack.ssl.truststore.path: /etc/elasticsearch/x-pack/elasticsearch-truststore.jks
+xpack.ssl.truststore.password: changeit
+xpack.ssl.verification_mode: full
+xpack.security.http.ssl.client_authentication: optional # in order for pki to work http ssl must be set to optional
 xpack.security.transport.ssl.enabled: true
 xpack.security.http.ssl.enabled: true
+#xpack.security.audit.enabled: true
 xpack.notification.email.account:
     gmail_account:
         profile: gmail
@@ -130,12 +136,3 @@ xpack.watcher.execution.default_throttle_period: 5m
 #         format: text
 #         color: blue
 #         notify: true
-# minimum_master_nodes need to be explicitly set when bound on a public IP
-# set to 1 to allow single node clusters
-# Details: https://github.com/elastic/elasticsearch/pull/17288
-#discovery.zen.minimum_master_nodes: 1
-
-## Use single node discovery in order to disable production mode and avoid bootstrap checks
-## see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
-#
-#discovery.type: single-node
