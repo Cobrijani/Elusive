@@ -39,6 +39,27 @@
             "logging": {
                 "text": "[RULE TRIGGERED] Error appeared in realestate application."
             }
+        },
+        "index_payload" : { 
+            "transform": {
+                    "script" : {
+                    "lang" : "painless",
+                    "inline" : "def alarms = []; for (int i = 0; i < ctx.payload.hits.hits.length; ++i){ def source = ctx.payload.hits.hits[i]._source; source.timestamp = ctx.execution_time; alarms.add(source); } return ['_doc' : alarms];" 
+                    }
+                },
+            "index" : {
+                "index" : "<alarms-{now/d{YYYY.MM.dd|+01:00}}>", 
+                "doc_type" : "realestate",
+                "execution_time_field" : "timestamp"  
+            }
+        },  
+        "send_email" : {
+            "email" : {
+                "to" : "cobrijani@gmail.com",
+                "subject" : "Alarm for realestate!",
+                "body" : "Error appeared in realestate application.",
+                "priority" : "high"
+            }
         }
     }
 }

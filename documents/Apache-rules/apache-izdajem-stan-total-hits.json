@@ -55,7 +55,28 @@
   "actions": {
     "my-logging-action": {
       "logging": {
-        "text": "[RULE TRIGGERED] There are more than 4000 requests coming from referrer 'http://www.izadajemstan.com/' with status code 401"
+        "text": "[RULE TRIGGERED] There are more than 4000 requests coming from referrer 'http://www.izdajemstan.com/' with status code 401"
+      }
+    },
+    "index_payload" : { 
+       "transform": {
+            "script" : {
+              "lang" : "painless",
+              "inline" : "def alarms = []; for (int i = 0; i < ctx.payload.hits.hits.length; ++i){ def source = ctx.payload.hits.hits[i]._source; source.timestamp = ctx.execution_time; alarms.add(source); } return ['_doc' : alarms];" 
+            }
+        },
+       "index" : {
+        "index" : "<alarms-{now/d{YYYY.MM.dd|+01:00}}>", 
+        "doc_type" : "aparche",
+        "execution_time_field" : "timestamp"  
+      }
+    },  
+    "send_email" : {
+      "email" : {
+        "to" : "cobrijani@gmail.com",
+        "subject" : "Alarm for Apache!",
+        "body" : "There are more than 4000 requests coming from referrer 'http://www.izdajemstan.com/' with status code 401",
+        "priority" : "high"
       }
     }
   }

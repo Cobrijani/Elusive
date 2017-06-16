@@ -125,6 +125,7 @@ xpack.notification.email.account:
             port: 587
             user: elasticstackbezb
             password: elasticstack
+xpack.watcher.execution.default_throttle_period: 5m
 # xpack.notification.hipchat:
 #   account:
 #     notify-monitoring:
