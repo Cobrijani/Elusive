@@ -35,7 +35,7 @@ function Main {
 
 function ImportDashboards{
     Write-Host "Importing dashboards"
-    Invoke-Expression "& `"$($wlb_dir)\scripts\import_dashboards.exe`""
+    Invoke-Expression "& `"$($wlb_dir)\scripts\import_dashboards.exe -cacert $($wlb_dir)\ca.pem -insecure -es https://localhost:9200`""
 }
 
 Function WaitForKey {
