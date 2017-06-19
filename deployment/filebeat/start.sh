@@ -9,30 +9,23 @@ LOGSTASH_PORT=5044
 ./wait.sh -t 300 -h ${ES_URL} -p ${ES_PORT} #wait for elasticsearch
 ./wait.sh -t 15 -h ${LOGSTASH_URL} -p ${LOGSTASH_PORT} # wait for logstash
 
-#Add role that is configured for logstash indexer named logstash_writer
-curl -k \
-   --user ${ES_USER}:${ES_PASS} \
-   -X POST \
-   -H "Content-Type: application/json"\
-   -d "{ \"cluster\": [\"manage_index_templates\", \"monitor\"], \"indices\": [{ \"names\": [\"logstash-*\", \"linuxbeat-*\", \"firebeat-*\", \"appbeat-*\", \"apachebeat-*\",\"winlogbeat-*\"], \"privileges\": [\"write\", \"delete\", \"create_index\"]}]}" \
-   https://${ES_URL}:${ES_PORT}/_xpack/security/role/logstash_writer
 
-# Add user with role logstash writer
 curl -k \
-   --user ${ES_USER}:${ES_PASS} \
-   -X POST \
-   -H "Content-Type: application/json"\
-   -d "{ \"password\" : \"changeme\",\"roles\" : [ \"logstash_writer\"],\"full_name\" : \"Internal Logstash User\"}"\
-   https://${ES_URL}:${ES_PORT}/_xpack/security/user/logstash_internal
+ --user ${ES_USER}:${ES_PASS} \
+ -X PUT \
+ "https://es:9200/_template/${INDEX_NAME}?pretty" \
+ -d@/usr/share/filebeat/filebeat.template.json
 
-# curl -k \
-#  --user ${ES_USER}:${ES_PASS} \
-#  -X PUT \
-#  "https://es:9200/_template/${INDEX_NAME}?pretty" \
-#  -d@/usr/share/filebeat/filebeat.template.json
+# ./usr/share/filebeat/scripts/import_dashboards \
+#   -es https://${ES_URL}:${ES_PORT} \
+#   -cacert /etc/pki/tls/certs/ca.pem \
+#   -insecure \
+#   -user ${ES_USER} \
+#   -pass ${ES_PASS} \
+#   -i ${INDEX_NAME}
 
 /etc/init.d/filebeat start -e
 
-mkdir /var/log/filebeat
+mkdir -p /var/log/filebeat
 touch /var/log/filebeat/filebeat.log
 tail -f /var/log/filebeat/filebeat.log & wait

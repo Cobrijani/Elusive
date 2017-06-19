@@ -1,5 +1,11 @@
 #!/bin/bash
 
+
+ES_USER=elastic
+ES_PASS=changeme
+ES_URL=localhost
+ES_PORT=9200
+
 _term() {
   echo "Terminating ELK"
   service elasticsearch stop
@@ -17,6 +23,9 @@ if [ ! -z "$TZ" ]; then
   ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 fi
 ## start services as needed
+
+cp -r /opt/elasticsearch/config/ingest-geoip/. /etc/elasticsearch/ingest-geoip
+#rm -rf /opt/elasticsearch/config/ingest-geoip
 
 ### crond
 
@@ -109,6 +118,24 @@ if [ "$ELASTICSEARCH_START" -ne "1" ]; then
   >&2 echo "No services started. Exiting."
   exit 1
 fi
+
+#Add role that is configured for logstash indexer named logstash_writer
+curl -k \
+   --user ${ES_USER}:${ES_PASS} \
+   -X POST \
+   -H "Content-Type: application/json"\
+   -d "{ \"cluster\": [\"manage_index_templates\", \"monitor\"], \"indices\": [{ \"names\": [\"logstash-*\", \"linuxbeat-*\", \"firebeat-*\", \"appbeat-*\", \"apachebeat-*\",\"winlogbeat-*\"], \"privileges\": [\"write\", \"delete\", \"create_index\"]}]}" \
+   https://${ES_URL}:${ES_PORT}/_xpack/security/role/logstash_writer
+
+# Add user with role logstash writer
+curl -k \
+   --user ${ES_USER}:${ES_PASS} \
+   -X POST \
+   -H "Content-Type: application/json"\
+   -d "{ \"password\" : \"changeme\",\"roles\" : [ \"logstash_writer\"],\"full_name\" : \"Internal Logstash User\"}"\
+   https://${ES_URL}:${ES_PORT}/_xpack/security/user/logstash_internal
+
+
 
 touch $OUTPUT_LOGFILES
 tail -f $OUTPUT_LOGFILES &

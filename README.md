@@ -41,6 +41,8 @@ Student project that consists of creating SIEM center using ELK stack.
 
 7. In _Discover_ menu you can watch in real time logs that are coming to elasticsearch from different sources separated by indexes you defined above.
 
+8. Folders located in resources folder(_resources/apachebeat_, _resources/appbeat_ and _resources/firebeat_)  contain visualization and dashboards exports for kibana. In order to import them, you need navigate in kibana to path _Management -> Saved Objects_ and press _Import_. When file dialog is opened select json file that represents Visualization or Dashboard export.
+
 ### Useful resources
  
 - [Xpack (official site)](https://www.elastic.co/guide/en/x-pack/current/index.html)

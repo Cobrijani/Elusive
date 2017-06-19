@@ -30,11 +30,20 @@ curl -k \
 #  -d@/etc/filebeat/filebeat.template.json
 
 
-./../scripts/import_dashboards.exe \
- -es https://localhost:9200 \
- -cacert ./filebeat/cryptography/certs/ca/ca.crt \
- -insecure \
- -user elastic \
- -pass changeme \
- -file ./../resources/beats-dashboards-5.4.1.zip
+# ./import_dashboards.exe \
+#  -es https://localhost:9200 \
+#  -cacert ./cryptography/certs/ca/ca.pem \
+#  -insecure \
+#  -user elastic \
+#  -pass changeme \
+#  -file ./../resources/beats-dashboards-5.4.1.zip
 
+
+#./import_dashboards -es https://es:9200 -cacert /etc/pki/tls/certs/ca.pem -insecure -user elastic -pass changeme
+
+curl -k \
+  --user elastic:changeme \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -d@geopoint.json \
+  https://localhost:9200/apachebeat
