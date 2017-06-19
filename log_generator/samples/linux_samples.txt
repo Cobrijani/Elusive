@@ -59,6 +59,6 @@ Feb 21 23:35:33 pera sudo: vagrant : TTY=pts/0 ; PWD=/home/vagrant ; USER=pera ;
 Feb 23 00:08:48 pera sudo: vagrant : TTY=pts/1 ; PWD=/home/vagrant ; USER=pera ; COMMAND=/bin/cat /var/log/secure
 Feb 24 00:13:02 pera sudo:      tsg : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/vagrant ; USER=pera ; COMMAND=/bin/ls
 Feb 22 11:47:05 pera groupadd[6993]: new group: name=python, GID=150
-Feb 22 11:47:05 pera useradd[6996]: new user: name=pera, UID=150, GID=150, home=/usr/share/httpd, shell=/sbin/nologin
+Feb 22 11:47:05 pera useradd[6996]: new user: name=pera, UID=150, GID=150, home=/usr/share/httpd, shell=/bin/true
 Feb 22 16:48:04 pera sshd[2805]: Accepted publickey for drewr from 89.216.18.13 port 34202 ssh2: RSA 01:67:32:d9:b3:20:5d:2d:5f:b4:35:c5:a5:8b:0a:5e
 Feb 22 17:03:22 pera sshd[3260]: Accepted publickey for tsg from 89.216.18.14 port 57936 ssh2: RSA 7c:28:53:4b:dd:5d:1e:07:77:0e:98:01:96:0d:c5:95

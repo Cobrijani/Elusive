@@ -1,0 +1,61 @@
+{
+    "trigger": {
+        "schedule": {
+            "interval": "1m"
+        }
+    },
+    "input": {
+        "search": {
+            "request": {
+                "body": {
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "match": {
+                                        "system.auth.ssh.event": "Invalid"
+                                    }
+                                }
+                            ],
+                            "filter": [{
+                                "range": {
+                                    "@timestamp": {
+                                        "gte": "now-30m"
+                                    }
+                                }
+                            }]
+                        }
+                    },
+                    "aggs": {
+                        "group_by_ip": {
+                            "terms": {
+                                "field": "system.auth.ip.keyword"
+                            }
+                        }
+                    },
+                    "_source": ["system.auth.ip", "system.auth.ssh.event"]
+                },
+                "indices": [
+                    "linuxbeat-*"
+                ]
+            }
+        }
+    },
+    "condition": {
+        "array_compare": {
+            "ctx.payload.aggregations.group_by_ip.buckets": {
+                "path": "doc_count",
+                "gte": {
+                    "value": 5
+                }
+            }
+        }
+    },
+    "actions": {
+        "my-logging-action": {
+            "logging": {
+                "text": "[RULE TRIGGERED] Invalid user from same ip address more than 5 times in last half hour. {{ctx.payload.aggregations.group_by_ip.buckets}}"
+            }
+        }
+    }
+}
