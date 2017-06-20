@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "02228a00-551d-11e7-98a7-bd48402a3cda",
+    "_type": "search",
+    "_source": {
+      "title": "appbeat - logmessage and severity",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "severity",
+        "logmessage"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"appbeat-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
+      }
+    }
+  }
+]

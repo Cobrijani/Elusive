@@ -23,8 +23,38 @@ fi
 
 service cron start
 
+# set number of retries (default: 30, override using ES_CONNECT_RETRY env var)
+  re_is_numeric='^[0-9]+$'
+  if ! [[ $ES_CONNECT_RETRY =~ $re_is_numeric ]] ; then
+     ES_CONNECT_RETRY=300
+  fi
+
+  counter=0
+  while [ ! "$(curl -k --user elastic:changeme https://es:9200 2> /dev/null)" -a $counter -lt $ES_CONNECT_RETRY  ]; do
+    sleep 1
+    ((counter++))
+    echo "Logstash waiting for Elasticsearch to be up ($counter/$ES_CONNECT_RETRY)"
+  done
+  if [ ! "$(curl -k --user elastic:changeme https://es:9200 2> /dev/null)" ]; then
+    echo "Couln't start Elasticsearch. Exiting."
+    exit 1
+  fi
+
+  # wait for cluster to respond before getting its name
+  counter=0
+  while [ -z "$CLUSTER_NAME" -a $counter -lt 30 ]; do
+    sleep 1
+    ((counter++))
+    CLUSTER_NAME=$(curl -k --user elastic:changeme https://es:9200/_cat/health?h=cluster 2> /dev/null | tr -d '[:space:]')
+    echo "Logstash waiting for Elasticsearch cluster to respond ($counter/30)"
+  done
+  if [ -z "$CLUSTER_NAME" ]; then
+    echo "Couln't get name of cluster. Exiting."
+    exit 1
+  fi
+
 ### Logstash
-./usr/local/bin/wait.sh -t 300 -h es -p 9200 # wait for elasticsearch
+#./usr/local/bin/wait.sh -t 300 -h es -p 9200 # wait for elasticsearch
 
 if [ -z "$LOGSTASH_START" ]; then
   LOGSTASH_START=1

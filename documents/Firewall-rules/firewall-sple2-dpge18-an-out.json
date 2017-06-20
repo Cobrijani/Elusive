@@ -73,7 +73,7 @@
             }
         },
        "index" : {
-        "index" : "<alarms-{now/d{YYYY.MM.dd|+01:00}}>", 
+        "index" : "<firewallalarms-{now/d{YYYY.MM.dd|+01:00}}>", 
         "doc_type" : "firewall",
         "execution_time_field" : "timestamp"  
       }

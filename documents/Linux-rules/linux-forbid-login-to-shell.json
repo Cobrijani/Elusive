@@ -1,0 +1,59 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "match": {
+                    "system.auth.groupadd.gid": "150"
+                  }
+                },
+                {
+                  "match": {
+                    "message": "useradd"
+                  }
+                }
+              ],
+              "should": [
+                  { "match": { "system.auth.useradd.shell": "/sbin/nologin" }},
+                  { "match": { "system.auth.useradd.shell": "/bin/false"   }}
+              ]
+            }
+          },
+          "aggs": {
+            "group_by_username": {
+              "terms": {
+                  "field": "system.auth.useradd.name.keyword"
+                }
+              }
+          }
+        },
+        "indices": [
+          "linuxbeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 1
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] There are {{ctx.payload.hits.total}} users who are registered on linux with GID 150 (python) and have access to shell. {{ctx.payload.aggregations.group_by_username.buckets}}"
+      }
+    }
+  }
+}

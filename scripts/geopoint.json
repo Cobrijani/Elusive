@@ -1,0 +1,14 @@
+{
+  "settings": {
+    "number_of_shards": 1
+  },
+  "mappings": {
+    "log": {
+      "properties": {
+        "apache2.access.geoip.location": {
+          "type": "geo_point"
+        }
+      }
+    }
+  }
+}

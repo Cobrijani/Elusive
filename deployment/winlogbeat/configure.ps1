@@ -14,12 +14,20 @@ $wlb_dir = "C:\Program Files\Winlogbeat"
 $conf_in = "$PSScriptRoot\winlogbeat.yml"
 $conf_out = "$($wlb_dir)\winlogbeat.yml"
 
-$cert_in = "$PSScriptRoot\logstash-beats.crt"
-$cert_out = "$($wlb_dir)\logstash-beats.crt"
+$cert_in_bk = "$PSScriptRoot\certs\beats.key"
+$cert_out_bk = "$($wlb_dir)\beats.key"
+
+$cert_in_bp = "$PSScriptRoot\certs\beats.pem"
+$cert_out_bp = "$($wlb_dir)\beats.pem"
+
+$cert_in_ca = "$PSScriptRoot\certs\ca.pem"
+$cert_out_ca = "$($wlb_dir)\ca.pem"
 
 function Main {
     Copy-Item $conf_in $conf_out -Force
-    Copy-Item $cert_in $cert_out -Force
+    Copy-Item $cert_in_bk $cert_out_bk -Force
+    Copy-Item $cert_in_bp $cert_out_bp -Force
+    Copy-Item $cert_in_ca $cert_out_ca -Force
     LoadTemplate
     ImportDashboards
     WaitForKey
@@ -27,7 +35,7 @@ function Main {
 
 function ImportDashboards{
     Write-Host "Importing dashboards"
-    Invoke-Expression "& `"$($wlb_dir)\scripts\import_dashboards.exe`""
+    Invoke-Expression "& `"$($wlb_dir)\scripts\import_dashboards.exe -cacert $($wlb_dir)\ca.pem -insecure -es https://localhost:9200`""
 }
 
 Function WaitForKey {

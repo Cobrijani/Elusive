@@ -47,7 +47,9 @@ RUN mkdir ${ES_HOME} \
  && useradd -r -s /usr/sbin/nologin -M -c "Elasticsearch service user" -u ${ES_UID} -g elasticsearch elasticsearch \
  && mkdir -p /var/log/elasticsearch /etc/elasticsearch /etc/elasticsearch/scripts /var/lib/elasticsearch \
  && chown -R elasticsearch:elasticsearch ${ES_HOME} /var/log/elasticsearch /var/lib/elasticsearch \
- && .${ES_HOME}/bin/elasticsearch-plugin install --batch x-pack
+ && .${ES_HOME}/bin/elasticsearch-plugin install --batch x-pack \
+ && .${ES_HOME}/bin/elasticsearch-plugin install ingest-user-agent \
+ && .${ES_HOME}/bin/elasticsearch-plugin install ingest-geoip
 
 
 ADD ./elasticsearch-init /etc/init.d/elasticsearch
@@ -64,7 +66,9 @@ ADD ./elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 ADD ./elasticsearch-log4j2.properties /etc/elasticsearch/log4j2.properties
 ADD ./elasticsearch-jvm.options /etc/elasticsearch/jvm.options
 ADD ./elasticsearch-default /etc/default/elasticsearch
-RUN chmod -R +r /etc/elasticsearch
+
+RUN mkdir /etc/elasticsearch/ingest-geoip \
+  && chmod -R +r /etc/elasticsearch
 
 ### configure logrotate
 ADD ./elasticsearch-logrotate /etc/logrotate.d/elasticsearch

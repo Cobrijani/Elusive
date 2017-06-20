@@ -1,0 +1,55 @@
+{
+    "trigger": {
+        "schedule": {
+            "interval": "1m"
+        }
+    },
+    "input": {
+        "search": {
+            "request": {
+                "body": {
+                    "size": 0,
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "match": {
+                                        "system.auth.sudo.command": "/bin/cat /var/log/secure"
+                                    }
+                                }
+                            ],
+                            "should": [
+                                { "match": { "system.auth.sudo.user": "test" }},
+                                { "match": { "system.auth.sudo.user": "miki"   }}
+                            ]
+                        }
+                    },
+                    "aggs": {
+                        "group_by_sudo_user": {
+                            "terms": {
+                                "field": "system.auth.sudo.user.keyword"
+                            }
+                        }
+                    }
+                },
+                "indices": [
+                    "linuxbeat-*"
+                ]
+            }
+        }
+    },
+    "condition": {
+        "compare": {
+            "ctx.payload.hits.total": {
+                "gt": 0
+            }
+        }
+    },
+    "actions": {
+        "my-logging-action": {
+            "logging": {
+                "text": "[RULE TRIGGERED] Sudo users executed forbidden command '/bin/cat /var/log/secure'. {{ctx.payload.aggregations.group_by_sudo_user.buckets}}"
+            }
+        }
+    }
+}

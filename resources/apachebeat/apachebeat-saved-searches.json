@@ -1,0 +1,25 @@
+[
+  {
+    "_id": "f319e280-551a-11e7-9973-85c7c24ff120",
+    "_type": "search",
+    "_source": {
+      "title": "apachebeat - live data",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "verb",
+        "request",
+        "response",
+        "os"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"apachebeat-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
+      }
+    }
+  }
+]

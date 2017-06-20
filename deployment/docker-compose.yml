@@ -10,6 +10,7 @@ services:
         - "elk"
       volumes:
         - ./elasticsearch/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml
+      container_name: "elasticsearch"
     kibana:
       image: "cobrijani/elusive:latest_kibana"
       ports:
@@ -18,6 +19,7 @@ services:
         - "elk"
       volumes:
         - ./kibana/kibana.yml:/opt/kibana/config/kibana.yml
+      container_name: "kibana"
     logstash:
       image: "cobrijani/elusive:latest_logstash"
       ports:
@@ -28,6 +30,7 @@ services:
         - ./logstash/logstash.yml:/opt/logstash/config/logstash.yml
         - ./logstash/pipeline/:/etc/logstash/conf.d/
         - ./logstash/patterns/:/opt/logstash/patterns/
+      container_name: "logstash"
     apachebeat:
       image: "cobrijani/elusive:latest_filebeat"
       networks:
@@ -37,6 +40,7 @@ services:
       environment:
         - BEAT_NAME=apache-beat
         - INDEX_NAME=apachebeat
+      container_name: "apachebeat"
     firebeat:
       image: "cobrijani/elusive:latest_filebeat"
       networks:
@@ -46,6 +50,7 @@ services:
       environment:
        - BEAT_NAME=fire-beat
        - INDEX_NAME=firebeat
+      container_name: "firebeat"
     appbeat:
       image: "cobrijani/elusive:latest_filebeat"
       networks:
@@ -55,6 +60,7 @@ services:
       environment:
        - BEAT_NAME=app-beat
        - INDEX_NAME=appbeat
+      container_name: "appbeat"
     linuxbeat:
       image: "cobrijani/elusive:latest_filebeat"
       networks:
@@ -64,7 +70,7 @@ services:
       environment:
        - BEAT_NAME=linux-beat
        - INDEX_NAME=linuxbeat
+      container_name: "linuxbeat"
 networks:
   elk:
     driver: bridge
-
