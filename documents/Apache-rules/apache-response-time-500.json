@@ -62,12 +62,12 @@
        "transform": {
             "script" : {
               "lang" : "painless",
-              "inline" : "def alarms = []; for (int i = 0; i < ctx.payload.hits.hits.length; ++i){ def source = ctx.payload.hits.hits[i]._source; source.timestamp = ctx.execution_time; alarms.add(source); } return ['_doc' : alarms];" 
+              "inline" : "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than 1000 Requests with ended with 500 Response code in last 30 minutes on some users.'; return ['_doc' : alarm];" 
             }
         },
        "index" : {
-        "index" : "<alarms-{now/d{YYYY.MM.dd|+01:00}}>", 
-        "doc_type" : "aparche",
+        "index" : "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>", 
+        "doc_type" : "apache",
         "execution_time_field" : "timestamp"  
       }
     },  

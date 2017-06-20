@@ -44,11 +44,11 @@
             "transform": {
                     "script" : {
                     "lang" : "painless",
-                    "inline" : "def alarms = []; for (int i = 0; i < ctx.payload.hits.hits.length; ++i){ def source = ctx.payload.hits.hits[i]._source; source.timestamp = ctx.execution_time; alarms.add(source); } return ['_doc' : alarms];" 
+                    "inline" : "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'Error appeared in realestate application.'; return ['_doc' : alarm];" 
                     }
                 },
             "index" : {
-                "index" : "<alarms-{now/d{YYYY.MM.dd|+01:00}}>", 
+                "index" : "<realestatealarms-{now/d{YYYY.MM.dd|+01:00}}>", 
                 "doc_type" : "realestate",
                 "execution_time_field" : "timestamp"  
             }
