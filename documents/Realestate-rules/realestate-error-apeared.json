@@ -1,65 +1,63 @@
 {
-    "trigger": {
-        "schedule": {
-            "interval": "1m"
-        }
-    },
-    "input": {
-        "search": {
-            "request": {
-                "body": {
-                    "size": 0,
-                    "query": {
-                        "bool": {
-                            "must": [
-                                {
-                                    "match_phrase": {
-                                        "severity": "ERROR"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                },
-                "indices": [
-                    "appbeat-*"
-                ]
-            }
-        }
-    },
-    "condition": {
-        "compare": {
-            "ctx.payload.hits.total": {
-                "gt": 0
-            }
-        }
-    },
-    "actions": {
-        "my-logging-action": {
-            "logging": {
-                "text": "[RULE TRIGGERED] Error appeared in realestate application."
-            }
-        },
-        "index_payload" : { 
-            "transform": {
-                    "script" : {
-                    "lang" : "painless",
-                    "inline" : "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'Error appeared in realestate application.'; return ['_doc' : alarm];" 
-                    }
-                },
-            "index" : {
-                "index" : "<realestatealarms-{now/d{YYYY.MM.dd|+01:00}}>", 
-                "doc_type" : "realestate",
-                "execution_time_field" : "timestamp"  
-            }
-        },  
-        "send_email" : {
-            "email" : {
-                "to" : "cobrijani@gmail.com",
-                "subject" : "Alarm for realestate!",
-                "body" : "Error appeared in realestate application.",
-                "priority" : "high"
-            }
-        }
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
     }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [{
+                "match_phrase": {
+                  "severity": "ERROR"
+                }
+              }]
+            }
+          }
+        },
+        "indices": [
+          "appbeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gt": 0
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] Error appeared in realestate application."
+      }
+    },
+    "index_payload": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'Error appeared in realestate application.'; return ['_doc' : alarm];"
+        }
+      },
+      "index": {
+        "index": "<realestatealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "doc_type": "realestate",
+        "execution_time_field": "timestamp"
+      }
+    },
+    "send_email": {
+      "email": {
+        "to": "cobrijani@gmail.com",
+        "subject": "Alarm for realestate!",
+        "body": "Error appeared in realestate application.",
+        "priority": "high"
+      }
+    }
+  }
 }

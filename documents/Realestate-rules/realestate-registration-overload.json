@@ -1,77 +1,76 @@
 {
-    "trigger": {
-        "schedule": {
-            "interval": "1m"
-        }
-    },
-    "input": {
-        "search": {
-            "request": {
-                "body": {
-                    "size": 0,
-                    "query": {
-                        "bool": {
-                            "must": [
-                                {
-                                    "match_phrase": {
-                                        "action": "REGISTRATION"
-                                    }
-                                },
-                                {
-                                    "match_phrase": {
-                                        "logmessage": "succesfully registered"
-                                    }
-                                }
-                            ],
-                            "filter": [{
-                                "range": {
-                                    "@timestamp": {
-                                        "gte": "now-30m"
-                                    }
-                                }
-                            }]
-                        }
-                    }
-                },
-                "indices": [
-                    "appbeat-*"
-                ]
-            }
-        }
-    },
-    "condition": {
-        "compare": {
-            "ctx.payload.hits.total": {
-                "gte": 100
-            }
-        }
-    },
-    "actions": {
-        "my-logging-action": {
-            "logging": {
-                "text": "[RULE TRIGGERED] Too many registrations in last half hour. {{ctx.payload.hits.total}} users registered."
-            }
-        },
-        "index_payload" : { 
-            "transform": {
-                    "script" : {
-                    "lang" : "painless",
-                    "inline" : "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'Too many registrations in last half hour. ' +  ctx.payload.hits.total +  ' users registered.'; return ['_doc' : alarm];" 
-                    }
-                },
-            "index" : {
-                "index" : "<realestatealarms-{now/d{YYYY.MM.dd|+01:00}}>", 
-                "doc_type" : "realestate",
-                "execution_time_field" : "timestamp"  
-            }
-        },  
-        "send_email" : {
-            "email" : {
-                "to" : "cobrijani@gmail.com",
-                "subject" : "Alarm for realestate!",
-                "body" : "Too many registrations in last half hour. {{ctx.payload.hits.total}} users registered.",
-                "priority" : "high"
-            }
-        }
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
     }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [{
+                  "match_phrase": {
+                    "action": "REGISTRATION"
+                  }
+                },
+                {
+                  "match_phrase": {
+                    "logmessage": "succesfully registered"
+                  }
+                }
+              ],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-30m"
+                  }
+                }
+              }]
+            }
+          }
+        },
+        "indices": [
+          "appbeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": 100
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] Too many registrations in last half hour. {{ctx.payload.hits.total}} users registered."
+      }
+    },
+    "index_payload": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'Too many registrations in last half hour. ' +  ctx.payload.hits.total +  ' users registered.'; return ['_doc' : alarm];"
+        }
+      },
+      "index": {
+        "index": "<realestatealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "doc_type": "realestate",
+        "execution_time_field": "timestamp"
+      }
+    },
+    "send_email": {
+      "email": {
+        "to": "cobrijani@gmail.com",
+        "subject": "Alarm for realestate!",
+        "body": "Too many registrations in last half hour. {{ctx.payload.hits.total}} users registered.",
+        "priority": "high"
+      }
+    }
+  }
 }

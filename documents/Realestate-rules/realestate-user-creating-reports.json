@@ -1,88 +1,87 @@
 {
-    "trigger": {
-        "schedule": {
-            "interval": "1m"
-        }
-    },
-    "input": {
-        "search": {
-            "request": {
-                "body": {
-                    "size": 0,
-                    "query": {
-                        "bool": {
-                            "must": [
-                                {
-                                    "match_phrase": {
-                                        "action": "CREATING_REPORT"
-                                    }
-                                },
-                                {
-                                    "match_phrase": {
-                                        "logmessage": "created a report"
-                                    }
-                                }
-                            ],
-                            "filter": [{
-                                "range": {
-                                    "@timestamp": {
-                                        "gte": "now-30m"
-                                    }
-                                }
-                            }]
-                        }
-                    },
-                    "aggs": {
-                        "group_by_username": {
-                            "terms": {
-                                "field": "username.keyword",
-                                "size": 5
-                            }
-                        }
-                    }
-                },
-                "indices": [
-                    "appbeat-*"
-                ]
-            }
-        }
-    },
-    "condition": {
-        "array_compare": {
-            "ctx.payload.aggregations.group_by_username.buckets": {
-                "path": "doc_count",
-                "gte": {
-                    "value": 5
-                }
-            }
-        }
-    },
-    "actions": {
-        "my-logging-action": {
-            "logging": {
-                "text": "[RULE TRIGGERED] User created more than 5 reports in last half hour. {{ctx.payload.aggregations.group_by_username.buckets}}"
-            }
-        },
-        "index_payload" : { 
-            "transform": {
-                    "script" : {
-                    "lang" : "painless",
-                    "inline" : "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'User created more than 5 reports in last half hour.'; return ['_doc' : alarm];" 
-                    }
-                },
-            "index" : {
-                "index" : "<realestatealarms-{now/d{YYYY.MM.dd|+01:00}}>", 
-                "doc_type" : "realestate",
-                "execution_time_field" : "timestamp"  
-            }
-        },  
-        "send_email" : {
-            "email" : {
-                "to" : "cobrijani@gmail.com",
-                "subject" : "Alarm for realestate!",
-                "body" : "User created more than 5 reports in last half hour. {{ctx.payload.aggregations.group_by_username.buckets}}",
-                "priority" : "high"
-            }
-        }
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
     }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [{
+                  "match_phrase": {
+                    "action": "CREATING_REPORT"
+                  }
+                },
+                {
+                  "match_phrase": {
+                    "logmessage": "created a report"
+                  }
+                }
+              ],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-30m"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "group_by_username": {
+              "terms": {
+                "field": "username.keyword",
+                "size": 5
+              }
+            }
+          }
+        },
+        "indices": [
+          "appbeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_username.buckets": {
+        "path": "doc_count",
+        "gte": {
+          "value": 5
+        }
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "[RULE TRIGGERED] User created more than 5 reports in last half hour. {{ctx.payload.aggregations.group_by_username.buckets}}"
+      }
+    },
+    "index_payload": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'User created more than 5 reports in last half hour.'; return ['_doc' : alarm];"
+        }
+      },
+      "index": {
+        "index": "<realestatealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "doc_type": "realestate",
+        "execution_time_field": "timestamp"
+      }
+    },
+    "send_email": {
+      "email": {
+        "to": "cobrijani@gmail.com",
+        "subject": "Alarm for realestate!",
+        "body": "User created more than 5 reports in last half hour. {{ctx.payload.aggregations.group_by_username.buckets}}",
+        "priority": "high"
+      }
+    }
+  }
 }
