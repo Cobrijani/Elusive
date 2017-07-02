@@ -186,3 +186,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/osx,linux,windows,visualstudiocode
+
+log_generator/Fake-Apache-Log-Generator
