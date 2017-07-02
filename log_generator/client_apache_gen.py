@@ -6,7 +6,7 @@ from faker import Faker
 from tzlocal import get_localzone
 
 
-class MainApacheGen(Generator):
+class ClientApacheGen(Generator):
   def __init__(self, file_path):
     Generator.__init__(self, file_path)
     self.logs = []

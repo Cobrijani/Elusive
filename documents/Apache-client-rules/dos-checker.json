@@ -1,0 +1,73 @@
+{
+  "metadata":{
+    "name": "Dos checker",
+    "description": "Rule that checks how many request are happening per minute, if it reaches threshhold it creates prevent action.",
+    "threshold": 50,
+    "time_window": "10m"
+  },
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-{{ctx.metadata.time_window}}"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "group_by_client_ip": {
+              "terms": {
+                "field": "clientip.keyword"
+              }
+            }
+          }
+        },
+        "indices": [
+          "apachebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_client_ip.buckets": {
+        "path": "doc_count",
+        "gte": {
+          "value": "{{ctx.metadata.threshold}}"
+        }
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "1 or more Ip addresses are making too many requests, possible dos, executing prevention actions."
+      }
+    },
+    "index_payload": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'Ip addresses making too many requests'; alarm.result = new ArrayList(); for(def line: ctx.payload.aggregations.group_by_client_ip.buckets){if(line.doc_count >= ctx.metadata.threshold){alarm.result.add(['ip-address': line.key, 'number-requests': line.doc_count])}} return ['_doc' : alarm];"
+        }
+      },
+      "index": {
+        "index": "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "doc_type": "apache",
+        "execution_time_field": "timestamp"
+      }
+    }
+  }
+}

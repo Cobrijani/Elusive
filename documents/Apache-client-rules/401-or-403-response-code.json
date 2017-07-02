@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "description": "This rule checks how many number of requests resulted with 401 or 403 error code and resulting appropriate prevention",
+    "time_window": "30m",
+    "threshold": 100
+  },
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "should": [{
+                  "match": {
+                    "response.keyword": "401"
+                  }
+                },
+                {
+                  "match": {
+                    "response.keyword": "403"
+                  }
+                }
+              ],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-{{ctx.metadata.time_window}}"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "group_by_client_ip": {
+              "terms": {
+                "field": "clientip.keyword"
+              }
+            }
+          }
+        },
+        "indices": [
+          "apachebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_client_ip.buckets": {
+        "path": "doc_count",
+        "gte": {
+          "value": "{{ctx.metadata.threshold}}"
+        }
+      }
+    }
+  },
+  "actions": {
+    "logging-action": {
+      "logging": {
+        "text": "There are more than {{ctx.metadata.threshold}} Requests with ended with 401 or 403 Response code in last {{ctx.metadata.time_window}} on users"
+      }
+    },
+    "index_payload": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than {{ctx.metadata.threshold}} Requests with ended with 401 Response code in last {{ctx.metadata.time_window}}  on some users.'; alarm.result = new ArrayList(); for(def line: ctx.payload.aggregations.group_by_client_ip.buckets){if(line.doc_count >= ctx.metadata.threshold){alarm.result.add(['ip-address': line.key, 'number-of-401-or-403-response': line.doc_count])}} return ['_doc' : alarm];"
+        }
+      },
+      "index": {
+        "index": "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "doc_type": "apache",
+        "execution_time_field": "timestamp"
+      }
+    }
+  }
+}
