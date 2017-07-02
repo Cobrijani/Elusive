@@ -30,7 +30,6 @@ Transformacija podataka je takođe važan proces u celokupnom sistemu, zato što
 Podaci nisu vredni ako nisu čitljivi za svakog čoveka. U tu svrhu se pronalazi primena _Kibane_, koja predstavlja klijentsku aplikaciju dizajniranu za potrebe čitanja podataka iz _Elasticsearch-a_. _Kibana_ ima podršku za kreiranje raznih widget-a nad podacima koje čuvamo u Elasticsearch-u takođe grupisanje tih Widget-a u grupacije zvane _Dashboard-i_.
 
 ## Korišćenje pravila i rule engine-a
-
 ## Autentifikacija
 ## Zaštita podataka
 ## Enkripcija komunikacije
