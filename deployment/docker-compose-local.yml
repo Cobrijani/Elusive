@@ -71,6 +71,11 @@ services:
        - BEAT_NAME=linux-beat
        - INDEX_NAME=linuxbeat
       container_name: "linuxbeat"
+    mongodb:
+      image: "mongo:latest"
+      networks:
+        - elk
+      container_name: "mongodb"
 networks:
   elk:
     driver: bridge

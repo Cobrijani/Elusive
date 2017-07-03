@@ -3,6 +3,7 @@ import os
 
 from generators.client_apache_gen import ClientApacheGen
 from generators.generator import LogGenerator
+from generators.main_firewall_gen import MainFirewallGen
 
 log_out = './../test_logs'
 
@@ -27,8 +28,8 @@ if __name__ == '__main__':
   # lg.add_generator(AppGenerator(file_app))
   # lg.add_generator(LinuxGenerator(file_linux))
 
-  lg.add_generator(ClientApacheGen(file_apache))
-
+  #lg.add_generator(ClientApacheGen(file_apache))
+  lg.add_generator(MainFirewallGen(file_firewall))
   try:
     lg.generate()
   except KeyboardInterrupt:

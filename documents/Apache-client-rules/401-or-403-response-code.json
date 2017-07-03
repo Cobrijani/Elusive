@@ -1,5 +1,6 @@
 {
   "metadata": {
+    "name": "Response code 401 or 403 tracker",
     "description": "This rule checks how many number of requests resulted with 401 or 403 error code and resulting appropriate prevention",
     "time_window": "30m",
     "threshold": 100

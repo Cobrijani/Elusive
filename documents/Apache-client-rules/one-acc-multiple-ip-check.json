@@ -1,78 +1,82 @@
 {
-    "trigger": {
-        "schedule": {
-            "interval": "1m"
-        }
-    },
-    "input": {
-        "search": {
-            "request": {
-                "body": {
-                    "size": 0,
-                    "query": {
-                        "bool": {
-                            "must": [],
-                            "filter": [
-                                {
-                                    "range": {
-                                        "@timestamp": {
-                                            "gte": "now-10m"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "aggs": {
-                        "agg_by_account_number": {
-                            "terms": {
-                                "field": "account_number"
-                            },
-                            "aggs": {
-                                "aggs_by_client_ip": {
-                                    "cardinality": {
-                                        "field": "clientip.keyword"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "indices": [
-                    "apachebeat-*"
-                ]
-            }
-        }
-    },
-    "condition": {
-        "array_compare": {
-            "ctx.payload.aggregations.agg_by_account_number.buckets": {
-                "path": "aggs_by_client_ip.value",
-                "gte": {
-                    "value": 2
-                }
-            }
-        }
-    },
-    "actions": {
-        "my-logging-action": {
-            "logging": {
-                "text": "Postoji vise od jedna ip adresa koja vrsi transakcije nad istim racunom u roku do 10 minuta"
-            }
-        },
-        "index_payload": {
-            "transform": {
-                "script": {
-                    "lang": "painless",
-                    "inline": "def alarm = new HashMap(); alarm.type='ONE-ACC-MULTIPLE-IP-CHECK'; alarm.timestamp = ctx.execution_time; alarm.message = 'Notices more than one ip address performing transactions on same account number'; alarm.result = new ArrayList(); for (def line: ctx.payload.aggregations.agg_by_account_number.buckets){ if(line.aggs_by_client_ip.value >= 2) {alarm.result.add(['account-number':line.key.toString(), 'num-of-ips': line.aggs_by_client_ip.value])}} return ['_doc' : alarm];"
-
-                }
-            },
-            "index": {
-                "index": "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>",
-                "doc_type": "apache",
-                "execution_time_field": "timestamp"
-            }
-        }
+  "metadata": {
+    "name": "Multiple ip addresses for same account checker",
+    "description": "This rule checks how many ip addresses are performing actions on account",
+    "time_window": "10m",
+    "threshold": 2
+  },
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
     }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-{{ctx.metadata.time_window}}"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "agg_by_account_number": {
+              "terms": {
+                "field": "account_number"
+              },
+              "aggs": {
+                "aggs_by_client_ip": {
+                  "cardinality": {
+                    "field": "clientip.keyword"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "indices": [
+          "apachebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.agg_by_account_number.buckets": {
+        "path": "aggs_by_client_ip.value",
+        "gte": {
+          "value": "{{ctx.metadata.threshold}}"
+        }
+      }
+    }
+  },
+  "actions": {
+    "my-logging-action": {
+      "logging": {
+        "text": "Postoji vise od jedna ip adresa koja vrsi transakcije nad istim racunom u roku do {{ctx.metadata.time_window}}"
+      }
+    },
+    "index_payload": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def alarm = new HashMap(); alarm.type='ONE-ACC-MULTIPLE-IP-CHECK'; alarm.timestamp = ctx.execution_time; alarm.message = 'Notices more than one ip address performing transactions on same account number'; alarm.result = new ArrayList(); for (def line: ctx.payload.aggregations.agg_by_account_number.buckets){ if(line.aggs_by_client_ip.value >= 2) {alarm.result.add(['account-number':line.key.toString(), 'num-of-ips': line.aggs_by_client_ip.value])}} return ['_doc' : alarm];"
+
+        }
+      },
+      "index": {
+        "index": "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "doc_type": "apache",
+        "execution_time_field": "timestamp"
+      }
+    }
+  }
 }
