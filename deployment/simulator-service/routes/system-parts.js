@@ -53,5 +53,47 @@ router.get('/:name/health', function (req, res, next) {
   })
 });
 
+/**
+ * Simulate restarting of system part
+ */
+router.get('/:name/restart', function (req, res, next) {
+  var query =
+    SystemPart.findOne({
+      name: req.params.name
+    });
+
+  query.exec(function (err, result) {
+    if (err)return next(err);
+    if (!result) return next({status: 404});
+
+    result.health.status = "ok";
+    result.save(function (err, part) {
+      if (err)return next(err);
+      res.json(part);
+    })
+  });
+});
+
+/**
+ * Simulate crashing of system part
+ */
+router.get('/:name/crash', function (req, res, next) {
+  var query =
+    SystemPart.findOne({
+      name: req.params.name
+    });
+
+  query.exec(function (err, result) {
+    if (err)return next(err);
+    if (!result) return next({status: 404});
+
+    result.health.status = "error";
+    result.save(function (err, part) {
+      if (err)return next(err);
+      res.json(part);
+    })
+  });
+});
+
 
 module.exports = router;
