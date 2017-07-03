@@ -64,7 +64,7 @@
             "transform": {
                 "script": {
                     "lang": "painless",
-                    "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'Notices more than one ip address performing transactions on same account number'; alarm.result = new ArrayList(); for (def line: ctx.payload.aggregations.agg_by_account_number.buckets){ if(line.aggs_by_client_ip.value >= 2) {alarm.result.add(['account-number':line.key.toString(), 'num-of-ips': line.aggs_by_client_ip.value])}} return ['_doc' : alarm];"
+                    "inline": "def alarm = new HashMap(); alarm.type='ONE-ACC-MULTIPLE-IP-CHECK'; alarm.timestamp = ctx.execution_time; alarm.message = 'Notices more than one ip address performing transactions on same account number'; alarm.result = new ArrayList(); for (def line: ctx.payload.aggregations.agg_by_account_number.buckets){ if(line.aggs_by_client_ip.value >= 2) {alarm.result.add(['account-number':line.key.toString(), 'num-of-ips': line.aggs_by_client_ip.value])}} return ['_doc' : alarm];"
 
                 }
             },

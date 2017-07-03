@@ -54,7 +54,7 @@
         "transform": {
           "script": {
             "lang": "painless",
-            "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than {{ctx.metadata.threshold}} Requests with ended with 500 Response code in last {{ctx.metadata.time_window}}  on some users.'; alarm.result = new ArrayList(); for(def line: ctx.payload.hits.hits){ alarm.result.add(line)} return ['_doc' : alarm];"
+            "inline": "def alarm = new HashMap(); alarm.type='500-RESPONSE-CODE-CHECK'; alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than {{ctx.metadata.threshold}} Requests with ended with 500 Response code in last {{ctx.metadata.time_window}}  on some users.'; alarm.result = new ArrayList(); for(def line: ctx.payload.hits.hits){ alarm.result.add(line)} return ['_doc' : alarm];"
           }
         },
         "index": {

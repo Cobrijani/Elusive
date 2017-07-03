@@ -60,7 +60,7 @@
       "transform": {
         "script": {
           "lang": "painless",
-          "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'Ip addresses making too many requests'; alarm.result = new ArrayList(); for(def line: ctx.payload.aggregations.group_by_client_ip.buckets){if(line.doc_count >= ctx.metadata.threshold){alarm.result.add(['ip-address': line.key, 'number-requests': line.doc_count])}} return ['_doc' : alarm];"
+          "inline": "def alarm = new HashMap(); alarm.type='DOS-CHECKER'; alarm.timestamp = ctx.execution_time; alarm.message = 'Ip addresses making too many requests'; alarm.result = new ArrayList(); for(def line: ctx.payload.aggregations.group_by_client_ip.buckets){if(line.doc_count >= ctx.metadata.threshold){alarm.result.add(['ip-address': line.key, 'number-requests': line.doc_count])}} return ['_doc' : alarm];"
         }
       },
       "index": {
