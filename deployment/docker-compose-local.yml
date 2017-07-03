@@ -73,9 +73,18 @@ services:
       container_name: "linuxbeat"
     mongodb:
       image: "mongo:latest"
+      ports:
+        - "27017:27017"
       networks:
         - elk
       container_name: "mongodb"
+    simulator:
+      build: "simulator-service"
+      networks:
+        - "elk"
+      ports:
+        - "3000:3000"
+      container_name: "simulator-service"
 networks:
   elk:
     driver: bridge

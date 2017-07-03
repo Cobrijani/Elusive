@@ -12,6 +12,7 @@ var systemParts = require('./routes/system-parts');
 var mongoose = require('mongoose');
 var cfg = require('./config');
 
+console.log('Configuration: ' + cfg.database);
 var app = express();
 mongoose.Promise = require('bluebird');
 mongoose.connect(cfg.database, {

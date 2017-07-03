@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "name": "Client bank health checker",
+    "description": "This watcher checks health status of a system",
+    "url": "http://simulator:3000/systemParts/client-bank/health",
+    "status": "error"
+  },
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "http": {
+      "request": {
+        "url": "http://simulator:3000/systemParts/client-bank/health"
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.status":{
+        "eq": "{{ctx.metadata.status}}"
+      }
+    }
+  },
+  "actions": {
+    "logging-action": {
+      "logging": {
+        "text": "Client bank is down! Restart in progress!"
+      }
+    },
+    "restart_webhook":{
+      "webhook":{
+        "method": "GET",
+        "url": "http://simulator:3000/systemParts/client-bank/restart"
+      }
+    }
+  }
+}

@@ -11,7 +11,13 @@ RUN npm install
 
 # Bundle app source
 COPY . /usr/src/app
+ENV NODE_ENV=production
+
+ADD ./wait.sh /usr/local/bin/wait.sh
+RUN chmod +x /usr/local/bin/wait.sh
+ADD ./start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "/usr/local/bin/start.sh" ]
