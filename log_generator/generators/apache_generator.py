@@ -10,7 +10,7 @@ class ApacheGenerator(Generator):
         self.get_log_samples()
 
     def get_log_samples(self):
-        with open('samples/apache_log_samples.txt', 'r') as f:
+        with open('./../samples/apache_log_samples.txt', 'r') as f:
             for row in f:
                 self.logs.append(row)
 

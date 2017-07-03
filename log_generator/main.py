@@ -1,12 +1,8 @@
-from firewall_generator import FirewallGenerator
-from apache_generator import ApacheGenerator
-from app_generator import AppGenerator
-from linux_generator import LinuxGenerator
-from generator import LogGenerator
-from client_apache_gen import ClientApacheGen
-import sys
-import os
 import argparse
+import os
+
+from generators.client_apache_gen import ClientApacheGen
+from generators.generator import LogGenerator
 
 log_out = './../test_logs'
 

@@ -10,7 +10,7 @@ class LinuxGenerator(Generator):
         self.get_log_samples()
 
     def get_log_samples(self):
-        with open('samples/linux_samples.txt', 'r') as f:
+        with open('./../samples/linux_samples.txt', 'r') as f:
             for row in f:
                 self.logs.append(row)
 
