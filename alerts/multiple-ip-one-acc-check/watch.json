@@ -1,0 +1,76 @@
+{
+    "trigger": {
+        "schedule": {
+            "interval": "1m"
+        }
+    },
+    "input": {
+        "search": {
+            "request": {
+                "body": {
+                    "size": 0,
+                    "query": {
+                        "bool": {
+                            "must": [],
+                            "filter": [
+                                {
+                                    "range": {
+                                        "@timestamp": {
+                                            "gte": "now-10m"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "aggs": {
+                        "agg_by_account_number": {
+                            "terms": {
+                                "field": "account_number"
+                            },
+                            "aggs": {
+                                "aggs_by_client_ip": {
+                                    "cardinality": {
+                                        "field": "clientip.keyword"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "indices": [
+                    "apachebeat-*"
+                ]
+            }
+        }
+    },
+    "condition": {
+        "array_compare": {
+            "ctx.payload.aggregations.agg_by_account_number.buckets": {
+                "path": "aggs_by_client_ip.value",
+                "gte": {
+                    "value": 2
+                }
+            }
+        }
+    },
+    "actions": {
+        "my-logging-action": {
+            "logging": {
+                "text": "Postoji vise od jedna ip adresa koja vrsi transakcije nad istim racunom u roku do 10 minuta"
+            }
+        },
+        "index_payload": {
+            "transform": {
+                "script": {
+                  "id": "index_transform"
+                }
+            },
+            "index": {
+                "index": "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+                "doc_type": "apache",
+                "execution_time_field": "timestamp"
+            }
+        }
+    }
+}

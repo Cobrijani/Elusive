@@ -1,0 +1,67 @@
+  {
+    "metadata": {
+      "description": "This rule checks how many number of requests resulted with 500 response error code and resulting appropriate prevention",
+      "time_window": "30m",
+      "threshold": 1
+    },
+    "trigger": {
+      "schedule": {
+        "interval": "1m"
+      }
+    },
+    "input": {
+      "search": {
+        "request": {
+          "body": {
+            "query": {
+              "bool": {
+                "must": [{
+                  "match": {
+                    "response": "500"
+                  }
+                }],
+                "filter": [{
+                  "range": {
+                    "@timestamp": {
+                      "gte": "now-{{ctx.metadata.time_window}}"
+                    }
+                  }
+                }]
+              }
+            },
+            "_source": ["request"]
+          },
+          "indices": [
+            "apachebeat-*"
+          ]
+        }
+      }
+    },
+    "condition": {
+      "compare": {
+        "ctx.payload.hits.total": {
+          "gte": "{{ctx.metadata.threshold}}"
+        }
+      }
+    },
+    "actions": {
+      "logging-action": {
+        "logging": {
+          "text": "There are more than {{ctx.metadata.threshold}} Requests with ended with 401 or 403 Response code in last {{ctx.metadata.time_window}} on users"
+        }
+      },
+      "index_payload": {
+        "transform": {
+          "script": {
+            "lang": "painless",
+            "inline": "def alarm = new HashMap(); alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than {{ctx.metadata.threshold}} Requests with ended with 500 Response code in last {{ctx.metadata.time_window}}  on some users.'; alarm.result = new ArrayList(); for(def line: ctx.payload.hits.hits){ alarm.result.add(line)} return ['_doc' : alarm];"
+          }
+        },
+        "index": {
+          "index": "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+          "doc_type": "apache",
+          "execution_time_field": "timestamp"
+        }
+      }
+    }
+  }

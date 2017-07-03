@@ -34,7 +34,7 @@ Napomena:
 - Spisak pravila vezanih za web server na kome se nalazi aplikacija kojoj pristupaju krajnji korisnici:
   1. Vrsi se provera sa koliko razlicitih IP adresa se pristupa sa jednim korisnickim nalogom. Ukoliko je taj pristup veci od 2 u periodu od 10 minuta, prevencija je da se racun blokira daljim transakcijama.
   2. Vrsi se provera koliko se puta desio Response Code 401 (Unauthorized), 403 (Forbidden) ili 500 (Internal Server Error) za svaku IP adresu. Ukoliko u roku od sat vremena dodje do 401 ili 403 40 puta ip adresa ce biti privremeno black listovana na 1 sat. Ukoliko dodje do 500 (Internal Server Error) salje se mail development timu da se desava greska koja ne bi smela da postoji.
-  3. Ukoliko se desava previse zahteva sa neke IP adrese vise od 50 puta u minuti, prekida se konekcija kako bi se specio DOS.
+  3. Ukoliko se desava previse zahteva sa neke IP adrese vise od 50 puta u minuti, prekida se konekcija kako bi se specio DOS. (*)
 
 - Spisak pravila vezanih za firewall koji stoji izmedju glavnom servera i ostalih ucenika koji komuniciraju sa njim
   1. Vrsi se provera sa kojih IP adresa dolazi request. Tacno se zna koje adrese smeju da salje zahtev i ukoliko se primeti da zahtevi sa nekih ip adresa previse dolaze (tipa 20 DENY ili DROP zahteva) vrsi detekcija uljeza i prevencija da napada firewall.
