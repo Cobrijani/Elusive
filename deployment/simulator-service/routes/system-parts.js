@@ -53,6 +53,48 @@ router.get('/:name/health', function (req, res, next) {
   })
 });
 
+router.get('/:name/allowedIps', function (req, res, next) {
+  var query =
+    SystemPart.findOne({
+      name: req.params.name
+    });
+
+  query.select('allowedIps');
+  query.exec(function (err, result) {
+    if (err) return next(err);
+    if (!result) return next({
+      status: 404
+    });
+    return res.json({
+      allowedIps: result.allowedIps
+    });
+  });
+});
+
+router.post('/:name/banIp', function (req, res, next) {
+
+  //this is because of elastic search
+  if (req.body.ips[req.body.ips.length - 1] === 'eof') {
+    req.body.ips.pop();
+  }
+
+  SystemPart.update({
+    name: req.params.name
+  }, {
+    $addToSet: {
+      blacklistedIps: {
+        $each: req.body.ips
+      }
+    }
+  }, {
+    upsert: true
+  }, function (err, result) {
+    if (err) return next(err);
+    res.json(result);
+  });
+});
+
+
 /**
  * Simulate restarting of system part
  */

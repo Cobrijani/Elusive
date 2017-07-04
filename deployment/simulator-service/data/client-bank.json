@@ -1,0 +1,10 @@
+{
+  "name": "client-bank",
+  "health": {
+    "status": "ok",
+    "cpu": 0.7,
+    "disk": 0.6
+  },
+  "allowedIps": [],
+  "blacklistedIps": []
+}

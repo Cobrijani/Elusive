@@ -4,6 +4,7 @@ import os
 from generators.atm_gen import AtmGen
 from generators.client_apache_gen import ClientApacheGen
 from generators.generator import LogGenerator
+from generators.main_apache_gen import MainApacheGen
 from generators.main_firewall_gen import MainFirewallGen
 
 log_out = './../test_logs'
@@ -19,6 +20,7 @@ if __name__ == '__main__':
   file_app = log_out + '/application/app.log'
   file_linux = log_out + '/linux/linux.log'
   file_atm = log_out + '/atm/atm.log'
+  file_apache_main = log_out + '/apache-main/apache-main.log'
 
   output_files = [file_apache, file_app, file_firewall, file_linux]
   print("Generator started")
@@ -32,7 +34,8 @@ if __name__ == '__main__':
 
   # lg.add_generator(ClientApacheGen(file_apache))
   # lg.add_generator(MainFirewallGen(file_firewall))
-  lg.add_generator(AtmGen(file_atm))
+  # lg.add_generator(AtmGen(file_atm))
+  lg.add_generator(MainApacheGen(file_apache_main))
   try:
     lg.generate()
   except KeyboardInterrupt:

@@ -7,7 +7,11 @@ var systemPartSchema = new Schema({
     required: true
   },
   health: {
-    status: String,
+    status: {
+      type: String,
+      enum: ['ok', 'error'],
+      required: true
+    },
     cpu: {
       type: Number,
       min: 0,
@@ -21,6 +25,8 @@ var systemPartSchema = new Schema({
       required: true
     }
   },
+  allowedIps: [String],
+  blacklistedIps: [String],
   createdAt: Date,
   updatedAt: Date
 });

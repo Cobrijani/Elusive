@@ -81,6 +81,16 @@ services:
         - BEAT_NAME=atm-beat
         - INDEX_NAME=atmbeat
       container_name: "atmbeat"
+    apache-main-beat:
+      build: "filebeat"
+      networks:
+        - elk
+      volumes:
+        - ./../test_logs/apache-main/:/var/log/apache-main
+      environment:
+        - BEAT_NAME=apache-main-beat
+        - INDEX_NAME=apachemainbeat
+      container_name: "apache-main-beat"
     mongodb:
       image: "mongo:latest"
       ports:

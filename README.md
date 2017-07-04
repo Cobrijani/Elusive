@@ -68,4 +68,6 @@ Student project that consists of creating SIEM center using ELK stack.
 
 - [Github repo for Docker cheatsheets](https://github.com/wsargent/docker-cheat-sheet)
 
+- [Mustache syntax used for xpack alerts](http://mustache.github.io/)
+
 
