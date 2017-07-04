@@ -71,6 +71,16 @@ services:
        - BEAT_NAME=linux-beat
        - INDEX_NAME=linuxbeat
       container_name: "linuxbeat"
+    atmbeat:
+      build: "filebeat"
+      networks:
+        - elk
+      volumes:
+        - ./../test_logs/atm/:/var/log/atm
+      environment:
+        - BEAT_NAME=atm-beat
+        - INDEX_NAME=atmbeat
+      container_name: "atmbeat"
     mongodb:
       image: "mongo:latest"
       ports:

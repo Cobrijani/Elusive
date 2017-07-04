@@ -46,7 +46,7 @@ Napomena:
   2. Vrsi se provera kodova 401, 403 i 500 i ukoliko se desi 401, 403 sprecava se komunikaija sa tim sistemima dok se ne ustanovi sta je uzrok tome, a dok za 500 se vrsi slanje mail administratoru sistema da se ustanovi i ukloni kvar
 
 - Spisak pravila za automate (logovi se prate za vise automata kako bi se mogle zakljuciti neke stvari):
-  1. Ukoliko se ustanovi da korinik sa istom karticom podize novac sa vise automata u jakom kratkom vremenskom periodu vrsi se blokiranje kartice, dok se korisnik ne javi na filijalu.
+  1. Ukoliko se ustanovi da korinik sa istom karticom podize novac sa vise automata u kratkom vremenskom periodu vrsi se blokiranje kartice, dok se korisnik ne javi na filijalu.
   2. Ukoliko se ustanovi da korisni pokusava vise od 5 puta da podigne novac preko limita sa automata, vrsi se akcija blokiranja kartice.
 
 - Spisak pravila za metrike:

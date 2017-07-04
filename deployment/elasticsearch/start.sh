@@ -124,7 +124,7 @@ curl -k \
    --user ${ES_USER}:${ES_PASS} \
    -X POST \
    -H "Content-Type: application/json"\
-   -d "{ \"cluster\": [\"manage_index_templates\", \"monitor\"], \"indices\": [{ \"names\": [\"logstash-*\", \"linuxbeat-*\", \"firebeat-*\", \"appbeat-*\", \"apachebeat-*\",\"winlogbeat-*\"], \"privileges\": [\"write\", \"delete\", \"create_index\"]}]}" \
+   -d "{ \"cluster\": [\"manage_index_templates\", \"monitor\"], \"indices\": [{ \"names\": [\"logstash-*\", \"linuxbeat-*\", \"firebeat-*\", \"appbeat-*\", \"apachebeat-*\",\"winlogbeat-*\", \"atmbeat-*\"], \"privileges\": [\"write\", \"delete\", \"create_index\"]}]}" \
    https://${ES_URL}:${ES_PORT}/_xpack/security/role/logstash_writer
 
 # Add user with role logstash writer

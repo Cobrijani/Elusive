@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "name": "ATM fraud checker",
+    "description": "Rule that checks whether one credit card is used to withdraw money from multiple ATMs in short period of time",
+    "threshold": 2,
+    "time_window": "10m",
+    "logging_message": "Found credit card purchase in more than one ATM in last 10 minutes"
+  },
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [{
+                "match": {
+                  "result": "Success"
+                }
+              }],
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-10m"
+                  }
+                }
+              }]
+            }
+          },
+          "aggs": {
+            "group_by_credit_cards": {
+              "terms": {
+                "field": "credit_card.keyword"
+              },
+              "aggs": {
+                "group_by_atm_id": {
+                  "cardinality": {
+                    "field": "atm_id.keyword"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "indices": [
+          "atmbeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "array_compare": {
+      "ctx.payload.aggregations.group_by_credit_cards.buckets": {
+        "path": "group_by_atm_id.value",
+        "gte": {
+          "value": "{{ctx.metadata.threshold}}"
+        }
+      }
+    }
+  },
+  "actions": {
+    "logging-action": {
+      "logging": {
+        "text": "{{ctx.metadata.logging_message}}"
+      }
+    },
+    "index_payload": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def alarm = new HashMap(); alarm.type='ATM-FRAUD-CHECKER'; alarm.timestamp = ctx.execution_time; alarm.message = 'Credit card money withdraw one multiple atms in short period of time'; alarm.result = new ArrayList(); for(def line: ctx.payload.aggregations.group_by_credit_cards.buckets){if(line.group_by_atm_id.value >= ctx.metadata.threshold){alarm.result.add(['credit_card': line.key, 'atm_number': line.group_by_atm_id.value])}} return ['_doc' : alarm];"
+        }
+      },
+      "index": {
+        "index": "<atmalarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "doc_type": "atm",
+        "execution_time_field": "timestamp"
+      }
+    }
+  }
+}
