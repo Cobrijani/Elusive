@@ -51,6 +51,6 @@ Napomena:
 
 - Spisak pravila za metrike:
   1. Vrsi se provera metrika za sistem (simuliranjem), tj. pravila ce da proveravaju da li su odredjeni sistema dostupni i ukoliko nisu salje se mail administratoru o trenutnom stanju sistema.
-  2. Vrsi se provera disk usage-a i ukoliko se ustanovi da u roku od manje dva dana nece biti dovoljno memorije salje se mail administratoru o obavestenju
+  2. Vrsi se pervora disk usage-a i ukoliko se ustanovi da je disk popunjen vise od 80% salje se mail administratoru.
 
 

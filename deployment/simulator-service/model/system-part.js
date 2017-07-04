@@ -8,8 +8,18 @@ var systemPartSchema = new Schema({
   },
   health: {
     status: String,
-    cpu: String,
-    disk: String
+    cpu: {
+      type: Number,
+      min: 0,
+      max: 1,
+      required: true
+    },
+    disk: {
+      type: Number,
+      min: 0,
+      max: 1,
+      required: true
+    }
   },
   createdAt: Date,
   updatedAt: Date

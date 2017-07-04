@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "name": "Main bank disk checker",
+    "description": "This watcher checks disk usage of a system",
+    "url": "http://simulator:3000/systemParts/main-bank/health",
+    "threshold": 0.8
+  },
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "http": {
+      "request": {
+        "url": "http://simulator:3000/systemParts/main-bank/health"
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.disk": {
+        "gte": "{{ctx.metadata.threshold}}"
+      }
+    }
+  },
+  "actions": {
+    "logging-action": {
+      "logging": {
+        "text": "Main bank disk usage is over 80%, contacting administrator"
+      }
+    },
+    "send_email": {
+      "email": {
+        "to": "cobrijani@gmail.com",
+        "subject": "Main bank client usage warning",
+        "body": "Rule engine reports that disk usage for main bank disk usage is over 80%",
+        "priority": "high"
+      }
+    }
+  }
+}
