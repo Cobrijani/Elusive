@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Response code 401 or 403 tracker",
     "description": "This rule checks how many number of requests resulted with 401 or 403 error code and resulting appropriate prevention",
-    "time_window": "30m",
+    "time_window": "10m",
     "threshold": 100
   },
   "trigger": {
@@ -43,7 +43,7 @@
           }
         },
         "indices": [
-          "apachebeat-*"
+          "apachemainbeat-*"
         ]
       }
     }
@@ -68,11 +68,11 @@
       "transform": {
         "script": {
           "lang": "painless",
-          "inline": "def alarm = new HashMap(); alarm.type='401-or-403-RESPONSE-CODE'; alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than '+ctx.metadata.threshold+' requests that ended with 401 response code in last '+ctx.metadata.time_window+' on some users.'; alarm.result = new ArrayList(); for(def line: ctx.payload.aggregations.group_by_client_ip.buckets){if(line.doc_count >= ctx.metadata.threshold){alarm.result.add(['ip-address': line.key, 'number-of-401-or-403-response': line.doc_count])}} return ['_doc' : alarm];"
+          "inline": "def alarm = new HashMap(); alarm.type='401-or-403-RESPONSE-CODE'; alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than '+ctx.metadata.threshold+' Requests that ended with 401 Response code in last '+ctx.metadata.time_window+'  on some users.'; alarm.result = new ArrayList(); for(def line: ctx.payload.aggregations.group_by_client_ip.buckets){if(line.doc_count >= ctx.metadata.threshold){alarm.result.add(['ip-address': line.key, 'number-of-401-or-403-response': line.doc_count])}} return ['_doc' : alarm];"
         }
       },
       "index": {
-        "index": "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "index": "<apachemainalarms-{now/d{YYYY.MM.dd|+01:00}}>",
         "doc_type": "apache",
         "execution_time_field": "timestamp"
       }

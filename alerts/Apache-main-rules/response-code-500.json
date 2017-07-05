@@ -33,7 +33,7 @@
             "_source": ["request"]
           },
           "indices": [
-            "apachebeat-*"
+            "apachemainbeat-*"
           ]
         }
       }
@@ -55,11 +55,11 @@
         "transform": {
           "script": {
             "lang": "painless",
-            "inline": "def alarm = new HashMap(); alarm.type='500-RESPONSE-CODE-CHECK'; alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than '+ctx.metadata.threshold+' requests that ended with 500 Response code in last '+ctx.metadata.time_window+'  on some users.'; alarm.result = new ArrayList(); for(def line: ctx.payload.hits.hits){ alarm.result.add(line)} return ['_doc' : alarm];"
+            "inline": "def alarm = new HashMap(); alarm.type='500-RESPONSE-CODE-CHECK'; alarm.timestamp = ctx.execution_time; alarm.message = 'There are more than ctx.metadata.threshold Requests that ended with 500 Response code in last '+ctx.metadata.time_window+' on some users.'; alarm.result = new ArrayList(); for(def line: ctx.payload.hits.hits){ alarm.result.add(line)} return ['_doc' : alarm];"
           }
         },
         "index": {
-          "index": "<apachealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+          "index": "<apachemainalarms-{now/d{YYYY.MM.dd|+01:00}}>",
           "doc_type": "apache",
           "execution_time_field": "timestamp"
         }

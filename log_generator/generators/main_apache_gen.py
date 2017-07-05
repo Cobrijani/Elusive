@@ -41,7 +41,6 @@ class MainApacheGen(Generator):
 
   def generate_log_row(self):
     ip = numpy.random.choice(self.allowedIps + [self.faker.ipv4()], p=[0.15, 0.15, 0.15, 0.15, 0.15, 0.2, 0.05])
-    # ip = numpy.random.choice(self.allowedIps)
     dt = datetime.datetime.now().strftime('%d/%b/%Y:%H:%M:%S')
     tz = datetime.datetime.now(self.local).strftime('%z')
     vrb = numpy.random.choice(self.verb, p=[0.6, 0.1, 0.1, 0.2])
