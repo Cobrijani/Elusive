@@ -38,7 +38,7 @@ Napomena:
 
 - Spisak pravila vezanih za firewall koji stoji izmedju glavnom servera i ostalih ucenika koji komuniciraju sa njim
   1. Vrsi se provera sa kojih IP adresa dolazi request. Tacno se zna koje adrese smeju da salje zahtev i ukoliko se primeti da zahtevi sa nekih ip adresa previse dolaze (tipa 20 DENY ili DROP zahteva) vrsi detekcija uljeza i prevencija da napada firewall.
-  2. Vrsi se provera na koje portove se salju zahtevi i ako dolaze zahtevi na neki od nedozvoljenih portova takodje se vrsi prevencija daljeg slanja zahteva sa tih IP adresa.
+  2. Vrsi se provera sa kojih portova stizu podaci. Ukoliko podatak stize sa dobre adrese, ali sa nedozvoljenog porta, salje se komanda da firewall zabrani slanje podataka sa tog porta.
   3. Vrsi se provera gustine prometa u periodu od 10 minuta. Ukoliko gustina saobracaja predje odredjeni threshhold, vrsimo detekciju i psuedo rate liming na zahteve
 
 - Spisak pravila vezanih za web server na kome se nalazi aplikacija koja ima pristup bazama podataka:

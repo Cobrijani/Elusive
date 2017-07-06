@@ -28,6 +28,7 @@ var systemPartSchema = new Schema({
   allowedIps: [String],
   blacklistedIps: [String],
   allowedPorts: [Number],
+  restrictedPorts: [Number],
   createdAt: Date,
   updatedAt: Date
 });

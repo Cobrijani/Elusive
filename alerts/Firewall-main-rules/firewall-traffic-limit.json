@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "name": "Traffic limit",
+    "description": "Rule that checks how many request are happening per minute, if it reaches threshhold it creates prevent action.",
+    "threshold": 120,
+    "time_window": "1m"
+  },
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "gte": "now-{{ctx.metadata.time_window}}"
+                  }
+                }
+              }]
+            }
+          }
+        },
+        "indices": [
+          "firebeat-*"
+        ]
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gte": "{{ctx.metadata.threshold}}"
+      }
+    }
+
+  },
+  "actions": {
+    "logging-action": {
+      "logging": {
+        "text": "Too many requests are going on firewall"
+      }
+    },
+    "index_payload": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def alarm = new HashMap(); alarm.type='DOS-CHECKER'; alarm.timestamp = ctx.execution_time; alarm.message = 'Too many requests'; alarm.result = ['number-of-requests': ctx.payload.hits.total]; return ['_doc' : alarm];"
+        }
+      },
+      "index": {
+        "index": "<firealarms-{now/d{YYYY.MM.dd|+01:00}}>",
+        "doc_type": "firewall",
+        "execution_time_field": "timestamp"
+      }
+    }
+  }
+}

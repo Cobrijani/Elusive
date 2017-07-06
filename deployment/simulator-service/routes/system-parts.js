@@ -94,6 +94,28 @@ router.post('/:name/banIp', function (req, res, next) {
   });
 });
 
+router.post('/:name/restrictPorts', function (req, res, next) {
+  //this is because of elastic search
+  if (req.body.ports[req.body.ports.length - 1] === 'eof') {
+    req.body.ports.pop();
+  }
+
+  SystemPart.update({
+    name: req.params.name
+  }, {
+    $addToSet: {
+      restrictedPorts: {
+        $each: req.body.ports
+      }
+    }
+  }, {
+    upsert: true
+  }, function (err, result) {
+    if (err) return next(err);
+    res.json(result);
+  });
+});
+
 
 /**
  * Simulate restarting of system part
