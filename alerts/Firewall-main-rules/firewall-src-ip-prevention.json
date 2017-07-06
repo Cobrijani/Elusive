@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "name": "Firewall src Ip prevention",
+    "description": "This watcher checks if there is a any ip address that is not allowed in the network",
+    "time_window": "10m",
+    "threshold": 1
+  },
+  "trigger": {
+    "schedule": {
+      "interval": "1m"
+    }
+  },
+  "input": {
+    "chain": {
+      "inputs": [{
+          "http_allowed_ips": {
+            "http": {
+              "request": {
+                "url": "http://simulator:3000/systemParts/main-bank/allowedIps"
+              }
+            }
+          }
+        },
+        {
+          "search_logs": {
+            "search": {
+              "request": {
+                "body": {
+                  "size": 0,
+                  "query": {
+                    "bool": {
+                      "filter": [{
+                        "range": {
+                          "@timestamp": {
+                            "gte": "now-{{ctx.metadata.time_window}}"
+                          }
+                        }
+                      }]
+                    }
+                  },
+                  "aggs": {
+                    "group_by_src_ip": {
+                      "terms": {
+                        "field": "src-ip.keyword"
+                      }
+                    }
+                  }
+                },
+                "indices": [
+                  "firebeat-*"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "condition": {
+    "script": {
+      "lang": "painless",
+      "inline": "def ips = new ArrayList(); for(def ip: ctx.payload.search_logs.aggregations.group_by_src_ip.buckets){ ips.add(ip.key)} ips.removeIf(item-> ctx.payload.http_allowed_ips.allowedIps.contains(item)); return ips.size() != 0;"
+    }
+  },
+  "actions": {
+    "logging-action": {
+      "logging": {
+        "text": "Detected ip addresses that are not allowed to enter the system"
+      }
+    },
+    "webhook-action": {
+      "transform": {
+        "script": {
+          "lang": "painless",
+          "inline": "def ips = new ArrayList(); for(def ip: ctx.payload.search_logs.aggregations.group_by_src_ip.buckets){ ips.add(ip)} ips.removeIf(item-> ctx.payload.http_allowed_ips.allowedIps.contains(item.key)); return ips;"
+        }
+      },
+      "webhook": {
+        "method": "POST",
+        "url": "http://simulator:3000/systemParts/main-bank/banIp",
+        "body": "{\"ips\": [{{#ctx.payload._value}}\"{{key}}\",{{/ctx.payload._value}} \"eof\"] }"
+      }
+    }
+  }
+}

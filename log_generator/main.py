@@ -33,9 +33,9 @@ if __name__ == '__main__':
   # lg.add_generator(LinuxGenerator(file_linux))
 
   # lg.add_generator(ClientApacheGen(file_apache))
-  # lg.add_generator(MainFirewallGen(file_firewall))
+  lg.add_generator(MainFirewallGen(file_firewall))
   # lg.add_generator(AtmGen(file_atm))
-  lg.add_generator(MainApacheGen(file_apache_main))
+  # lg.add_generator(MainApacheGen(file_apache_main))
   try:
     lg.generate()
   except KeyboardInterrupt:
