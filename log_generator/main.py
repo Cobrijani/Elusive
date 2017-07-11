@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
   output_files = [file_apache, file_app, file_firewall, file_linux]
   print("Generator started")
-  print("Output locations {}", output_files)
+  # print("Output locations {}", output_files)
 
   lg = LogGenerator(sleep=args.sleep)
   # lg.add_generator(FirewallGenerator(file_firewall))
@@ -32,10 +32,10 @@ if __name__ == '__main__':
   # lg.add_generator(AppGenerator(file_app))
   # lg.add_generator(LinuxGenerator(file_linux))
 
-  # lg.add_generator(ClientApacheGen(file_apache))
+  lg.add_generator(ClientApacheGen(file_apache))
   lg.add_generator(MainFirewallGen(file_firewall))
-  # lg.add_generator(AtmGen(file_atm))
-  # lg.add_generator(MainApacheGen(file_apache_main))
+  lg.add_generator(AtmGen(file_atm))
+  lg.add_generator(MainApacheGen(file_apache_main))
   try:
     lg.generate()
   except KeyboardInterrupt:

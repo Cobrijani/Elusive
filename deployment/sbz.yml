@@ -85,6 +85,36 @@ services:
       ports:
         - "3000:3000"
       container_name: "simulator-service"
+    # packetbeat:
+    #   build: "packetbeat"
+    #   cap_add: ['NET_RAW', 'NET_ADMIN']
+    #   network_mode: host
+    #   volumes:
+    #     - ./packetbeat/packetbeat.yml:/etc/packetbeat/packetbeat.yml
+    #   environment:
+    #     - BEAT_NAME=packetbeat
+    #     - INDEX_NAME=packetbeat
+    #   container_name: "packetbeat"
+    # packetbeat:
+    #   image: docker.elastic.co/beats/packetbeat:5.4.1
+    #   cap_add: ['NET_RAW', 'NET_ADMIN']
+    #   network_mode: host
+    #   volumes:
+    #     - ./packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml
+    #     - ./packetbeat/cryptography/certs/ca/ca.pem:/usr/share/packetbeat/ca.pem
+    #     - ./packetbeat/cryptography/certs/beats/beats.pem:/usr/share/packetbeat/beats.pem
+    #     - ./packetbeat/cryptography/certs/beats/beats.key:/usr/share/packetbeat/beats.key
+    #   environment:
+    #     - BEAT_NAME=packetbeat
+    #     - INDEX_NAME=packetbeat
+    #   container_name: "packetbeat"
+    # configure_kibana:
+    #   image: docker.elastic.co/beats/metricbeat:5.4.1
+    #   volumes: ['./scripts/configure-kibana.sh:/usr/local/bin/configure-kibana.sh:ro']
+    #   command: ['/bin/bash', '-c', 'cat /usr/local/bin/configure-kibana.sh | tr -d "\r" | bash']
+    #   environment: ['ELASTIC_VERSION=5.4.1']
+    #   networks: ['elk']
+    #   depends_on: ['kibana']
 networks:
   elk:
     driver: bridge
